@@ -1,4 +1,5 @@
-﻿using MelonLoader;
+﻿using System.Resources;
+using MelonLoader;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -6,12 +7,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ClassLibrary1")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("HP csc Plus")]
+[assembly: AssemblyDescription("alternative way to create custom stories")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ClassLibrary1")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyProduct("")]
+[assembly: AssemblyCopyright("Copyleft  ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -41,3 +42,4 @@ using System.Runtime.InteropServices;
 [assembly: MelonInfo(typeof(Project.HPcscPlus), "HPcscPlus", "1.0.0", "CamelCaseName")]
 [assembly: MelonGame("Eek", "House Party")]
 [assembly: VerifyLoaderVersion(0, 4, 0, true)]
+[assembly: NeutralResourcesLanguage("en")]

@@ -302,98 +302,147 @@ namespace Project
 
         private EekEvents.Criteria DisplayComparisonFields(EekEvents.Criteria criterion)
         {
-            //todo this
             switch (criterion.CompareType)
             {
                 case EekEvents.CompareTypes.Never:
+                    //Nothing?
                     break;
                 case EekEvents.CompareTypes.Clothing:
+                    //character as character for condition, clothing as value, clothing set as option (none 0, number afterwards), boolvalue as value
                     break;
                 case EekEvents.CompareTypes.CoinFlip:
+                    //nothing needed, its 50/50 anyways
                     break;
                 case EekEvents.CompareTypes.CompareValues:
+                    //character as character, character as character2, comparison as valueformula, value1 as key, value2 as key2
                     break;
                 case EekEvents.CompareTypes.CriteriaGroup:
+                    //criteriagroup(id) as key, true/false as option (0/1)
                     break;
                 case EekEvents.CompareTypes.CutScene:
+                    //todo: no idea what is needed
                     break;
                 case EekEvents.CompareTypes.Dialogue:
+                    //Character as character, dialogie id as value, dialogue status as dialogue status
                     break;
                 case EekEvents.CompareTypes.Distance:
+                    //object name 1 as key, object name 2 as key2, equal value as equationvalue, distance as value
                     break;
                 case EekEvents.CompareTypes.Door:
+                    //dor name as key, door option as dooroption
                     break;
                 case EekEvents.CompareTypes.IntimacyPartner:
+                    //character as charater, equals value as equalsvalue, character 2 as value 
                     break;
                 case EekEvents.CompareTypes.IntimacyState:
+                    //character as character, equals vlaue as equalsvalue, state as value
                     break;
                 case EekEvents.CompareTypes.InZone:
+                    //character as character, zone name as key, state as boolvalue
                     break;
                 case EekEvents.CompareTypes.InVicinity:
+                    //character as character, character as character2, state as boolvalue
                     break;
                 case EekEvents.CompareTypes.InVicinityAndVision:
+                    //same as invicinity
                     break;
                 case EekEvents.CompareTypes.Item:
+                    //item as key, item comparison as itemcomparison, character as character, state as boolvalue
+                    //or it not involved with characters(no "To/By")
+                    //item as key, item comparison as itemcomparison, state as boolvalue
                     break;
                 case EekEvents.CompareTypes.IsOnlyInVicinityOf:
+                    //same as invicinity
                     break;
                 case EekEvents.CompareTypes.IsOnlyInVisionOf:
+                    //same as invicinity
                     break;
                 case EekEvents.CompareTypes.IsOnlyInVicinityAndVisionOf:
+                    //same as invicinity
                     break;
                 case EekEvents.CompareTypes.IsAloneWithPlayer:
+                    //character as character, value as boolvalue
                     break;
                 case EekEvents.CompareTypes.IsCharacterEnabled:
+                    //character as character, value as boolvalue
                     break;
                 case EekEvents.CompareTypes.IsCurrentlyBeingUsed:
+                    //item name as key, value as boolvalue
                     break;
                 case EekEvents.CompareTypes.IsCurrentlyUsing:
+                    //character as character, item as key, state as boolvalue
                     break;
                 case EekEvents.CompareTypes.IsExplicitGameVersion:
+                    //state as boolvalue
                     break;
                 case EekEvents.CompareTypes.IsInFrontOf:
+                    //character as character2, characetr as character, state as boolvalue
                     break;
                 case EekEvents.CompareTypes.IsInHouse:
+                    //character as character, state as boolvalue
                     break;
                 case EekEvents.CompareTypes.IsNewGame:
+                    //state as boolvalue
                     break;
                 case EekEvents.CompareTypes.IsZoneEmpty:
+                    //zone as key, state as boolvalue
                     break;
                 case EekEvents.CompareTypes.ItemFromItemGroup:
+                    //greyed out in csc
                     break;
                 case EekEvents.CompareTypes.MetByPlayer:
+                    //character as character, value as boolvalue
                     break;
                 case EekEvents.CompareTypes.Personality:
+                    //character as character, personality type as key, comparison as equationvalue, value as boolvalue
                     break;
                 case EekEvents.CompareTypes.IsBeingSpokenTo:
+                    //character as character, value as boolvalue
                     break;
                 case EekEvents.CompareTypes.PlayerBeingSpokenTo:
+                    //value as boolvalue
                     break;
                 case EekEvents.CompareTypes.PlayerGender:
+                    //gender as value
                     break;
                 case EekEvents.CompareTypes.PlayerInventory:
+                    //has item: item as key, value as boolvalue
+                    //has at least one item: value as boolvalue
                     break;
                 case EekEvents.CompareTypes.Posing:
+                    //is currently posing: character as character, value as boolvalue
+                    //current pose: character as character, pose id as value, value as boolvalue
                     break;
                 case EekEvents.CompareTypes.Property:
+                    //character as character, property id as value, value as boolvalue
                     break;
                 case EekEvents.CompareTypes.Quest:
+                    //quest id as key, quest name as key2, value as boolvalue
                     break;
                 case EekEvents.CompareTypes.SameZoneAs:
+                    //character as character, character as character2, value as boolvalue
                     break;
                 case EekEvents.CompareTypes.Social:
+                    //for one: character as character, status as social status, comparison as equationvalue, value as value
+                    //for two: character as character, character as character2, status as social status, comparison as equationvalue, value as value
                     break;
                 case EekEvents.CompareTypes.State:
+                    //character as character, state id as value, value as boolvalue
                     break;
                 case EekEvents.CompareTypes.Value:
+                    //character as character, value name as key, comparison as equationvalue, value as value
                     break;
                 case EekEvents.CompareTypes.Vision:
+                    //character as character, character as character2, value as boolvalue
                     break;
                 case EekEvents.CompareTypes.PlayerPrefs:
+                    //value name as key, comparison as equationvalue, value as value
                     break;
                 case EekEvents.CompareTypes.UseLegacyIntimacy:
+                    //state as boolvalue
                     break;
                 case EekEvents.CompareTypes.None:
+                    //none, duh :)
                     break;
                 default:
                     break;
@@ -586,19 +635,41 @@ namespace Project
             {
                 GUILayout.Box("---Alternate Text---", Opt);
             }
+            if (dialogue.AlternateTexts.Count > 0)
+            {
+                GUILayout.BeginHorizontal(Opt);
+                if (GUILayout.Button("Add Alternate Text", Opt))
+                {
+                    dialogue.AlternateTexts.Add(new EekEvents.Dialogues.AlternateDialogueText());
+                    AlternateTextScrollPosition++;
+                }
+                if (GUILayout.Button("Remove Current Alternate Text", Opt) && dialogue.AlternateTexts.Count > 0)
+                {
+                    dialogue.AlternateTexts.RemoveAt(AlternateTextScrollPosition);
+                    AlternateTextScrollPosition--;
+                }
+                GUILayout.EndHorizontal();
 
-            string altText = dialogue.AlternateTexts[AlternateTextScrollPosition].Text;
-            if (RemoveVaHints) altText = RemoveVAHints(altText);
-            altText = ConstrainLength(altText);
+                string altText = dialogue.AlternateTexts[AlternateTextScrollPosition].Text;
+                if (RemoveVaHints) altText = RemoveVAHints(altText);
+                altText = ConstrainLength(altText);
 
-            //the actual text
-            GUILayout.Label(altText, "Box", Opt);
+                //the actual text
+                GUILayout.Label(altText, "Box", Opt);
 
-            //order of the dialogue
-            dialogue.AlternateTexts[AlternateTextScrollPosition].Order = DisplayNumberHorizontal(dialogue.AlternateTexts[AlternateTextScrollPosition].Order, 0, int.MaxValue, "Sort Order");
-            dialogue.AlternateTexts[AlternateTextScrollPosition].Critera = DisplayCriteria(dialogue.AlternateTexts[AlternateTextScrollPosition].Critera);
+                //order of the dialogue
+                dialogue.AlternateTexts[AlternateTextScrollPosition].Order = DisplayNumberHorizontal(dialogue.AlternateTexts[AlternateTextScrollPosition].Order, 0, int.MaxValue, "Sort Order");
+                dialogue.AlternateTexts[AlternateTextScrollPosition].Critera = DisplayCriteria(dialogue.AlternateTexts[AlternateTextScrollPosition].Critera);
 
-            //todo add add button, delete button for the selected alternate text
+                
+            }
+            else
+            {
+                if (GUILayout.Button("Add Alternate Text", Opt))
+                {
+                    dialogue.AlternateTexts.Add(new EekEvents.Dialogues.AlternateDialogueText());
+                }
+            }
 
             //end portion for the alternate texts
             GUILayout.EndVertical();
@@ -633,10 +704,8 @@ namespace Project
             dialogue.ShowGlobalGoodByeResponses = GUILayout.Toggle(dialogue.ShowGlobalGoodByeResponses, "Use GoodBye Responses", Opt);
 
             //alternate texts
-            if (dialogue.AlternateTexts.Count > 0)
-            {
-                DisplayAlternateTexts(dialogue);
-            }
+            DisplayAlternateTexts(dialogue);
+
 
             //todo the rest like events, responses and so on
             //todo add toggle/list what to edit from the dialogue, same with all the other things you can edit 

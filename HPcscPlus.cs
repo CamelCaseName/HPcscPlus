@@ -563,7 +563,22 @@ namespace Project
                 }
 
                 //about half of the values are in this list, the others can't be added via console, they only show up in the csc
-                //todo, add them here
+                foreach (Il2CppSystem.Object obj in CharacterStoryObjects)
+                {
+                    MelonLogger.Msg("try creating new Characterstory with pointer of obj");
+                    CharacterStory story = new CharacterStory(obj.Pointer);
+                    MelonLogger.Msg("");
+                    if (story.CharacterName == characterName)
+                    {
+                        foreach(string value in story.StoryValues)
+                        {
+                            if (!StoryValues.Contains(value))
+                            {
+                                StoryValues.Add(value);
+                            }
+                        }
+                    }
+                }
 
                 //MelonLogger.Msg(EekCharacterEngine.GameManager.GetLoadFile);
 

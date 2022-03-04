@@ -79,8 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HPcscPlus.cs" />
-    <Compile Include="ICriterion.cs" />
-    <Compile Include="IEvent.cs" />
     <Compile Include="Items.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,82 +1,26 @@
-﻿using MelonLoader;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
-using EekAddOns;
+﻿using EekEvents;
+using EekCharacterEngine;
+using MelonLoader;
 using Il2CppSystem;
+using Il2CppSystem.Collections.Generic;
+using Il2CppSystem.IO;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using EekEvents.Stories;
+using MelonLoader.TinyJSON;
 using UnhollowerRuntimeLib;
-using EekCharacterEngine.Interaction;
 
 namespace Project
 {
     public class HPcscPlus : MelonMod
     {
-        //attributes
-        private bool ShowEditor = false;
-        private bool StoriesSet = false;
-        private bool StorySelected = false;
-        private const int EditorCharacterSelectionHeight = 60;
-        private const int EditorHeight = 1000;
-        private const int EditorWidth = 600;
-        private EekCharacterEngine.GameManager GameManager;
-        private EekEvents.Stories.CharacterStoryData _selectedStory;
-        private Il2CppSystem.Collections.Generic.List<EekEvents.Stories.CharacterStoryData> Stories;
-        private int DialogueScrollPosition;
-        private int AlternateTextScrollPosition;
-        private int SelectionIndex = 0;
-        private readonly bool RemoveVaHints = true;
-        private readonly int EditorX = Screen.width - EditorWidth;
-        private readonly int EditorY = 0;
-        private readonly GUILayoutOption[] Opt = new GUILayoutOption[0]; //default options, cant create others due to il2cpp limitations
-        private Rect EditorWindow;
         public bool InGameMain = false;
-        private readonly EekEvents.CompareTypes[] CompareTypesArray = new EekEvents.CompareTypes[] {
-                EekEvents.CompareTypes.Clothing,
-                EekEvents.CompareTypes.CoinFlip,
-                EekEvents.CompareTypes.CompareValues,
-                EekEvents.CompareTypes.CriteriaGroup,
-                EekEvents.CompareTypes.CutScene,
-                EekEvents.CompareTypes.Dialogue,
-                EekEvents.CompareTypes.Distance,
-                EekEvents.CompareTypes.Door,
-                EekEvents.CompareTypes.IntimacyPartner,
-                EekEvents.CompareTypes.IntimacyState,
-                EekEvents.CompareTypes.InVicinity,
-                EekEvents.CompareTypes.InVicinityAndVision,
-                EekEvents.CompareTypes.InZone,
-                EekEvents.CompareTypes.IsAloneWithPlayer,
-                EekEvents.CompareTypes.IsBeingSpokenTo,
-                EekEvents.CompareTypes.IsCharacterEnabled,
-                EekEvents.CompareTypes.IsCurrentlyBeingUsed,
-                EekEvents.CompareTypes.IsCurrentlyUsing,
-                EekEvents.CompareTypes.IsExplicitGameVersion,
-                EekEvents.CompareTypes.IsInFrontOf,
-                EekEvents.CompareTypes.IsInHouse,
-                EekEvents.CompareTypes.IsNewGame,
-                EekEvents.CompareTypes.IsOnlyInVicinityAndVisionOf,
-                EekEvents.CompareTypes.IsOnlyInVicinityOf,
-                EekEvents.CompareTypes.IsOnlyInVisionOf,
-                EekEvents.CompareTypes.IsZoneEmpty,
-                EekEvents.CompareTypes.Item,
-                EekEvents.CompareTypes.ItemFromItemGroup,
-                EekEvents.CompareTypes.MetByPlayer,
-                EekEvents.CompareTypes.Never,
-                EekEvents.CompareTypes.None,
-                EekEvents.CompareTypes.Personality,
-                EekEvents.CompareTypes.PlayerBeingSpokenTo,
-                EekEvents.CompareTypes.PlayerGender,
-                EekEvents.CompareTypes.PlayerInventory,
-                EekEvents.CompareTypes.PlayerPrefs,
-                EekEvents.CompareTypes.Posing,
-                EekEvents.CompareTypes.Property,
-                EekEvents.CompareTypes.Quest,
-                EekEvents.CompareTypes.SameZoneAs,
-                EekEvents.CompareTypes.Social,
-                EekEvents.CompareTypes.State,
-                EekEvents.CompareTypes.UseLegacyIntimacy,
-                EekEvents.CompareTypes.Value,
-                EekEvents.CompareTypes.Vision
-            };
+
+        //private const int EditorCharacterSelectionHeight = 60;
+        private readonly int EditorHeight = Screen.height;
+
+        private const int EditorWidth = 800;
+
         private readonly string[] Characters = new string[] {
             "Amy",
             "Arin",
@@ -96,7 +40,97 @@ namespace Project
             "Vickie"
         };
 
-        private EekEvents.Stories.CharacterStoryData SelectedStory
+        private readonly string[] ClothingPieces = new string[] {
+            "Top",
+            "Bottom",
+            "Underwear",
+            "Bra",
+            "Shoes",
+            "Accessory",
+            "StrapOn"
+        };
+
+        private readonly string[] ClothingSets = new string[] {
+            "Any Set",
+            "Set 0",
+            "Set 1"
+            };
+
+        private readonly CompareTypes[] CompareTypesArray = new CompareTypes[] {
+                CompareTypes.Never,
+                CompareTypes.Clothing,
+                CompareTypes.CoinFlip,
+                CompareTypes.CompareValues,
+                CompareTypes.CriteriaGroup,
+                CompareTypes.CutScene,
+                CompareTypes.Dialogue,
+                CompareTypes.Distance,
+                CompareTypes.Door,
+                CompareTypes.IntimacyPartner,
+                CompareTypes.IntimacyState,
+                CompareTypes.InVicinity,
+                CompareTypes.InVicinityAndVision,
+                CompareTypes.InZone,
+                CompareTypes.IsAloneWithPlayer,
+                CompareTypes.IsBeingSpokenTo,
+                CompareTypes.IsCharacterEnabled,
+                CompareTypes.IsCurrentlyBeingUsed,
+                CompareTypes.IsCurrentlyUsing,
+                CompareTypes.IsExplicitGameVersion,
+                CompareTypes.IsInFrontOf,
+                CompareTypes.IsInHouse,
+                CompareTypes.IsNewGame,
+                CompareTypes.IsOnlyInVicinityAndVisionOf,
+                CompareTypes.IsOnlyInVicinityOf,
+                CompareTypes.IsOnlyInVisionOf,
+                CompareTypes.IsZoneEmpty,
+                CompareTypes.Item,
+                CompareTypes.ItemFromItemGroup,
+                CompareTypes.MetByPlayer,
+                CompareTypes.None,
+                CompareTypes.Personality,
+                CompareTypes.PlayerBeingSpokenTo,
+                CompareTypes.PlayerGender,
+                CompareTypes.PlayerInventory,
+                CompareTypes.PlayerPrefs,
+                CompareTypes.Posing,
+                CompareTypes.Property,
+                CompareTypes.Quest,
+                CompareTypes.SameZoneAs,
+                CompareTypes.Social,
+                CompareTypes.State,
+                CompareTypes.UseLegacyIntimacy,
+                CompareTypes.Value,
+                CompareTypes.Vision
+            };
+
+        private readonly int EditorX = Screen.width - EditorWidth;
+
+        private readonly int EditorY = 0;
+
+        private readonly GUILayoutOption[] Opt = new GUILayoutOption[0];
+
+        private readonly bool RemoveVaHints = true;
+
+        private CharacterStoryData _selectedStory;
+
+        private int AlternateTextScrollPosition;
+
+        private int DialogueScrollPosition;
+
+        //default options, cant create others due to il2cpp limitations
+        private Rect EditorWindow;
+
+        private GameManager GameManagerInstance;
+
+        private int SelectionIndex = 0;
+
+        //attributes
+        private bool ShowEditor = false;
+        private List<CharacterStoryData> Stories;
+        private bool StoriesSet = false;
+        private bool StorySelected = false;
+        private CharacterStoryData SelectedStory
         {
             get
             {
@@ -113,30 +147,181 @@ namespace Project
                 }
             }
         }
+        private StoryData MainStoryData;
+        private string CurrentStoryFolder;
+        private MainStory MainStoryObject;
+        private List<CharacterStory> CharacterStoryObjects;
 
         //methods
 
-        private string RemoveVAHints(string input)
+        //on quit
+        public override void OnApplicationQuit()
         {
-            bool inVAHint = false;
-            string output = "";
-            foreach (char character in input)
+
+        }
+
+        //on start
+        public override void OnApplicationStart()
+        {
+            
+            ClassInjector.RegisterTypeInIl2Cpp<Criterion>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<OnTakeActionEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ItemAction>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<OnSuccessEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<UseWith>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ItemOverride>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ItemGroupBehavior>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Achievement>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<CriteriaList2>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<CriteriaList1>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<CriteriaGroup>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ItemGroup>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<GameStartEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Critera>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Event>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<PlayerReaction>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<MainStory>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<AlternateText>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<CloseEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ResponseCriteria>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ResponseEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Response>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<StartEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Dialogue>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<GlobalGoodbyeResponse>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<GlobalResponse>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<BackgroundChatter>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Valuee>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Personality>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ExtendedDetail>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Quest>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Reaction>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<OnAcceptEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<StoryItem>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<CharacterStory>(true);
+            
+
+
+            EditorWindow = new Rect(EditorX, EditorY, EditorWidth, EditorHeight);
+            CharacterStoryObjects = new List<CharacterStory>();
+        }
+
+        //every time ui is updated
+        public override void OnGUI()
+        {
+            if (InGameMain && ShowEditor)
             {
-                if (character == '[' && !inVAHint)
+
+                //also do keys and mouse by events:
+                //Event currentEvent = Event.current;
+                //then get event type via the .type
+
+                //create character selection sliders
+                //Wrap everything in the designated GUI Area
+                GUILayout.BeginArea(EditorWindow, (GUIStyle)"Box");
+                //GUILayout.BeginArea(EditorWindow, "cscPlus", "Box");
+                GUILayout.BeginVertical(Opt);
+
+                DisplayCharacterStorySelector();
+
+                if (StorySelected)
                 {
-                    inVAHint = true;
+                    DisplayDialogueParts();
+                    //todo show save and then also reload the story
+                    //todo export on save so it is really saved
                 }
-                else if (character == ']' && inVAHint)
+
+                //end all
+                GUILayout.EndVertical();
+                GUILayout.EndArea();
+            }
+        }
+
+        public void LoadAndParseCurrentStory()
+        {
+            CurrentStoryFolder = StoryData.GetInternalStoryFolder(GameManager.GetActiveStoryName());
+
+            MelonLogger.Msg($"Current story found in {CurrentStoryFolder}");
+
+            string[] paths = CurrentStoryFolder.Split('/');
+
+            string tempF = $"{CurrentStoryFolder}{paths[paths.Length - 2]}.story";
+            string tempS = File.ReadAllText(tempF);
+
+            if (tempS.Length > 0)
+            {
+                MelonLogger.Msg($"Current story file found at {tempF}, trying to parse...");
+                JSON.MakeInto(JSON.Load(tempS), out MainStoryObject);
+                if (MainStoryObject != null)
                 {
-                    inVAHint = false;
+                    MelonLogger.Msg(System.ConsoleColor.DarkGreen, "Story parsed successfully.");
                 }
-                else if (!inVAHint)
+            }
+            else
+            {
+                MelonLogger.Msg(System.ConsoleColor.Red, "Error reading story file!");
+            }
+
+            MelonLogger.Msg("Parsing character stories now.");
+
+            foreach (var file in Directory.GetFiles(CurrentStoryFolder))
+            {
+                MelonLogger.Msg(System.ConsoleColor.DarkGray, $"Found {Path.GetFileName(file).Split('.')[0]}");
+                if (Path.GetFileName(file).Split('.')[1] == "character")
                 {
-                    output += character;
+                    JSON.MakeInto(JSON.Load(File.ReadAllText(file)), out CharacterStory tempStory);
+                    if (tempStory != null)
+                    {
+                        CharacterStoryObjects.Add(tempStory);
+                        MelonLogger.Msg(System.ConsoleColor.Gray, $"Parsed {Path.GetFileNameWithoutExtension(file)}'s Story.");
+                    }
                 }
             }
 
-            return output;
+            MelonLogger.Msg(System.ConsoleColor.Green, "Done parsing :)");
+        }
+
+        //when the main game scene was loaded
+        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
+        {
+            InGameMain = sceneName == "GameMain";
+            MelonLogger.Msg($"scene {sceneName} loaded ({buildIndex}) igm: {InGameMain}");
+
+            //get references to the GameManager and so on
+            if (InGameMain)
+            {
+                GameManagerInstance = GameManager.GetActiveGameManager();
+
+                Stories = GameManager.GetCharacterStories();
+
+                MainStoryData = GameManager.GetActiveStory();
+
+                LoadAndParseCurrentStory();
+
+                //parse story to custom format from file here, eeks libraries don't provide enough info lol
+
+                StoriesSet = true;
+
+                //add stories to game
+                foreach (var story in Stories)
+                {
+                    GameManagerInstance.RegisterCharacterStory(story);
+                }
+            }
+        }
+
+        //every frame
+        public override void OnUpdate()
+        {
+            if (StoriesSet)
+            {
+                //check for keypresses to open story editor, toggle window
+                if (Keyboard.current[Key.LeftAlt].isPressed && Keyboard.current[Key.U].wasPressedThisFrame)
+                {
+                    //MelonLogger.Msg($"ui shown {ShowEditor}");
+                    ShowEditor = !ShowEditor;
+                }
+            }
         }
 
         private string ConstrainLength(string input)
@@ -186,79 +371,227 @@ namespace Project
             return output;
         }
 
-        private int DisplayNumberBlock(int number, int min = 0, int max = int.MaxValue, string text = "", string plusButton = "+", string minusButton = "-")
+        private void DisplayAlternateTexts(EekEvents.Dialogues.Dialogue dialogue)
         {
-            GUILayout.BeginVertical(Opt);
+            GUILayout.BeginVertical("Box", Opt);
 
-            if (text.Length > 0) GUILayout.Box($"{text}: {number}", Opt);
-            else GUILayout.Box($"{number}", Opt);
-
-            GUILayout.BeginHorizontal(Opt);
-
-            if (GUILayout.Button(minusButton, Opt) && number > min)
+            if (dialogue.AlternateTexts.Count > 1)
             {
-                number--;
+                GUILayout.Box("---Alternate Texts---", Opt);
+                //add slider to select currently displayed alternate text
+                AlternateTextScrollPosition = (int)GUILayout.HorizontalSlider(AlternateTextScrollPosition, 0, dialogue.AlternateTexts.Count - 1, Opt);
             }
-            if (GUILayout.Button(plusButton, Opt) && number < max)
+            else
             {
-                number++;
+                GUILayout.Box("---Alternate Text---", Opt);
+            }
+            if (dialogue.AlternateTexts.Count > 0)
+            {
+                GUILayout.BeginHorizontal(Opt);
+                if (GUILayout.Button("Add Alternate Text", Opt))
+                {
+                    dialogue.AlternateTexts.Add(new EekEvents.Dialogues.AlternateDialogueText());
+                    AlternateTextScrollPosition++;
+                }
+                if (GUILayout.Button("Remove Current Alternate Text", Opt) && dialogue.AlternateTexts.Count > 0)
+                {
+                    dialogue.AlternateTexts.RemoveAt(AlternateTextScrollPosition);
+                    AlternateTextScrollPosition--;
+                }
+                GUILayout.EndHorizontal();
+
+                string altText = dialogue.AlternateTexts[AlternateTextScrollPosition].Text;
+                if (RemoveVaHints) altText = RemoveVAHints(altText);
+                altText = ConstrainLength(altText);
+
+                //the actual text
+                GUILayout.Label(altText, "Box", Opt);
+
+                //order of the dialogue
+                dialogue.AlternateTexts[AlternateTextScrollPosition].Order = DisplayNumberHorizontal(dialogue.AlternateTexts[AlternateTextScrollPosition].Order, 0, int.MaxValue, "Sort Order");
+                dialogue.AlternateTexts[AlternateTextScrollPosition].Critera = DisplayCriteria(dialogue.AlternateTexts[AlternateTextScrollPosition].Critera);
+
+
+            }
+            else
+            {
+                if (GUILayout.Button("Add Alternate Text", Opt))
+                {
+                    dialogue.AlternateTexts.Add(new EekEvents.Dialogues.AlternateDialogueText());
+                }
             }
 
-            if (text.Length + number.ToString().Length > 10) GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
+            //end portion for the alternate texts
             GUILayout.EndVertical();
-
-            return number;
         }
 
-        private int DisplayNumberHorizontal(int number, int min = 0, int max = int.MaxValue, string text = "", string plusButton = "+", string minusButton = "-")
+        private BoolCritera DisplayBoolValueSelector(BoolCritera boolValue)
         {
-            GUILayout.BeginHorizontal(Opt);
 
-            if (GUILayout.Button(minusButton, Opt) && number > min)
+            if (GUILayout.Toggle(boolValue == BoolCritera.True, boolValue.ToString(), Opt))
             {
-                number--;
+                boolValue = BoolCritera.True;
             }
-            if (GUILayout.Button(plusButton, Opt) && number < max)
+            else
             {
-                number++;
+                boolValue = BoolCritera.False;
             }
-
-            if (text.Length > 0) GUILayout.Box($"{text}: {number}", Opt);
-            else GUILayout.Box($"{number}", Opt);
-
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
-
-            return number;
+            return boolValue;
         }
 
-        private int DisplayNumberVertical(int number, int min = 0, int max = int.MaxValue, string text = "", string plusButton = "+", string minusButton = "-")
-        {
-            GUILayout.BeginVertical(Opt);
-
-            if (text.Length > 0) GUILayout.Box($"{text}: {number}", Opt);
-            else GUILayout.Box($"{number}", Opt);
-
-            if (GUILayout.Button(minusButton, Opt) && number > min)
-            {
-                number--;
-            }
-            if (GUILayout.Button(plusButton, Opt) && number < max)
-            {
-                number++;
-            }
-
-            GUILayout.EndVertical();
-
-            return number;
-        }
-
-        private EekEvents.CompareTypes DisplayCompareTypes(EekEvents.CompareTypes type)
+        private string DisplayCharacterSelector(string character, string textBefore)
         {
             GUILayout.BeginVertical(Opt);
             int index = 0;
-            foreach (EekEvents.CompareTypes item in CompareTypesArray)
+            bool found = false;
+            foreach (string item in Characters)
+            {
+                if (item == character)
+                {
+                    found = true;
+                    break;
+                }
+                index++;
+            }
+            //fallback
+            if (!found) index = 0;
+
+
+            //display compare type and selection
+            index = DisplayNumberBlock(index, 0, Characters.Length - 1, $"{textBefore}{Characters[index]}", ">", "<", false);
+
+            character = Characters[index];
+
+            GUILayout.EndVertical();
+
+            return character;
+        }
+
+        private void DisplayCharacterStorySelector()
+        {
+            //title lol
+            GUILayout.BeginHorizontal(Opt);
+            GUILayout.Box("cscPlus by Lenny", Opt);
+            GUILayout.EndHorizontal();
+
+            //Begin the group catpuring both buttons and slider
+            GUILayout.BeginHorizontal(Opt);
+
+            //button to select character
+            if (GUILayout.Button("Select the character\nto edit the story of", Opt))
+            {
+                SelectedStory = Stories[SelectionIndex];
+            }
+
+            //Arrange two more Controls vertically beside the Button
+            GUILayout.BeginVertical(Opt);
+            GUILayout.Box($"Character: {Stories[SelectionIndex].CharacterName}", Opt);
+            SelectionIndex = (int)GUILayout.HorizontalSlider(SelectionIndex, 0.0f, Stories.Count - 1, Opt);
+
+            //End the Groups and Area
+            GUILayout.EndVertical();
+            GUILayout.EndHorizontal();
+        }
+
+        private string DisplayClothingSelector(string clothing)
+        {
+            if (!int.TryParse(clothing, out int clothing_i)) clothing_i = 0;
+            clothing_i = DisplayNumberBlock(clothing_i, 0, ClothingPieces.Length - 1, ClothingPieces[clothing_i], ">", "<");
+            return clothing_i.ToString();
+        }
+
+        private int DisplayClothingSetSelector(int option)
+        {
+            option = DisplayNumberBlock(option, 0, ClothingSets.Length - 1, ClothingSets[option], ">", "<", false);
+            return option;
+        }
+
+        private Criteria DisplayCompareTypeClothing(Criteria criterion)
+        {
+            //character as character for condition, clothing as value, clothing set as option (none 0, number afterwards), boolvalue as value
+            criterion.Character = DisplayCharacterSelector(criterion.Character, "");
+            //try parsing, if it fails fall back to 0
+            criterion.Value = DisplayClothingSelector(criterion.Value);
+            criterion.Option = DisplayClothingSetSelector(criterion.Option);
+            criterion.BoolValue = DisplayBoolValueSelector(criterion.BoolValue);
+            return criterion;
+        }
+
+        private Criteria DisplayCompareTypeCompareValues(Criteria criterion)
+        {
+            //character as character, character as character2, comparison as valueformula, value1 as key, value2 as key2
+            criterion.Character = DisplayCharacterSelector(criterion.Character, "");
+            criterion.Key = DisplayCharacterValueSelector(criterion.Key, criterion.Character);
+            criterion.ValueFormula = DisplayValueFormulaSelector(criterion.ValueFormula);
+            criterion.Character2 = DisplayCharacterSelector(criterion.Character2, "");
+            criterion.Key2 = DisplayCharacterValueSelector(criterion.Key2, criterion.Character2);
+            return criterion;
+        }
+
+        private ValueSpecificFormulas DisplayValueFormulaSelector(ValueSpecificFormulas valueFormula)
+        {
+            valueFormula = (ValueSpecificFormulas)DisplayNumberBlock((int)valueFormula, 0, 3, valueFormula.ToString(), ">", "<", false);
+            return valueFormula;
+        }
+
+        private string DisplayCharacterValueSelector(string key, string characterName)
+        {
+            //EekEvents.Values.ValueStore.InitializeValues(characterName);
+
+            var temp = EekEvents.Values.ValueStore.GetValues(characterName).GetCurrentValuesAsStringList();
+
+            //has fewer values than the method above???
+            //var temp = EekEvents.Values.ValueStore.GetValues(characterName)._dirtyValues;
+            //var temp = EekEvents.Values.ValueStore.GetValues(characterName)._items;
+            //SaveLoadManager.PerformAutoSave();
+            //var temp = SaveLoadManager.autoSave.NPCs[0].Values.ToArray();
+
+
+
+            if (temp.Count <= 0)
+            {
+                MelonLogger.Msg("no values found");
+            }
+            else
+            {
+                List<string> StoryValues = new List<string>();
+
+                foreach (var kvp in temp)
+                {
+                    string cleaner = kvp.Key;
+                    if (!cleaner.Contains(":")) StoryValues.Add(cleaner);
+                }
+
+                //about half of the values are in this list, the others can't be added via console, they only show up in the csc
+                //todo, add them here
+
+                //MelonLogger.Msg(EekCharacterEngine.GameManager.GetLoadFile);
+
+                StoryValues.Sort();
+                MelonLogger.Msg("Values here:");
+
+                foreach (var item in StoryValues)
+                {
+                    MelonLogger.Msg(item);
+                }
+
+                int t = StoryValues.IndexOf(key);
+
+                if (t < 0 || t > temp.Count - 1)
+                {
+                    t = 0;
+                }
+
+                key = StoryValues[DisplayNumberBlock(t, 0, StoryValues.Count - 1, key, ">", "<", false)];
+            }
+            return key;
+        }
+
+        private CompareTypes DisplayCompareTypes(CompareTypes type)
+        {
+            GUILayout.BeginVertical(Opt);
+            int index = 0;
+            foreach (CompareTypes item in CompareTypesArray)
             {
                 if (item == type)
                 {
@@ -268,7 +601,7 @@ namespace Project
             }
 
             //display compare type and selection
-            index = DisplayNumberBlock(index, 0, CompareTypesArray.Length - 1, CompareTypesArray[index].ToString(), ">", "<");
+            index = DisplayNumberBlock(index, 0, CompareTypesArray.Length - 1, CompareTypesArray[index].ToString(), ">", "<", false);
 
             type = CompareTypesArray[index];
 
@@ -277,171 +610,149 @@ namespace Project
             return type;
         }
 
-        private string DisplayCharacterSelector(string character)
+        private Criteria DisplayComparisonFields(Criteria criterion)
         {
-            GUILayout.BeginVertical(Opt);
-            int index = 0;
-            foreach (string item in Characters)
-            {
-                if (item == character)
-                {
-                    break;
-                }
-                index++;
-            }
-
-            //display compare type and selection
-            index = DisplayNumberHorizontal(index, 0, Characters.Length - 1, $"Speaking To {Characters[index]}", ">", "<");
-
-            character = Characters[index];
-
-            GUILayout.EndVertical();
-
-            return character;
-        }
-
-        private EekEvents.Criteria DisplayComparisonFields(EekEvents.Criteria criterion)
-        {
+            //we are already in a horizontal area!
             switch (criterion.CompareType)
             {
-                case EekEvents.CompareTypes.Never:
+                case CompareTypes.Never:
                     //Nothing?
                     break;
-                case EekEvents.CompareTypes.Clothing:
-                    //character as character for condition, clothing as value, clothing set as option (none 0, number afterwards), boolvalue as value
+                case CompareTypes.Clothing:
+                    criterion = DisplayCompareTypeClothing(criterion);
                     break;
-                case EekEvents.CompareTypes.CoinFlip:
+                case CompareTypes.CoinFlip:
                     //nothing needed, its 50/50 anyways
                     break;
-                case EekEvents.CompareTypes.CompareValues:
-                    //character as character, character as character2, comparison as valueformula, value1 as key, value2 as key2
+                case CompareTypes.CompareValues:
+                    criterion = DisplayCompareTypeCompareValues(criterion);
                     break;
-                case EekEvents.CompareTypes.CriteriaGroup:
+                case CompareTypes.CriteriaGroup:
                     //criteriagroup(id) as key, true/false as option (0/1)
                     break;
-                case EekEvents.CompareTypes.CutScene:
+                case CompareTypes.CutScene:
                     //todo: no idea what is needed
                     break;
-                case EekEvents.CompareTypes.Dialogue:
+                case CompareTypes.Dialogue:
                     //Character as character, dialogie id as value, dialogue status as dialogue status
                     break;
-                case EekEvents.CompareTypes.Distance:
-                    //object name 1 as key, object name 2 as key2, equal value as equationvalue, distance as value
+                case CompareTypes.Distance:
+                    //Object name 1 as key(typed), Object name 2 as key2(typed), equal value as equationvalue, distance as value
                     break;
-                case EekEvents.CompareTypes.Door:
+                case CompareTypes.Door:
                     //dor name as key, door option as dooroption
                     break;
-                case EekEvents.CompareTypes.IntimacyPartner:
+                case CompareTypes.IntimacyPartner:
                     //character as charater, equals value as equalsvalue, character 2 as value 
                     break;
-                case EekEvents.CompareTypes.IntimacyState:
+                case CompareTypes.IntimacyState:
                     //character as character, equals vlaue as equalsvalue, state as value
                     break;
-                case EekEvents.CompareTypes.InZone:
+                case CompareTypes.InZone:
                     //character as character, zone name as key, state as boolvalue
                     break;
-                case EekEvents.CompareTypes.InVicinity:
+                case CompareTypes.InVicinity:
                     //character as character, character as character2, state as boolvalue
                     break;
-                case EekEvents.CompareTypes.InVicinityAndVision:
+                case CompareTypes.InVicinityAndVision:
                     //same as invicinity
                     break;
-                case EekEvents.CompareTypes.Item:
+                case CompareTypes.Item:
                     //item as key, item comparison as itemcomparison, character as character, state as boolvalue
                     //or it not involved with characters(no "To/By")
                     //item as key, item comparison as itemcomparison, state as boolvalue
                     break;
-                case EekEvents.CompareTypes.IsOnlyInVicinityOf:
+                case CompareTypes.IsOnlyInVicinityOf:
                     //same as invicinity
                     break;
-                case EekEvents.CompareTypes.IsOnlyInVisionOf:
+                case CompareTypes.IsOnlyInVisionOf:
                     //same as invicinity
                     break;
-                case EekEvents.CompareTypes.IsOnlyInVicinityAndVisionOf:
+                case CompareTypes.IsOnlyInVicinityAndVisionOf:
                     //same as invicinity
                     break;
-                case EekEvents.CompareTypes.IsAloneWithPlayer:
+                case CompareTypes.IsAloneWithPlayer:
                     //character as character, value as boolvalue
                     break;
-                case EekEvents.CompareTypes.IsCharacterEnabled:
+                case CompareTypes.IsCharacterEnabled:
                     //character as character, value as boolvalue
                     break;
-                case EekEvents.CompareTypes.IsCurrentlyBeingUsed:
+                case CompareTypes.IsCurrentlyBeingUsed:
                     //item name as key, value as boolvalue
                     break;
-                case EekEvents.CompareTypes.IsCurrentlyUsing:
+                case CompareTypes.IsCurrentlyUsing:
                     //character as character, item as key, state as boolvalue
                     break;
-                case EekEvents.CompareTypes.IsExplicitGameVersion:
+                case CompareTypes.IsExplicitGameVersion:
                     //state as boolvalue
                     break;
-                case EekEvents.CompareTypes.IsInFrontOf:
+                case CompareTypes.IsInFrontOf:
                     //character as character2, characetr as character, state as boolvalue
                     break;
-                case EekEvents.CompareTypes.IsInHouse:
+                case CompareTypes.IsInHouse:
                     //character as character, state as boolvalue
                     break;
-                case EekEvents.CompareTypes.IsNewGame:
+                case CompareTypes.IsNewGame:
                     //state as boolvalue
                     break;
-                case EekEvents.CompareTypes.IsZoneEmpty:
+                case CompareTypes.IsZoneEmpty:
                     //zone as key, state as boolvalue
                     break;
-                case EekEvents.CompareTypes.ItemFromItemGroup:
+                case CompareTypes.ItemFromItemGroup:
                     //greyed out in csc
                     break;
-                case EekEvents.CompareTypes.MetByPlayer:
+                case CompareTypes.MetByPlayer:
                     //character as character, value as boolvalue
                     break;
-                case EekEvents.CompareTypes.Personality:
+                case CompareTypes.Personality:
                     //character as character, personality type as key, comparison as equationvalue, value as boolvalue
                     break;
-                case EekEvents.CompareTypes.IsBeingSpokenTo:
+                case CompareTypes.IsBeingSpokenTo:
                     //character as character, value as boolvalue
                     break;
-                case EekEvents.CompareTypes.PlayerBeingSpokenTo:
+                case CompareTypes.PlayerBeingSpokenTo:
                     //value as boolvalue
                     break;
-                case EekEvents.CompareTypes.PlayerGender:
+                case CompareTypes.PlayerGender:
                     //gender as value
                     break;
-                case EekEvents.CompareTypes.PlayerInventory:
+                case CompareTypes.PlayerInventory:
                     //has item: item as key, value as boolvalue
                     //has at least one item: value as boolvalue
                     break;
-                case EekEvents.CompareTypes.Posing:
+                case CompareTypes.Posing:
                     //is currently posing: character as character, value as boolvalue
                     //current pose: character as character, pose id as value, value as boolvalue
                     break;
-                case EekEvents.CompareTypes.Property:
+                case CompareTypes.Property:
                     //character as character, property id as value, value as boolvalue
                     break;
-                case EekEvents.CompareTypes.Quest:
+                case CompareTypes.Quest:
                     //quest id as key, quest name as key2, value as boolvalue
                     break;
-                case EekEvents.CompareTypes.SameZoneAs:
+                case CompareTypes.SameZoneAs:
                     //character as character, character as character2, value as boolvalue
                     break;
-                case EekEvents.CompareTypes.Social:
+                case CompareTypes.Social:
                     //for one: character as character, status as social status, comparison as equationvalue, value as value
                     //for two: character as character, character as character2, status as social status, comparison as equationvalue, value as value
                     break;
-                case EekEvents.CompareTypes.State:
+                case CompareTypes.State:
                     //character as character, state id as value, value as boolvalue
                     break;
-                case EekEvents.CompareTypes.Value:
+                case CompareTypes.Value:
                     //character as character, value name as key, comparison as equationvalue, value as value
                     break;
-                case EekEvents.CompareTypes.Vision:
+                case CompareTypes.Vision:
                     //character as character, character as character2, value as boolvalue
                     break;
-                case EekEvents.CompareTypes.PlayerPrefs:
+                case CompareTypes.PlayerPrefs:
                     //value name as key, comparison as equationvalue, value as value
                     break;
-                case EekEvents.CompareTypes.UseLegacyIntimacy:
+                case CompareTypes.UseLegacyIntimacy:
                     //state as boolvalue
                     break;
-                case EekEvents.CompareTypes.None:
+                case CompareTypes.None:
                     //none, duh :)
                     break;
                 default:
@@ -451,49 +762,20 @@ namespace Project
             return criterion;
         }
 
-        private EekEvents.Criteria DuplicateCriterion(EekEvents.Criteria criterion)
-        {
-            EekEvents.Criteria tempCriterion = new EekEvents.Criteria
-            {
-                BoolValue = criterion.BoolValue,
-                Character = criterion.Character,
-                Character2 = criterion.Character2,
-                CompareType = criterion.CompareType,
-                DialogueStatus = criterion.DialogueStatus,
-                DisplayInEditor = criterion.DisplayInEditor,
-                DoorOptions = criterion.DoorOptions,
-                EqualsValue = criterion.EqualsValue,
-                EquationValue = criterion.EquationValue,
-                ItemComparison = criterion.ItemComparison,
-                ItemFromItemGroupComparison = criterion.ItemFromItemGroupComparison,
-                Key = criterion.Key,
-                Key2 = criterion.Key2,
-                Option = criterion.Option,
-                Order = criterion.Order,
-                PlayerInventoryOption = criterion.PlayerInventoryOption,
-                PoseOption = criterion.PoseOption,
-                SocialStatus = criterion.SocialStatus,
-                Value = criterion.Value,
-                ValueFormula = criterion.ValueFormula
-            };
-
-            return tempCriterion;
-        }
-
-        private Il2CppSystem.Collections.Generic.List<EekEvents.Criteria> DisplayCriteria(Il2CppSystem.Collections.Generic.List<EekEvents.Criteria> criteria)
+        private List<Criteria> DisplayCriteria(List<Criteria> criteria)
         {
             GUILayout.BeginHorizontal(Opt);
             GUILayout.Space(30f);
 
             GUILayout.BeginVertical(Opt);
-            EekEvents.Criteria CriterionToDelete = null;
-            EekEvents.Criteria CriterionToCopy = null;
-            EekEvents.Criteria CriterionToMove = null;
+            Criteria CriterionToDelete = null;
+            Criteria CriterionToCopy = null;
+            Criteria CriterionToMove = null;
             int MoveCriterionDirection = 0; // 1 is up, 2 is down, 0 nothing
 
             if (criteria.Count > 0)
             {
-                foreach (EekEvents.Criteria criterion in criteria)
+                foreach (Criteria criterion in criteria)
                 {
                     GUILayout.BeginHorizontal("box", Opt);
 
@@ -514,9 +796,9 @@ namespace Project
                     criterion.Order = DisplayNumberBlock(criterion.Order, text: "Order");
                     criterion.CompareType = DisplayCompareTypes(criterion.CompareType);
 
-                    EekEvents.Criteria tempCriterion = DisplayComparisonFields(criterion);
+                    Criteria tempCriterion = DisplayComparisonFields(criterion);
 
-                    //copy all fields, cant just copy the object or even use ref because we are in a for loop
+                    //copy all fields, cant just copy the Object or even use ref because we are in a for loop
                     criterion.BoolValue = tempCriterion.BoolValue;
                     criterion.Character = tempCriterion.Character;
                     criterion.Character2 = tempCriterion.Character2;
@@ -565,7 +847,7 @@ namespace Project
                         criteria.Insert(index - 1, CriterionToMove);
                     }
                     //move down
-                    else if (MoveCriterionDirection == 2 && index < criteria.Count - 2)
+                    else if (MoveCriterionDirection == 2 && index < criteria.Count - 1)
                     {
                         criteria.Remove(CriterionToMove);
                         criteria.Insert(index + 1, CriterionToMove);
@@ -577,11 +859,11 @@ namespace Project
             GUILayout.BeginHorizontal("Box", Opt);
             if (GUILayout.Button("Add Criteria Top", Opt))
             {
-                criteria.Insert(0, new EekEvents.Criteria());
+                criteria.Insert(0, new Criteria());
             }
             if (GUILayout.Button("Add Criteria Bottom", Opt))
             {
-                criteria.Add(new EekEvents.Criteria());
+                criteria.Add(new Criteria());
             }
             if (GUILayout.Button("Remove All Criteria", Opt))
             {
@@ -593,86 +875,6 @@ namespace Project
             GUILayout.EndHorizontal();
 
             return criteria;
-        }
-
-        private void DisplayCharacterStorySelector()
-        {
-            //title lol
-            GUILayout.BeginHorizontal(Opt);
-            GUILayout.Box("cscPlus by Lenny", Opt);
-            GUILayout.EndHorizontal();
-
-            //Begin the group catpuring both buttons and slider
-            GUILayout.BeginHorizontal(Opt);
-
-            //button to select character
-            if (GUILayout.Button("Select the character\nto edit the story of", Opt))
-            {
-                SelectedStory = Stories[SelectionIndex];
-            }
-
-            //Arrange two more Controls vertically beside the Button
-            GUILayout.BeginVertical(Opt);
-            GUILayout.Box($"Character: {Stories[SelectionIndex].CharacterName}", Opt);
-            SelectionIndex = (int)GUILayout.HorizontalSlider(SelectionIndex, 0.0f, Stories.Count - 1, Opt);
-
-            //End the Groups and Area
-            GUILayout.EndVertical();
-            GUILayout.EndHorizontal();
-        }
-
-        private void DisplayAlternateTexts(EekEvents.Dialogues.Dialogue dialogue)
-        {
-            GUILayout.BeginVertical("Box", Opt);
-
-            if (dialogue.AlternateTexts.Count > 1)
-            {
-                GUILayout.Box("---Alternate Texts---", Opt);
-                //add slider to select currently displayed alternate text
-                AlternateTextScrollPosition = (int)GUILayout.HorizontalSlider(AlternateTextScrollPosition, 0, dialogue.AlternateTexts.Count - 1, Opt);
-            }
-            else
-            {
-                GUILayout.Box("---Alternate Text---", Opt);
-            }
-            if (dialogue.AlternateTexts.Count > 0)
-            {
-                GUILayout.BeginHorizontal(Opt);
-                if (GUILayout.Button("Add Alternate Text", Opt))
-                {
-                    dialogue.AlternateTexts.Add(new EekEvents.Dialogues.AlternateDialogueText());
-                    AlternateTextScrollPosition++;
-                }
-                if (GUILayout.Button("Remove Current Alternate Text", Opt) && dialogue.AlternateTexts.Count > 0)
-                {
-                    dialogue.AlternateTexts.RemoveAt(AlternateTextScrollPosition);
-                    AlternateTextScrollPosition--;
-                }
-                GUILayout.EndHorizontal();
-
-                string altText = dialogue.AlternateTexts[AlternateTextScrollPosition].Text;
-                if (RemoveVaHints) altText = RemoveVAHints(altText);
-                altText = ConstrainLength(altText);
-
-                //the actual text
-                GUILayout.Label(altText, "Box", Opt);
-
-                //order of the dialogue
-                dialogue.AlternateTexts[AlternateTextScrollPosition].Order = DisplayNumberHorizontal(dialogue.AlternateTexts[AlternateTextScrollPosition].Order, 0, int.MaxValue, "Sort Order");
-                dialogue.AlternateTexts[AlternateTextScrollPosition].Critera = DisplayCriteria(dialogue.AlternateTexts[AlternateTextScrollPosition].Critera);
-
-                
-            }
-            else
-            {
-                if (GUILayout.Button("Add Alternate Text", Opt))
-                {
-                    dialogue.AlternateTexts.Add(new EekEvents.Dialogues.AlternateDialogueText());
-                }
-            }
-
-            //end portion for the alternate texts
-            GUILayout.EndVertical();
         }
 
         private void DisplayDialogueParts()
@@ -696,9 +898,11 @@ namespace Project
             GUILayout.Label(text, "Box", Opt);
 
             //TODO add custom built text fiels where you can actually edit the text
+            //get layout rect with guilayoututility.getrect()
+            //https://github.com/Unity-Technologies/UnityCsReference/blob/master/Modules/IMGUI/GUILayout.cs
 
             //other infos, layout is the same as in the csc
-            dialogue.SpeakingToCharacterName = DisplayCharacterSelector(dialogue.SpeakingToCharacterName);
+            dialogue.SpeakingToCharacterName = DisplayCharacterSelector(dialogue.SpeakingToCharacterName, "Speaking To ");
             dialogue.DoesNotCountAsMet = GUILayout.Toggle(dialogue.DoesNotCountAsMet, "Does not count as \"Met\"", Opt);
             dialogue.ShowGlobalResponses = GUILayout.Toggle(dialogue.ShowGlobalResponses, "Show Global Responses", Opt);
             dialogue.ShowGlobalGoodByeResponses = GUILayout.Toggle(dialogue.ShowGlobalGoodByeResponses, "Use GoodBye Responses", Opt);
@@ -715,83 +919,126 @@ namespace Project
             GUILayout.EndHorizontal();
         }
 
-        //
-        //overrides that get called
-        //
-
-        //every frame
-        public override void OnUpdate()
+        private int DisplayNumberBlock(int number, int min = 0, int max = int.MaxValue, string text = "", string plusButton = "+", string minusButton = "-", bool showNumber = true)
         {
-            if (StoriesSet)
+            GUILayout.BeginVertical("Box", Opt);
+
+            if (text.Length > 0 && !showNumber) GUILayout.Label(text, Opt);
+            else if (text.Length > 0) GUILayout.Label($"{text}: {number}", Opt);
+            else GUILayout.Label($"{number}", Opt);
+
+            GUILayout.BeginHorizontal(Opt);
+
+            if (GUILayout.Button(minusButton, Opt) && number > min)
             {
-                //check for keypresses to open story editor, toggle window
-                if (Keyboard.current[Key.LeftAlt].isPressed && Keyboard.current[Key.U].wasPressedThisFrame)
+                number--;
+            }
+            if (GUILayout.Button(plusButton, Opt) && number < max)
+            {
+                number++;
+            }
+
+            if (text.Length + number.ToString().Length > 10) GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+            GUILayout.EndVertical();
+
+            return number;
+        }
+
+        private int DisplayNumberHorizontal(int number, int min = 0, int max = int.MaxValue, string text = "", string plusButton = "+", string minusButton = "-", bool showNumber = true)
+        {
+            GUILayout.BeginHorizontal("Box", Opt);
+
+            if (GUILayout.Button(minusButton, Opt) && number > min)
+            {
+                number--;
+            }
+            if (GUILayout.Button(plusButton, Opt) && number < max)
+            {
+                number++;
+            }
+
+            if (text.Length > 0 && !showNumber) GUILayout.Label(text, Opt);
+            else if (text.Length > 0) GUILayout.Label($"{text}: {number}", Opt);
+            else GUILayout.Label($"{number}", Opt);
+
+            GUILayout.EndHorizontal();
+
+            return number;
+        }
+
+        private int DisplayNumberVertical(int number, int min = 0, int max = int.MaxValue, string text = "", string plusButton = "+", string minusButton = "-", bool showNumber = true)
+        {
+            GUILayout.BeginVertical("Box", Opt);
+
+            if (text.Length > 0 && !showNumber) GUILayout.Label(text, Opt);
+            else if (text.Length > 0) GUILayout.Label($"{text}: {number}", Opt);
+            else GUILayout.Label($"{number}", Opt);
+
+            if (GUILayout.Button(plusButton, Opt) && number < max)
+            {
+                number++;
+            }
+            if (GUILayout.Button(minusButton, Opt) && number > min)
+            {
+                number--;
+            }
+
+            GUILayout.EndVertical();
+
+            return number;
+        }
+
+        private Criteria DuplicateCriterion(Criteria criterion)
+        {
+            Criteria tempCriterion = new Criteria
+            {
+                BoolValue = criterion.BoolValue,
+                Character = criterion.Character,
+                Character2 = criterion.Character2,
+                CompareType = criterion.CompareType,
+                DialogueStatus = criterion.DialogueStatus,
+                DisplayInEditor = criterion.DisplayInEditor,
+                DoorOptions = criterion.DoorOptions,
+                EqualsValue = criterion.EqualsValue,
+                EquationValue = criterion.EquationValue,
+                ItemComparison = criterion.ItemComparison,
+                ItemFromItemGroupComparison = criterion.ItemFromItemGroupComparison,
+                Key = criterion.Key,
+                Key2 = criterion.Key2,
+                Option = criterion.Option,
+                Order = criterion.Order,
+                PlayerInventoryOption = criterion.PlayerInventoryOption,
+                PoseOption = criterion.PoseOption,
+                SocialStatus = criterion.SocialStatus,
+                Value = criterion.Value,
+                ValueFormula = criterion.ValueFormula
+            };
+
+            return tempCriterion;
+        }
+
+        private string RemoveVAHints(string input)
+        {
+            bool inVAHint = false;
+            string output = "";
+            foreach (char character in input)
+            {
+                if (character == '[' && !inVAHint)
                 {
-                    //MelonLogger.Msg($"ui shown {ShowEditor}");
-                    ShowEditor = !ShowEditor;
+                    inVAHint = true;
+                }
+                else if (character == ']' && inVAHint)
+                {
+                    inVAHint = false;
+                }
+                else if (!inVAHint)
+                {
+                    output += character;
                 }
             }
-        }
 
-        //every time ui is updated
-        public override void OnGUI()
-        {
-            if (InGameMain && ShowEditor)
-            {
-
-                //create character selection sliders
-                //Wrap everything in the designated GUI Area
-                GUILayout.BeginArea(EditorWindow, (GUIStyle)"Box");
-                //GUILayout.BeginArea(EditorWindow, "cscPlus", "Box");
-                GUILayout.BeginVertical(Opt);
-
-                DisplayCharacterStorySelector();
-
-                if (StorySelected)
-                {
-                    DisplayDialogueParts();
-                    //todo show save and then also reload the story
-                    //todo export on save so it is really saved
-                }
-
-                //end all
-                GUILayout.EndVertical();
-                GUILayout.EndArea();
-            }
-        }
-
-        //when the main game scene was loaded
-        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
-        {
-            InGameMain = sceneName == "GameMain";
-            MelonLogger.Msg($"scene {sceneName} loaded ({buildIndex}) igm: {InGameMain}");
-
-            //get references to the GameManager and so on
-            if (InGameMain)
-            {
-                GameManager = UnityEngine.Object.FindObjectOfType<EekCharacterEngine.GameManager>();
-
-                Stories = EekCharacterEngine.GameManager.GetCharacterStories();
-                StoriesSet = true;
-
-                //add stories to game
-                foreach (var story in Stories)
-                {
-                    GameManager.RegisterCharacterStory(story);
-                }
-            }
-        }
-
-        //on start
-        public override void OnApplicationStart()
-        {
-            EditorWindow = new Rect(EditorX, EditorY, EditorWidth, EditorHeight);
-        }
-
-        //on quit
-        public override void OnApplicationQuit()
-        {
-
+            return output;
         }
     }
 }

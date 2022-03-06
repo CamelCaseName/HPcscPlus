@@ -9,6 +9,9 @@ using UnityEngine.InputSystem;
 using EekEvents.Stories;
 using MelonLoader.TinyJSON;
 using UnhollowerRuntimeLib;
+using Il2CppSystem.Reflection;
+using Il2CppSystem.Runtime.InteropServices;
+using Newtonsoft.Json;
 
 namespace Project
 {
@@ -150,7 +153,7 @@ namespace Project
         private StoryData MainStoryData;
         private string CurrentStoryFolder;
         private MainStory MainStoryObject;
-        private List<CharacterStory> CharacterStoryObjects;
+        private readonly CharacterStory[] CharacterStoryObjects = new CharacterStory[17];
 
         //methods
 
@@ -163,7 +166,7 @@ namespace Project
         //on start
         public override void OnApplicationStart()
         {
-            
+
             ClassInjector.RegisterTypeInIl2Cpp<Criterion>(true);
             ClassInjector.RegisterTypeInIl2Cpp<OnTakeActionEvent>(true);
             ClassInjector.RegisterTypeInIl2Cpp<ItemAction>(true);
@@ -199,11 +202,10 @@ namespace Project
             ClassInjector.RegisterTypeInIl2Cpp<OnAcceptEvent>(true);
             ClassInjector.RegisterTypeInIl2Cpp<StoryItem>(true);
             ClassInjector.RegisterTypeInIl2Cpp<CharacterStory>(true);
-            
+
 
 
             EditorWindow = new Rect(EditorX, EditorY, EditorWidth, EditorHeight);
-            CharacterStoryObjects = new List<CharacterStory>();
         }
 
         //every time ui is updated
@@ -251,7 +253,8 @@ namespace Project
             if (tempS.Length > 0)
             {
                 MelonLogger.Msg($"Current story file found at {tempF}, trying to parse...");
-                JSON.MakeInto(JSON.Load(tempS), out MainStoryObject);
+                MainStoryObject = ParseJsonToStory(tempS);
+                //MainStoryObject = JsonConvert.DeserializeObject<MainStory>(tempS);
                 if (MainStoryObject != null)
                 {
                     MelonLogger.Msg(System.ConsoleColor.DarkGreen, "Story parsed successfully.");
@@ -264,21 +267,130 @@ namespace Project
 
             MelonLogger.Msg("Parsing character stories now.");
 
+            int x = 0;
+
             foreach (var file in Directory.GetFiles(CurrentStoryFolder))
             {
                 MelonLogger.Msg(System.ConsoleColor.DarkGray, $"Found {Path.GetFileName(file).Split('.')[0]}");
                 if (Path.GetFileName(file).Split('.')[1] == "character")
                 {
-                    JSON.MakeInto(JSON.Load(File.ReadAllText(file)), out CharacterStory tempStory);
+                    //use custom json/story parser
+                    CharacterStory tempStory = ParseJsonToCharacterStory(tempS);
                     if (tempStory != null)
                     {
-                        CharacterStoryObjects.Add(tempStory);
+                        CharacterStoryObjects[x] = tempStory;
+                        x++;
                         MelonLogger.Msg(System.ConsoleColor.Gray, $"Parsed {Path.GetFileNameWithoutExtension(file)}'s Story.");
                     }
                 }
             }
 
             MelonLogger.Msg(System.ConsoleColor.Green, "Done parsing :)");
+        }
+
+        public CharacterStory ParseJsonToCharacterStory(string tempS)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public MainStory ParseJsonToStory(string tempS)
+        {
+            MainStory mainStory = new MainStory();
+
+            List<string> tokens = SplitJson(tempS);
+
+            SetObjectValues(tokens, out mainStory);
+
+            MelonLogger.Msg("returning object");
+
+            return mainStory;
+        }
+
+        private void SetObjectValues<T>(List<string> tokens, out T returnedObject)
+        {
+            //Todo continue expüloring the issues here
+            MelonLogger.Msg("getting constructor");
+            ConstructorInfo cInfo = Il2CppType.Of<T>().GetConstructor(new UnhollowerBaseLib.Il2CppReferenceArray<Type>(new Type[] { }));
+            MelonLogger.Msg("invoking contructor");
+            Il2CppSystem.Object constructed = cInfo.Invoke(new Il2CppSystem.Object[0]);
+            MelonLogger.Msg("converting returned object to type T");
+            MelonLogger.Msg(cInfo.ToString());
+            MelonLogger.Msg(Il2CppType.Of<T>().ToString());
+            MelonLogger.Msg(cInfo.DeclaringType.ToString());
+            MelonLogger.Msg(cInfo.ReflectedType.ToString());
+            if (constructed is T t)
+            {
+                MelonLogger.Msg("object is of type T");
+                returnedObject = t;
+            }
+            else
+            {
+                MelonLogger.Msg("called base constructor by using default");
+                returnedObject = default;
+            }
+
+            MelonLogger.Msg(returnedObject);
+
+        }
+
+        private List<string> SplitJson(string tempS)
+        {
+            List<string> tokens = new List<string>();
+
+            bool inValueString = false;
+            string builderString = "";
+            List<char> seperators = new List<char>();
+            foreach (char charry in "{}[],:")
+            {
+                seperators.Add(charry);
+            }
+            List<char> numbers = new List<char>();
+            foreach (char numbah in "0123456789.")
+            {
+                numbers.Add(numbah);
+            }
+
+            foreach (char c in tempS)
+            {
+                //entering string
+                if (!inValueString && c == '"')
+                {
+                    inValueString = true;
+                }
+                else if (inValueString && c == '"')
+                {
+                    inValueString = false;
+                }
+                else if (inValueString)
+                {
+                    //add char to builder regardless of what it is
+                    builderString += c;
+                }
+                else if (seperators.Contains(c) && builderString != "" && !inValueString)
+                {
+                    //if we hit a seperator, add nonempty strings and clear string builder
+                    tokens.Add(builderString);
+                    if (c == '[') tokens.Add("START-ARRAY");
+                    if (c == ']') tokens.Add("END-ARRAY");
+                    if (c == '{') tokens.Add("START-OBJECT");
+                    if (c == '}') tokens.Add("END-OBJECT");
+                    builderString = "";
+                }
+                else
+                {
+                    if (numbers.Contains(c))
+                    {
+                        /*if(builderString.Length == 0)
+                        {
+                            builderString += "NUMBER";
+                        }*/
+                        //add char, in names and stuff
+                        builderString += c;
+                    }
+                }
+            }
+
+            return tokens;
         }
 
         //when the main game scene was loaded
@@ -563,24 +675,54 @@ namespace Project
                 }
 
                 //about half of the values are in this list, the others can't be added via console, they only show up in the csc
-                foreach (Il2CppSystem.Object obj in CharacterStoryObjects)
+                for (int i = 0; i < CharacterStoryObjects.Length; i++)
                 {
-                    MelonLogger.Msg("try creating new Characterstory with pointer of obj");
-                    CharacterStory story = new CharacterStory(obj.Pointer);
-                    MelonLogger.Msg("");
-                    if (story.CharacterName == characterName)
+                    if (CharacterStoryObjects[i] != null)
                     {
-                        foreach(string value in story.StoryValues)
+                        /*
+                        Il2CppSystem.Object story = CharacterStoryObjects[i];
+
+                        MelonLogger.Msg("trying to access the Object methods to return the field with methodinfo via reflection");
+
+                        MelonLogger.Msg("getting type");
+                        Type type = Il2CppType.Of<CharacterStory>();
+
+                        MelonLogger.Msg("getting methodinfo");
+                        foreach (MethodInfo method in type.GetMethods())
                         {
-                            if (!StoryValues.Contains(value))
+                            MelonLogger.Msg(method.Name);
+                        }
+                        MethodInfo GetCharacterNameMethod = type.GetMethod("GetCharacterName");
+
+                        MelonLogger.Msg("invoking Method");
+                        Il2CppSystem.Object ret = GetCharacterNameMethod.Invoke(story, null);
+
+                        MelonLogger.Msg("accessing returned object");
+                        MelonLogger.Msg($"size of ret: {Marshal.SizeOf(ret)}");
+                        MelonLogger.Msg($"hascode of ret: {ret.GetHashCode()} of name: {characterName.GetHashCode()}");
+                        if (ret.GetHashCode() == characterName.GetHashCode())
+                        {
+                            MelonLogger.Msg($"{characterName} story found form parsed");
+                            foreach(string value in story.GetStoryValues())
                             {
-                                StoryValues.Add(value);
+                                if (!StoryValues.Contains(value))
+                                {
+                                    StoryValues.Add(value);
+                                }
                             }
+                        }
+                        */
+                        MelonLogger.Msg($"trying to access the Object methods{CharacterStoryObjects[i].GetCharacterName()}");
+                        MelonLogger.Msg($"trying to access the Object methods{CharacterStoryObjects[i].GetDialogueID()}");
+                        MelonLogger.Msg($"trying to access the Object methods{CharacterStoryObjects[i].GetHousePartyVersion()}");
+                        MelonLogger.Msg($"trying to access the Object methods{CharacterStoryObjects[i].GetCurrentAspect()}");
+                        MelonLogger.Msg($"trying to access the Object methods{CharacterStoryObjects[i].GetDialogues()[0].GetText()}");
+                        if (CharacterStoryObjects[i].GetCharacterName() == characterName)
+                        {
+                            MelonLogger.Msg("Could access method, name is correct");
                         }
                     }
                 }
-
-                //MelonLogger.Msg(EekCharacterEngine.GameManager.GetLoadFile);
 
                 StoryValues.Sort();
                 MelonLogger.Msg("Values here:");

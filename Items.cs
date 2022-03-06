@@ -8,52 +8,273 @@ public class Criterion : Object
     {
     }
 
-    public Criterion(System.IntPtr ptr) : base(ptr) { }
+    public Criterion(System.IntPtr value) : base(value)
+    {
+    }
 
     public Criterion(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, EekEvents.ItemComparisonTypes itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option)
     {
-        BoolValue = boolValue;
-        Character = character;
-        Character2 = character2;
-        CompareType = compareType;
-        DialogueStatus = dialogueStatus;
-        DisplayInEditor = displayInEditor;
-        DoorOptions = doorOptions;
-        EqualsValue = equalsValue;
-        EquationValue = equationValue;
-        ValueFormula = valueFormula;
-        ItemComparison = itemComparison;
-        ItemFromItemGroupComparison = itemFromItemGroupComparison;
-        Key = key;
-        Key2 = key2;
-        Order = order;
-        PlayerInventoryOption = playerInventoryOption;
-        PoseOption = poseOption;
-        SocialStatus = socialStatus;
-        Value = value;
-        Option = option;
+        SetBoolValue(boolValue);
+        SetCharacter(character);
+        SetCharacter2(character2);
+        SetCompareType(compareType);
+        SetDialogueStatus(dialogueStatus);
+        SetDisplayInEditor(displayInEditor);
+        SetDoorOptions(doorOptions);
+        SetEqualsValue(equalsValue);
+        SetEquationValue(equationValue);
+        SetValueFormula(valueFormula);
+        SetItemComparison(itemComparison);
+        SetItemFromItemGroupComparison(itemFromItemGroupComparison);
+        SetKey(key);
+        SetKey2(key2);
+        SetOrder(order);
+        SetPlayerInventoryOption(playerInventoryOption);
+        SetPoseOption(poseOption);
+        SetSocialStatus(socialStatus);
+        SetValue(value);
+        SetOption(option);
     }
 
-    public string BoolValue { get; set; }
-    public string Character { get; set; }
-    public string Character2 { get; set; }
-    public string CompareType { get; set; }
-    public string DialogueStatus { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public string DoorOptions { get; set; }
-    public string EqualsValue { get; set; }
-    public string EquationValue { get; set; }
-    public string ValueFormula { get; set; }
-    public EekEvents.ItemComparisonTypes ItemComparison { get; set; }
-    public InteractiveItem ItemFromItemGroupComparison { get; set; }
-    public string Key { get; set; }
-    public string Key2 { get; set; }
-    public int Order { get; set; }
-    public string PlayerInventoryOption { get; set; }
-    public string PoseOption { get; set; }
-    public string SocialStatus { get; set; }
-    public string Value { get; set; }
-    public int Option { get; set; }
+    private string boolValue;
+
+    public string GetBoolValue()
+    {
+        return boolValue;
+    }
+
+    public void SetBoolValue(string value)
+    {
+        boolValue = value;
+    }
+
+    private string character;
+
+    public string GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(string value)
+    {
+        character = value;
+    }
+
+    private string character2;
+
+    public string GetCharacter2()
+    {
+        return character2;
+    }
+
+    public void SetCharacter2(string value)
+    {
+        character2 = value;
+    }
+
+    private string compareType;
+
+    public string GetCompareType()
+    {
+        return compareType;
+    }
+
+    public void SetCompareType(string value)
+    {
+        compareType = value;
+    }
+
+    private string dialogueStatus;
+
+    public string GetDialogueStatus()
+    {
+        return dialogueStatus;
+    }
+
+    public void SetDialogueStatus(string value)
+    {
+        dialogueStatus = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private string doorOptions;
+
+    public string GetDoorOptions()
+    {
+        return doorOptions;
+    }
+
+    public void SetDoorOptions(string value)
+    {
+        doorOptions = value;
+    }
+
+    private string equalsValue;
+
+    public string GetEqualsValue()
+    {
+        return equalsValue;
+    }
+
+    public void SetEqualsValue(string value)
+    {
+        equalsValue = value;
+    }
+
+    private string equationValue;
+
+    public string GetEquationValue()
+    {
+        return equationValue;
+    }
+
+    public void SetEquationValue(string value)
+    {
+        equationValue = value;
+    }
+
+    private string valueFormula;
+
+    public string GetValueFormula()
+    {
+        return valueFormula;
+    }
+
+    public void SetValueFormula(string value)
+    {
+        valueFormula = value;
+    }
+
+    private EekEvents.ItemComparisonTypes itemComparison;
+
+    public EekEvents.ItemComparisonTypes GetItemComparison()
+    {
+        return itemComparison;
+    }
+
+    public void SetItemComparison(EekEvents.ItemComparisonTypes value)
+    {
+        itemComparison = value;
+    }
+
+    private InteractiveItem itemFromItemGroupComparison;
+
+    public InteractiveItem GetItemFromItemGroupComparison()
+    {
+        return itemFromItemGroupComparison;
+    }
+
+    public void SetItemFromItemGroupComparison(InteractiveItem value)
+    {
+        itemFromItemGroupComparison = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private string key2;
+
+    public string GetKey2()
+    {
+        return key2;
+    }
+
+    public void SetKey2(string value)
+    {
+        key2 = value;
+    }
+
+    private int order;
+
+    public int GetOrder()
+    {
+        return order;
+    }
+
+    public void SetOrder(int value)
+    {
+        order = value;
+    }
+
+    private string playerInventoryOption;
+
+    public string GetPlayerInventoryOption()
+    {
+        return playerInventoryOption;
+    }
+
+    public void SetPlayerInventoryOption(string value)
+    {
+        playerInventoryOption = value;
+    }
+
+    private string poseOption;
+
+    public string GetPoseOption()
+    {
+        return poseOption;
+    }
+
+    public void SetPoseOption(string value)
+    {
+        poseOption = value;
+    }
+
+    private string socialStatus;
+
+    public string GetSocialStatus()
+    {
+        return socialStatus;
+    }
+
+    public void SetSocialStatus(string value)
+    {
+        socialStatus = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private int option;
+
+    public int GetOption()
+    {
+        return option;
+    }
+
+    public void SetOption(int value)
+    {
+        option = value;
+    }
 }
 
 public class OnTakeActionEvent : Object
@@ -62,52 +283,273 @@ public class OnTakeActionEvent : Object
     {
     }
 
-    public OnTakeActionEvent(System.IntPtr ptr) : base(ptr) { }
+    public OnTakeActionEvent(System.IntPtr value) : base(value)
+    {
+    }
 
     public OnTakeActionEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
     {
-        SortOrder2 = sortOrder2;
-        Version = version;
-        Id = id;
-        Enabled = enabled;
-        EventType = eventType;
-        Character = character;
-        Character2 = character2;
-        Key = key;
-        Option = option;
-        Option2 = option2;
-        Option3 = option3;
-        Value = value;
-        Value2 = value2;
-        SortOrder = sortOrder;
-        Delay = delay;
-        OriginalDelay = originalDelay;
-        StartDelayTime = startDelayTime;
-        UseConditions = useConditions;
-        DisplayInEditor = displayInEditor;
-        Criteria = criteria;
+        SetSortOrder2(sortOrder2);
+        SetVersion(version);
+        SetId(id);
+        SetEnabled(enabled);
+        SetEventType(eventType);
+        SetCharacter(character);
+        SetCharacter2(character2);
+        SetKey(key);
+        SetOption(option);
+        SetOption2(option2);
+        SetOption3(option3);
+        SetValue(value);
+        SetValue2(value2);
+        SetSortOrder(sortOrder);
+        SetDelay(delay);
+        SetOriginalDelay(originalDelay);
+        SetStartDelayTime(startDelayTime);
+        SetUseConditions(useConditions);
+        SetDisplayInEditor(displayInEditor);
+        SetCriteria(criteria);
     }
 
-    public int SortOrder2 { get; set; }
-    public string Version { get; set; }
-    public string Id { get; set; }
-    public bool Enabled { get; set; }
-    public int EventType { get; set; }
-    public string Character { get; set; }
-    public string Character2 { get; set; }
-    public string Key { get; set; }
-    public int Option { get; set; }
-    public int Option2 { get; set; }
-    public int Option3 { get; set; }
-    public string Value { get; set; }
-    public string Value2 { get; set; }
-    public int SortOrder { get; set; }
-    public Double Delay { get; set; }
-    public Double OriginalDelay { get; set; }
-    public Double StartDelayTime { get; set; }
-    public bool UseConditions { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public List<Criterion> Criteria { get; set; }
+    private int sortOrder2;
+
+    public int GetSortOrder2()
+    {
+        return sortOrder2;
+    }
+
+    public void SetSortOrder2(int value)
+    {
+        sortOrder2 = value;
+    }
+
+    private string version;
+
+    public string GetVersion()
+    {
+        return version;
+    }
+
+    public void SetVersion(string value)
+    {
+        version = value;
+    }
+
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private bool enabled;
+
+    public bool GetEnabled()
+    {
+        return enabled;
+    }
+
+    public void SetEnabled(bool value)
+    {
+        enabled = value;
+    }
+
+    private int eventType;
+
+    public int GetEventType()
+    {
+        return eventType;
+    }
+
+    public void SetEventType(int value)
+    {
+        eventType = value;
+    }
+
+    private string character;
+
+    public string GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(string value)
+    {
+        character = value;
+    }
+
+    private string character2;
+
+    public string GetCharacter2()
+    {
+        return character2;
+    }
+
+    public void SetCharacter2(string value)
+    {
+        character2 = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private int option;
+
+    public int GetOption()
+    {
+        return option;
+    }
+
+    public void SetOption(int value)
+    {
+        option = value;
+    }
+
+    private int option2;
+
+    public int GetOption2()
+    {
+        return option2;
+    }
+
+    public void SetOption2(int value)
+    {
+        option2 = value;
+    }
+
+    private int option3;
+
+    public int GetOption3()
+    {
+        return option3;
+    }
+
+    public void SetOption3(int value)
+    {
+        option3 = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private string value2;
+
+    public string GetValue2()
+    {
+        return value2;
+    }
+
+    public void SetValue2(string value)
+    {
+        value2 = value;
+    }
+
+    private int sortOrder;
+
+    public int GetSortOrder()
+    {
+        return sortOrder;
+    }
+
+    public void SetSortOrder(int value)
+    {
+        sortOrder = value;
+    }
+
+    private Double delay;
+
+    public Double GetDelay()
+    {
+        return delay;
+    }
+
+    public void SetDelay(Double value)
+    {
+        delay = value;
+    }
+
+    private Double originalDelay;
+
+    public Double GetOriginalDelay()
+    {
+        return originalDelay;
+    }
+
+    public void SetOriginalDelay(Double value)
+    {
+        originalDelay = value;
+    }
+
+    private Double startDelayTime;
+
+    public Double GetStartDelayTime()
+    {
+        return startDelayTime;
+    }
+
+    public void SetStartDelayTime(Double value)
+    {
+        startDelayTime = value;
+    }
+
+    private bool useConditions;
+
+    public bool GetUseConditions()
+    {
+        return useConditions;
+    }
+
+    public void SetUseConditions(bool value)
+    {
+        useConditions = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private List<Criterion> criteria;
+
+    public List<Criterion> GetCriteria()
+    {
+        return criteria;
+    }
+
+    public void SetCriteria(List<Criterion> value)
+    {
+        criteria = value;
+    }
 }
 
 public class ItemAction : Object
@@ -116,20 +558,65 @@ public class ItemAction : Object
     {
     }
 
-    public ItemAction(System.IntPtr ptr) : base(ptr) { }
+    public ItemAction(System.IntPtr value) : base(value)
+    {
+    }
 
     public ItemAction(string actionName, List<Criterion> criteria, bool displayInEditor, List<OnTakeActionEvent> onTakeActionEvents)
     {
-        ActionName = actionName;
-        Criteria = criteria;
-        DisplayInEditor = displayInEditor;
-        OnTakeActionEvents = onTakeActionEvents;
+        SetActionName(actionName);
+        SetCriteria(criteria);
+        SetDisplayInEditor(displayInEditor);
+        SetOnTakeActionEvents(onTakeActionEvents);
     }
 
-    public string ActionName { get; set; }
-    public List<Criterion> Criteria { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public List<OnTakeActionEvent> OnTakeActionEvents { get; set; }
+    private string actionName;
+
+    public string GetActionName()
+    {
+        return actionName;
+    }
+
+    public void SetActionName(string value)
+    {
+        actionName = value;
+    }
+
+    private List<Criterion> criteria;
+
+    public List<Criterion> GetCriteria()
+    {
+        return criteria;
+    }
+
+    public void SetCriteria(List<Criterion> value)
+    {
+        criteria = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private List<OnTakeActionEvent> onTakeActionEvents;
+
+    public List<OnTakeActionEvent> GetOnTakeActionEvents()
+    {
+        return onTakeActionEvents;
+    }
+
+    public void SetOnTakeActionEvents(List<OnTakeActionEvent> value)
+    {
+        onTakeActionEvents = value;
+    }
 }
 
 public class OnSuccessEvent : Object
@@ -138,52 +625,273 @@ public class OnSuccessEvent : Object
     {
     }
 
-    public OnSuccessEvent(System.IntPtr ptr) : base(ptr) { }
+    public OnSuccessEvent(System.IntPtr value) : base(value)
+    {
+    }
 
     public OnSuccessEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
     {
-        SortOrder2 = sortOrder2;
-        Version = version;
-        Id = id;
-        Enabled = enabled;
-        EventType = eventType;
-        Character = character;
-        Character2 = character2;
-        Key = key;
-        Option = option;
-        Option2 = option2;
-        Option3 = option3;
-        Value = value;
-        Value2 = value2;
-        SortOrder = sortOrder;
-        Delay = delay;
-        OriginalDelay = originalDelay;
-        StartDelayTime = startDelayTime;
-        UseConditions = useConditions;
-        DisplayInEditor = displayInEditor;
-        Criteria = criteria;
+        SetSortOrder2(sortOrder2);
+        SetVersion(version);
+        SetId(id);
+        SetEnabled(enabled);
+        SetEventType(eventType);
+        SetCharacter(character);
+        SetCharacter2(character2);
+        SetKey(key);
+        SetOption(option);
+        SetOption2(option2);
+        SetOption3(option3);
+        SetValue(value);
+        SetValue2(value2);
+        SetSortOrder(sortOrder);
+        SetDelay(delay);
+        SetOriginalDelay(originalDelay);
+        SetStartDelayTime(startDelayTime);
+        SetUseConditions(useConditions);
+        SetDisplayInEditor(displayInEditor);
+        SetCriteria(criteria);
     }
 
-    public int SortOrder2 { get; set; }
-    public string Version { get; set; }
-    public string Id { get; set; }
-    public bool Enabled { get; set; }
-    public int EventType { get; set; }
-    public string Character { get; set; }
-    public string Character2 { get; set; }
-    public string Key { get; set; }
-    public int Option { get; set; }
-    public int Option2 { get; set; }
-    public int Option3 { get; set; }
-    public string Value { get; set; }
-    public string Value2 { get; set; }
-    public int SortOrder { get; set; }
-    public Double Delay { get; set; }
-    public Double OriginalDelay { get; set; }
-    public Double StartDelayTime { get; set; }
-    public bool UseConditions { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public List<Criterion> Criteria { get; set; }
+    private int sortOrder2;
+
+    public int GetSortOrder2()
+    {
+        return sortOrder2;
+    }
+
+    public void SetSortOrder2(int value)
+    {
+        sortOrder2 = value;
+    }
+
+    private string version;
+
+    public string GetVersion()
+    {
+        return version;
+    }
+
+    public void SetVersion(string value)
+    {
+        version = value;
+    }
+
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private bool enabled;
+
+    public bool GetEnabled()
+    {
+        return enabled;
+    }
+
+    public void SetEnabled(bool value)
+    {
+        enabled = value;
+    }
+
+    private int eventType;
+
+    public int GetEventType()
+    {
+        return eventType;
+    }
+
+    public void SetEventType(int value)
+    {
+        eventType = value;
+    }
+
+    private string character;
+
+    public string GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(string value)
+    {
+        character = value;
+    }
+
+    private string character2;
+
+    public string GetCharacter2()
+    {
+        return character2;
+    }
+
+    public void SetCharacter2(string value)
+    {
+        character2 = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private int option;
+
+    public int GetOption()
+    {
+        return option;
+    }
+
+    public void SetOption(int value)
+    {
+        option = value;
+    }
+
+    private int option2;
+
+    public int GetOption2()
+    {
+        return option2;
+    }
+
+    public void SetOption2(int value)
+    {
+        option2 = value;
+    }
+
+    private int option3;
+
+    public int GetOption3()
+    {
+        return option3;
+    }
+
+    public void SetOption3(int value)
+    {
+        option3 = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private string value2;
+
+    public string GetValue2()
+    {
+        return value2;
+    }
+
+    public void SetValue2(string value)
+    {
+        value2 = value;
+    }
+
+    private int sortOrder;
+
+    public int GetSortOrder()
+    {
+        return sortOrder;
+    }
+
+    public void SetSortOrder(int value)
+    {
+        sortOrder = value;
+    }
+
+    private Double delay;
+
+    public Double GetDelay()
+    {
+        return delay;
+    }
+
+    public void SetDelay(Double value)
+    {
+        delay = value;
+    }
+
+    private Double originalDelay;
+
+    public Double GetOriginalDelay()
+    {
+        return originalDelay;
+    }
+
+    public void SetOriginalDelay(Double value)
+    {
+        originalDelay = value;
+    }
+
+    private Double startDelayTime;
+
+    public Double GetStartDelayTime()
+    {
+        return startDelayTime;
+    }
+
+    public void SetStartDelayTime(Double value)
+    {
+        startDelayTime = value;
+    }
+
+    private bool useConditions;
+
+    public bool GetUseConditions()
+    {
+        return useConditions;
+    }
+
+    public void SetUseConditions(bool value)
+    {
+        useConditions = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private List<Criterion> criteria;
+
+    public List<Criterion> GetCriteria()
+    {
+        return criteria;
+    }
+
+    public void SetCriteria(List<Criterion> value)
+    {
+        criteria = value;
+    }
 }
 
 public class UseWith : Object
@@ -192,22 +900,78 @@ public class UseWith : Object
     {
     }
 
-    public UseWith(System.IntPtr ptr) : base(ptr) { }
+    public UseWith(System.IntPtr value) : base(value)
+    {
+    }
 
     public UseWith(List<Criterion> criteria, string customCantDoThatMessage, bool displayInEditor, string itemName, List<OnSuccessEvent> onSuccessEvents)
     {
-        Criteria = criteria;
-        CustomCantDoThatMessage = customCantDoThatMessage;
-        DisplayInEditor = displayInEditor;
-        ItemName = itemName;
-        OnSuccessEvents = onSuccessEvents;
+        SetCriteria(criteria);
+        SetCustomCantDoThatMessage(customCantDoThatMessage);
+        SetDisplayInEditor(displayInEditor);
+        SetItemName(itemName);
+        SetOnSuccessEvents(onSuccessEvents);
     }
 
-    public List<Criterion> Criteria { get; set; }
-    public string CustomCantDoThatMessage { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public string ItemName { get; set; }
-    public List<OnSuccessEvent> OnSuccessEvents { get; set; }
+    private List<Criterion> criteria;
+
+    public List<Criterion> GetCriteria()
+    {
+        return criteria;
+    }
+
+    public void SetCriteria(List<Criterion> value)
+    {
+        criteria = value;
+    }
+
+    private string customCantDoThatMessage;
+
+    public string GetCustomCantDoThatMessage()
+    {
+        return customCantDoThatMessage;
+    }
+
+    public void SetCustomCantDoThatMessage(string value)
+    {
+        customCantDoThatMessage = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private string itemName;
+
+    public string GetItemName()
+    {
+        return itemName;
+    }
+
+    public void SetItemName(string value)
+    {
+        itemName = value;
+    }
+
+    private List<OnSuccessEvent> onSuccessEvents;
+
+    public List<OnSuccessEvent> GetOnSuccessEvents()
+    {
+        return onSuccessEvents;
+    }
+
+    public void SetOnSuccessEvents(List<OnSuccessEvent> value)
+    {
+        onSuccessEvents = value;
+    }
 }
 
 public class ItemOverride : Object
@@ -216,26 +980,104 @@ public class ItemOverride : Object
     {
     }
 
-    public ItemOverride(System.IntPtr ptr) : base(ptr) { }
+    public ItemOverride(System.IntPtr value) : base(value)
+    {
+    }
 
     public ItemOverride(string id, bool displayInEditor, string displayName, List<ItemAction> itemActions, string itemName, List<UseWith> useWiths, bool useDefaultRadialOptions)
     {
-        Id = id;
-        DisplayInEditor = displayInEditor;
-        DisplayName = displayName;
-        ItemActions = itemActions;
-        ItemName = itemName;
-        UseWiths = useWiths;
-        UseDefaultRadialOptions = useDefaultRadialOptions;
+        SetId(id);
+        SetDisplayInEditor(displayInEditor);
+        SetDisplayName(displayName);
+        SetItemActions(itemActions);
+        SetItemName(itemName);
+        SetUseWiths(useWiths);
+        SetUseDefaultRadialOptions(useDefaultRadialOptions);
     }
 
-    public string Id { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public string DisplayName { get; set; }
-    public List<ItemAction> ItemActions { get; set; }
-    public string ItemName { get; set; }
-    public List<UseWith> UseWiths { get; set; }
-    public bool UseDefaultRadialOptions { get; set; }
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private string displayName;
+
+    public string GetDisplayName()
+    {
+        return displayName;
+    }
+
+    public void SetDisplayName(string value)
+    {
+        displayName = value;
+    }
+
+    private List<ItemAction> itemActions;
+
+    public List<ItemAction> GetItemActions()
+    {
+        return itemActions;
+    }
+
+    public void SetItemActions(List<ItemAction> value)
+    {
+        itemActions = value;
+    }
+
+    private string itemName;
+
+    public string GetItemName()
+    {
+        return itemName;
+    }
+
+    public void SetItemName(string value)
+    {
+        itemName = value;
+    }
+
+    private List<UseWith> useWiths;
+
+    public List<UseWith> GetUseWiths()
+    {
+        return useWiths;
+    }
+
+    public void SetUseWiths(List<UseWith> value)
+    {
+        useWiths = value;
+    }
+
+    private bool useDefaultRadialOptions;
+
+    public bool GetUseDefaultRadialOptions()
+    {
+        return useDefaultRadialOptions;
+    }
+
+    public void SetUseDefaultRadialOptions(bool value)
+    {
+        useDefaultRadialOptions = value;
+    }
 }
 
 public class ItemGroupBehavior : Object
@@ -244,24 +1086,91 @@ public class ItemGroupBehavior : Object
     {
     }
 
-    public ItemGroupBehavior(System.IntPtr ptr) : base(ptr) { }
+    public ItemGroupBehavior(System.IntPtr value) : base(value)
+    {
+    }
 
     public ItemGroupBehavior(string id, string name, string groupName, bool displayInEditor, List<ItemAction> itemActions, List<string> useWiths)
     {
-        Id = id;
-        Name = name;
-        GroupName = groupName;
-        DisplayInEditor = displayInEditor;
-        ItemActions = itemActions;
-        UseWiths = useWiths;
+        SetId(id);
+        SetName(name);
+        SetGroupName(groupName);
+        SetDisplayInEditor(displayInEditor);
+        SetItemActions(itemActions);
+        SetUseWiths(useWiths);
     }
 
-    public string Id { get; set; }
-    public string Name { get; set; }
-    public string GroupName { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public List<ItemAction> ItemActions { get; set; }
-    public List<string> UseWiths { get; set; }
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private string name;
+
+    public string GetName()
+    {
+        return name;
+    }
+
+    public void SetName(string value)
+    {
+        name = value;
+    }
+
+    private string groupName;
+
+    public string GetGroupName()
+    {
+        return groupName;
+    }
+
+    public void SetGroupName(string value)
+    {
+        groupName = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private List<ItemAction> itemActions;
+
+    public List<ItemAction> GetItemActions()
+    {
+        return itemActions;
+    }
+
+    public void SetItemActions(List<ItemAction> value)
+    {
+        itemActions = value;
+    }
+
+    private List<string> useWiths;
+
+    public List<string> GetUseWiths()
+    {
+        return useWiths;
+    }
+
+    public void SetUseWiths(List<string> value)
+    {
+        useWiths = value;
+    }
 }
 
 public class Achievement : Object
@@ -270,24 +1179,91 @@ public class Achievement : Object
     {
     }
 
-    public Achievement(System.IntPtr ptr) : base(ptr) { }
+    public Achievement(System.IntPtr value) : base(value)
+    {
+    }
 
     public Achievement(string description, string id, string image, string name, bool showInEditor, string steamName)
     {
-        Description = description;
-        Id = id;
-        Image = image;
-        Name = name;
-        ShowInEditor = showInEditor;
-        SteamName = steamName;
+        SetDescription(description);
+        SetId(id);
+        SetImage(image);
+        SetName(name);
+        SetShowInEditor(showInEditor);
+        SetSteamName(steamName);
     }
 
-    public string Description { get; set; }
-    public string Id { get; set; }
-    public string Image { get; set; }
-    public string Name { get; set; }
-    public bool ShowInEditor { get; set; }
-    public string SteamName { get; set; }
+    private string description;
+
+    public string GetDescription()
+    {
+        return description;
+    }
+
+    public void SetDescription(string value)
+    {
+        description = value;
+    }
+
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private string image;
+
+    public string GetImage()
+    {
+        return image;
+    }
+
+    public void SetImage(string value)
+    {
+        image = value;
+    }
+
+    private string name;
+
+    public string GetName()
+    {
+        return name;
+    }
+
+    public void SetName(string value)
+    {
+        name = value;
+    }
+
+    private bool showInEditor;
+
+    public bool GetShowInEditor()
+    {
+        return showInEditor;
+    }
+
+    public void SetShowInEditor(bool value)
+    {
+        showInEditor = value;
+    }
+
+    private string steamName;
+
+    public string GetSteamName()
+    {
+        return steamName;
+    }
+
+    public void SetSteamName(string value)
+    {
+        steamName = value;
+    }
 }
 
 public class CriteriaList2 : Object
@@ -296,52 +1272,273 @@ public class CriteriaList2 : Object
     {
     }
 
-    public CriteriaList2(System.IntPtr ptr) : base(ptr) { }
+    public CriteriaList2(System.IntPtr value) : base(value)
+    {
+    }
 
     public CriteriaList2(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, EekEvents.ItemComparisonTypes itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option)
     {
-        BoolValue = boolValue;
-        Character = character;
-        Character2 = character2;
-        CompareType = compareType;
-        DialogueStatus = dialogueStatus;
-        DisplayInEditor = displayInEditor;
-        DoorOptions = doorOptions;
-        EqualsValue = equalsValue;
-        EquationValue = equationValue;
-        ValueFormula = valueFormula;
-        ItemComparison = itemComparison;
-        ItemFromItemGroupComparison = itemFromItemGroupComparison;
-        Key = key;
-        Key2 = key2;
-        Order = order;
-        PlayerInventoryOption = playerInventoryOption;
-        PoseOption = poseOption;
-        SocialStatus = socialStatus;
-        Value = value;
-        Option = option;
+        SetBoolValue(boolValue);
+        SetCharacter(character);
+        SetCharacter2(character2);
+        SetCompareType(compareType);
+        SetDialogueStatus(dialogueStatus);
+        SetDisplayInEditor(displayInEditor);
+        SetDoorOptions(doorOptions);
+        SetEqualsValue(equalsValue);
+        SetEquationValue(equationValue);
+        SetValueFormula(valueFormula);
+        SetItemComparison(itemComparison);
+        SetItemFromItemGroupComparison(itemFromItemGroupComparison);
+        SetKey(key);
+        SetKey2(key2);
+        SetOrder(order);
+        SetPlayerInventoryOption(playerInventoryOption);
+        SetPoseOption(poseOption);
+        SetSocialStatus(socialStatus);
+        SetValue(value);
+        SetOption(option);
     }
 
-    public string BoolValue { get; set; }
-    public string Character { get; set; }
-    public string Character2 { get; set; }
-    public string CompareType { get; set; }
-    public string DialogueStatus { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public string DoorOptions { get; set; }
-    public string EqualsValue { get; set; }
-    public string EquationValue { get; set; }
-    public string ValueFormula { get; set; }
-    public EekEvents.ItemComparisonTypes ItemComparison { get; set; }
-    public EekCharacterEngine.Interaction.InteractiveItem ItemFromItemGroupComparison { get; set; }
-    public string Key { get; set; }
-    public string Key2 { get; set; }
-    public int Order { get; set; }
-    public string PlayerInventoryOption { get; set; }
-    public string PoseOption { get; set; }
-    public string SocialStatus { get; set; }
-    public string Value { get; set; }
-    public int Option { get; set; }
+    private string boolValue;
+
+    public string GetBoolValue()
+    {
+        return boolValue;
+    }
+
+    public void SetBoolValue(string value)
+    {
+        boolValue = value;
+    }
+
+    private string character;
+
+    public string GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(string value)
+    {
+        character = value;
+    }
+
+    private string character2;
+
+    public string GetCharacter2()
+    {
+        return character2;
+    }
+
+    public void SetCharacter2(string value)
+    {
+        character2 = value;
+    }
+
+    private string compareType;
+
+    public string GetCompareType()
+    {
+        return compareType;
+    }
+
+    public void SetCompareType(string value)
+    {
+        compareType = value;
+    }
+
+    private string dialogueStatus;
+
+    public string GetDialogueStatus()
+    {
+        return dialogueStatus;
+    }
+
+    public void SetDialogueStatus(string value)
+    {
+        dialogueStatus = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private string doorOptions;
+
+    public string GetDoorOptions()
+    {
+        return doorOptions;
+    }
+
+    public void SetDoorOptions(string value)
+    {
+        doorOptions = value;
+    }
+
+    private string equalsValue;
+
+    public string GetEqualsValue()
+    {
+        return equalsValue;
+    }
+
+    public void SetEqualsValue(string value)
+    {
+        equalsValue = value;
+    }
+
+    private string equationValue;
+
+    public string GetEquationValue()
+    {
+        return equationValue;
+    }
+
+    public void SetEquationValue(string value)
+    {
+        equationValue = value;
+    }
+
+    private string valueFormula;
+
+    public string GetValueFormula()
+    {
+        return valueFormula;
+    }
+
+    public void SetValueFormula(string value)
+    {
+        valueFormula = value;
+    }
+
+    private EekEvents.ItemComparisonTypes itemComparison;
+
+    public EekEvents.ItemComparisonTypes GetItemComparison()
+    {
+        return itemComparison;
+    }
+
+    public void SetItemComparison(EekEvents.ItemComparisonTypes value)
+    {
+        itemComparison = value;
+    }
+
+    private InteractiveItem itemFromItemGroupComparison;
+
+    public InteractiveItem GetItemFromItemGroupComparison()
+    {
+        return itemFromItemGroupComparison;
+    }
+
+    public void SetItemFromItemGroupComparison(InteractiveItem value)
+    {
+        itemFromItemGroupComparison = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private string key2;
+
+    public string GetKey2()
+    {
+        return key2;
+    }
+
+    public void SetKey2(string value)
+    {
+        key2 = value;
+    }
+
+    private int order;
+
+    public int GetOrder()
+    {
+        return order;
+    }
+
+    public void SetOrder(int value)
+    {
+        order = value;
+    }
+
+    private string playerInventoryOption;
+
+    public string GetPlayerInventoryOption()
+    {
+        return playerInventoryOption;
+    }
+
+    public void SetPlayerInventoryOption(string value)
+    {
+        playerInventoryOption = value;
+    }
+
+    private string poseOption;
+
+    public string GetPoseOption()
+    {
+        return poseOption;
+    }
+
+    public void SetPoseOption(string value)
+    {
+        poseOption = value;
+    }
+
+    private string socialStatus;
+
+    public string GetSocialStatus()
+    {
+        return socialStatus;
+    }
+
+    public void SetSocialStatus(string value)
+    {
+        socialStatus = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private int option;
+
+    public int GetOption()
+    {
+        return option;
+    }
+
+    public void SetOption(int value)
+    {
+        option = value;
+    }
 }
 
 public class CriteriaList1 : Object
@@ -350,7 +1547,9 @@ public class CriteriaList1 : Object
     {
     }
 
-    public CriteriaList1(System.IntPtr ptr) : base(ptr) { }
+    public CriteriaList1(System.IntPtr value) : base(value)
+    {
+    }
 
     public CriteriaList1(List<CriteriaList2> criteriaList)
     {
@@ -366,22 +1565,78 @@ public class CriteriaGroup : Object
     {
     }
 
-    public CriteriaGroup(System.IntPtr ptr) : base(ptr) { }
+    public CriteriaGroup(System.IntPtr value) : base(value)
+    {
+    }
 
     public CriteriaGroup(string id, string name, bool displayInEditor, string passCondition, List<CriteriaList1> criteriaList)
     {
-        Id = id;
-        Name = name;
-        DisplayInEditor = displayInEditor;
-        PassCondition = passCondition;
-        CriteriaList = criteriaList;
+        SetId(id);
+        SetName(name);
+        SetDisplayInEditor(displayInEditor);
+        SetPassCondition(passCondition);
+        SetCriteriaList(criteriaList);
     }
 
-    public string Id { get; set; }
-    public string Name { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public string PassCondition { get; set; }
-    public List<CriteriaList1> CriteriaList { get; set; }
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private string name;
+
+    public string GetName()
+    {
+        return name;
+    }
+
+    public void SetName(string value)
+    {
+        name = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private string passCondition;
+
+    public string GetPassCondition()
+    {
+        return passCondition;
+    }
+
+    public void SetPassCondition(string value)
+    {
+        passCondition = value;
+    }
+
+    private List<CriteriaList1> criteriaList;
+
+    public List<CriteriaList1> GetCriteriaList()
+    {
+        return criteriaList;
+    }
+
+    public void SetCriteriaList(List<CriteriaList1> value)
+    {
+        criteriaList = value;
+    }
 }
 
 public class ItemGroup : Object
@@ -390,20 +1645,65 @@ public class ItemGroup : Object
     {
     }
 
-    public ItemGroup(System.IntPtr ptr) : base(ptr) { }
+    public ItemGroup(System.IntPtr value) : base(value)
+    {
+    }
 
     public ItemGroup(string id, string name, bool displayInEditor, List<string> itemsInGroup)
     {
-        Id = id;
-        Name = name;
-        DisplayInEditor = displayInEditor;
-        ItemsInGroup = itemsInGroup;
+        SetId(id);
+        SetName(name);
+        SetDisplayInEditor(displayInEditor);
+        SetItemsInGroup(itemsInGroup);
     }
 
-    public string Id { get; set; }
-    public string Name { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public List<string> ItemsInGroup { get; set; }
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private string name;
+
+    public string GetName()
+    {
+        return name;
+    }
+
+    public void SetName(string value)
+    {
+        name = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private List<string> itemsInGroup;
+
+    public List<string> GetItemsInGroup()
+    {
+        return itemsInGroup;
+    }
+
+    public void SetItemsInGroup(List<string> value)
+    {
+        itemsInGroup = value;
+    }
 }
 
 public class GameStartEvent : Object
@@ -412,52 +1712,273 @@ public class GameStartEvent : Object
     {
     }
 
-    public GameStartEvent(System.IntPtr ptr) : base(ptr) { }
+    public GameStartEvent(System.IntPtr value) : base(value)
+    {
+    }
 
     public GameStartEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
     {
-        SortOrder2 = sortOrder2;
-        Version = version;
-        Id = id;
-        Enabled = enabled;
-        EventType = eventType;
-        Character = character;
-        Character2 = character2;
-        Key = key;
-        Option = option;
-        Option2 = option2;
-        Option3 = option3;
-        Value = value;
-        Value2 = value2;
-        SortOrder = sortOrder;
-        Delay = delay;
-        OriginalDelay = originalDelay;
-        StartDelayTime = startDelayTime;
-        UseConditions = useConditions;
-        DisplayInEditor = displayInEditor;
-        Criteria = criteria;
+        SetSortOrder2(sortOrder2);
+        SetVersion(version);
+        SetId(id);
+        SetEnabled(enabled);
+        SetEventType(eventType);
+        SetCharacter(character);
+        SetCharacter2(character2);
+        SetKey(key);
+        SetOption(option);
+        SetOption2(option2);
+        SetOption3(option3);
+        SetValue(value);
+        SetValue2(value2);
+        SetSortOrder(sortOrder);
+        SetDelay(delay);
+        SetOriginalDelay(originalDelay);
+        SetStartDelayTime(startDelayTime);
+        SetUseConditions(useConditions);
+        SetDisplayInEditor(displayInEditor);
+        SetCriteria(criteria);
     }
 
-    public int SortOrder2 { get; set; }
-    public string Version { get; set; }
-    public string Id { get; set; }
-    public bool Enabled { get; set; }
-    public int EventType { get; set; }
-    public string Character { get; set; }
-    public string Character2 { get; set; }
-    public string Key { get; set; }
-    public int Option { get; set; }
-    public int Option2 { get; set; }
-    public int Option3 { get; set; }
-    public string Value { get; set; }
-    public string Value2 { get; set; }
-    public int SortOrder { get; set; }
-    public Double Delay { get; set; }
-    public Double OriginalDelay { get; set; }
-    public Double StartDelayTime { get; set; }
-    public bool UseConditions { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public List<Criterion> Criteria { get; set; }
+    private int sortOrder2;
+
+    public int GetSortOrder2()
+    {
+        return sortOrder2;
+    }
+
+    public void SetSortOrder2(int value)
+    {
+        sortOrder2 = value;
+    }
+
+    private string version;
+
+    public string GetVersion()
+    {
+        return version;
+    }
+
+    public void SetVersion(string value)
+    {
+        version = value;
+    }
+
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private bool enabled;
+
+    public bool GetEnabled()
+    {
+        return enabled;
+    }
+
+    public void SetEnabled(bool value)
+    {
+        enabled = value;
+    }
+
+    private int eventType;
+
+    public int GetEventType()
+    {
+        return eventType;
+    }
+
+    public void SetEventType(int value)
+    {
+        eventType = value;
+    }
+
+    private string character;
+
+    public string GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(string value)
+    {
+        character = value;
+    }
+
+    private string character2;
+
+    public string GetCharacter2()
+    {
+        return character2;
+    }
+
+    public void SetCharacter2(string value)
+    {
+        character2 = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private int option;
+
+    public int GetOption()
+    {
+        return option;
+    }
+
+    public void SetOption(int value)
+    {
+        option = value;
+    }
+
+    private int option2;
+
+    public int GetOption2()
+    {
+        return option2;
+    }
+
+    public void SetOption2(int value)
+    {
+        option2 = value;
+    }
+
+    private int option3;
+
+    public int GetOption3()
+    {
+        return option3;
+    }
+
+    public void SetOption3(int value)
+    {
+        option3 = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private string value2;
+
+    public string GetValue2()
+    {
+        return value2;
+    }
+
+    public void SetValue2(string value)
+    {
+        value2 = value;
+    }
+
+    private int sortOrder;
+
+    public int GetSortOrder()
+    {
+        return sortOrder;
+    }
+
+    public void SetSortOrder(int value)
+    {
+        sortOrder = value;
+    }
+
+    private Double delay;
+
+    public Double GetDelay()
+    {
+        return delay;
+    }
+
+    public void SetDelay(Double value)
+    {
+        delay = value;
+    }
+
+    private Double originalDelay;
+
+    public Double GetOriginalDelay()
+    {
+        return originalDelay;
+    }
+
+    public void SetOriginalDelay(Double value)
+    {
+        originalDelay = value;
+    }
+
+    private Double startDelayTime;
+
+    public Double GetStartDelayTime()
+    {
+        return startDelayTime;
+    }
+
+    public void SetStartDelayTime(Double value)
+    {
+        startDelayTime = value;
+    }
+
+    private bool useConditions;
+
+    public bool GetUseConditions()
+    {
+        return useConditions;
+    }
+
+    public void SetUseConditions(bool value)
+    {
+        useConditions = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private List<Criterion> criteria;
+
+    public List<Criterion> GetCriteria()
+    {
+        return criteria;
+    }
+
+    public void SetCriteria(List<Criterion> value)
+    {
+        criteria = value;
+    }
 }
 
 public class Critera : Object
@@ -466,52 +1987,273 @@ public class Critera : Object
     {
     }
 
-    public Critera(System.IntPtr ptr) : base(ptr) { }
+    public Critera(System.IntPtr value) : base(value)
+    {
+    }
 
     public Critera(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, EekEvents.ItemComparisonTypes itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option)
     {
-        BoolValue = boolValue;
-        Character = character;
-        Character2 = character2;
-        CompareType = compareType;
-        DialogueStatus = dialogueStatus;
-        DisplayInEditor = displayInEditor;
-        DoorOptions = doorOptions;
-        EqualsValue = equalsValue;
-        EquationValue = equationValue;
-        ValueFormula = valueFormula;
-        ItemComparison = itemComparison;
-        ItemFromItemGroupComparison = itemFromItemGroupComparison;
-        Key = key;
-        Key2 = key2;
-        Order = order;
-        PlayerInventoryOption = playerInventoryOption;
-        PoseOption = poseOption;
-        SocialStatus = socialStatus;
-        Value = value;
-        Option = option;
+        SetBoolValue(boolValue);
+        SetCharacter(character);
+        SetCharacter2(character2);
+        SetCompareType(compareType);
+        SetDialogueStatus(dialogueStatus);
+        SetDisplayInEditor(displayInEditor);
+        SetDoorOptions(doorOptions);
+        SetEqualsValue(equalsValue);
+        SetEquationValue(equationValue);
+        SetValueFormula(valueFormula);
+        SetItemComparison(itemComparison);
+        SetItemFromItemGroupComparison(itemFromItemGroupComparison);
+        SetKey(key);
+        SetKey2(key2);
+        SetOrder(order);
+        SetPlayerInventoryOption(playerInventoryOption);
+        SetPoseOption(poseOption);
+        SetSocialStatus(socialStatus);
+        SetValue(value);
+        SetOption(option);
     }
 
-    public string BoolValue { get; set; }
-    public string Character { get; set; }
-    public string Character2 { get; set; }
-    public string CompareType { get; set; }
-    public string DialogueStatus { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public string DoorOptions { get; set; }
-    public string EqualsValue { get; set; }
-    public string EquationValue { get; set; }
-    public string ValueFormula { get; set; }
-    public EekEvents.ItemComparisonTypes ItemComparison { get; set; }
-    public EekCharacterEngine.Interaction.InteractiveItem ItemFromItemGroupComparison { get; set; }
-    public string Key { get; set; }
-    public string Key2 { get; set; }
-    public int Order { get; set; }
-    public string PlayerInventoryOption { get; set; }
-    public string PoseOption { get; set; }
-    public string SocialStatus { get; set; }
-    public string Value { get; set; }
-    public int Option { get; set; }
+    private string boolValue;
+
+    public string GetBoolValue()
+    {
+        return boolValue;
+    }
+
+    public void SetBoolValue(string value)
+    {
+        boolValue = value;
+    }
+
+    private string character;
+
+    public string GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(string value)
+    {
+        character = value;
+    }
+
+    private string character2;
+
+    public string GetCharacter2()
+    {
+        return character2;
+    }
+
+    public void SetCharacter2(string value)
+    {
+        character2 = value;
+    }
+
+    private string compareType;
+
+    public string GetCompareType()
+    {
+        return compareType;
+    }
+
+    public void SetCompareType(string value)
+    {
+        compareType = value;
+    }
+
+    private string dialogueStatus;
+
+    public string GetDialogueStatus()
+    {
+        return dialogueStatus;
+    }
+
+    public void SetDialogueStatus(string value)
+    {
+        dialogueStatus = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private string doorOptions;
+
+    public string GetDoorOptions()
+    {
+        return doorOptions;
+    }
+
+    public void SetDoorOptions(string value)
+    {
+        doorOptions = value;
+    }
+
+    private string equalsValue;
+
+    public string GetEqualsValue()
+    {
+        return equalsValue;
+    }
+
+    public void SetEqualsValue(string value)
+    {
+        equalsValue = value;
+    }
+
+    private string equationValue;
+
+    public string GetEquationValue()
+    {
+        return equationValue;
+    }
+
+    public void SetEquationValue(string value)
+    {
+        equationValue = value;
+    }
+
+    private string valueFormula;
+
+    public string GetValueFormula()
+    {
+        return valueFormula;
+    }
+
+    public void SetValueFormula(string value)
+    {
+        valueFormula = value;
+    }
+
+    private EekEvents.ItemComparisonTypes itemComparison;
+
+    public EekEvents.ItemComparisonTypes GetItemComparison()
+    {
+        return itemComparison;
+    }
+
+    public void SetItemComparison(EekEvents.ItemComparisonTypes value)
+    {
+        itemComparison = value;
+    }
+
+    private InteractiveItem itemFromItemGroupComparison;
+
+    public InteractiveItem GetItemFromItemGroupComparison()
+    {
+        return itemFromItemGroupComparison;
+    }
+
+    public void SetItemFromItemGroupComparison(InteractiveItem value)
+    {
+        itemFromItemGroupComparison = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private string key2;
+
+    public string GetKey2()
+    {
+        return key2;
+    }
+
+    public void SetKey2(string value)
+    {
+        key2 = value;
+    }
+
+    private int order;
+
+    public int GetOrder()
+    {
+        return order;
+    }
+
+    public void SetOrder(int value)
+    {
+        order = value;
+    }
+
+    private string playerInventoryOption;
+
+    public string GetPlayerInventoryOption()
+    {
+        return playerInventoryOption;
+    }
+
+    public void SetPlayerInventoryOption(string value)
+    {
+        playerInventoryOption = value;
+    }
+
+    private string poseOption;
+
+    public string GetPoseOption()
+    {
+        return poseOption;
+    }
+
+    public void SetPoseOption(string value)
+    {
+        poseOption = value;
+    }
+
+    private string socialStatus;
+
+    public string GetSocialStatus()
+    {
+        return socialStatus;
+    }
+
+    public void SetSocialStatus(string value)
+    {
+        socialStatus = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private int option;
+
+    public int GetOption()
+    {
+        return option;
+    }
+
+    public void SetOption(int value)
+    {
+        option = value;
+    }
 }
 
 public class Event : Object
@@ -520,52 +2262,273 @@ public class Event : Object
     {
     }
 
-    public Event(System.IntPtr ptr) : base(ptr) { }
+    public Event(System.IntPtr value) : base(value)
+    {
+    }
 
     public Event(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
     {
-        SortOrder2 = sortOrder2;
-        Version = version;
-        Id = id;
-        Enabled = enabled;
-        EventType = eventType;
-        Character = character;
-        Character2 = character2;
-        Key = key;
-        Option = option;
-        Option2 = option2;
-        Option3 = option3;
-        Value = value;
-        Value2 = value2;
-        SortOrder = sortOrder;
-        Delay = delay;
-        OriginalDelay = originalDelay;
-        StartDelayTime = startDelayTime;
-        UseConditions = useConditions;
-        DisplayInEditor = displayInEditor;
-        Criteria = criteria;
+        SetSortOrder2(sortOrder2);
+        SetVersion(version);
+        SetId(id);
+        SetEnabled(enabled);
+        SetEventType(eventType);
+        SetCharacter(character);
+        SetCharacter2(character2);
+        SetKey(key);
+        SetOption(option);
+        SetOption2(option2);
+        SetOption3(option3);
+        SetValue(value);
+        SetValue2(value2);
+        SetSortOrder(sortOrder);
+        SetDelay(delay);
+        SetOriginalDelay(originalDelay);
+        SetStartDelayTime(startDelayTime);
+        SetUseConditions(useConditions);
+        SetDisplayInEditor(displayInEditor);
+        SetCriteria(criteria);
     }
 
-    public int SortOrder2 { get; set; }
-    public string Version { get; set; }
-    public string Id { get; set; }
-    public bool Enabled { get; set; }
-    public int EventType { get; set; }
-    public string Character { get; set; }
-    public string Character2 { get; set; }
-    public string Key { get; set; }
-    public int Option { get; set; }
-    public int Option2 { get; set; }
-    public int Option3 { get; set; }
-    public string Value { get; set; }
-    public string Value2 { get; set; }
-    public int SortOrder { get; set; }
-    public Double Delay { get; set; }
-    public Double OriginalDelay { get; set; }
-    public Double StartDelayTime { get; set; }
-    public bool UseConditions { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public List<Criterion> Criteria { get; set; }
+    private int sortOrder2;
+
+    public int GetSortOrder2()
+    {
+        return sortOrder2;
+    }
+
+    public void SetSortOrder2(int value)
+    {
+        sortOrder2 = value;
+    }
+
+    private string version;
+
+    public string GetVersion()
+    {
+        return version;
+    }
+
+    public void SetVersion(string value)
+    {
+        version = value;
+    }
+
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private bool enabled;
+
+    public bool GetEnabled()
+    {
+        return enabled;
+    }
+
+    public void SetEnabled(bool value)
+    {
+        enabled = value;
+    }
+
+    private int eventType;
+
+    public int GetEventType()
+    {
+        return eventType;
+    }
+
+    public void SetEventType(int value)
+    {
+        eventType = value;
+    }
+
+    private string character;
+
+    public string GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(string value)
+    {
+        character = value;
+    }
+
+    private string character2;
+
+    public string GetCharacter2()
+    {
+        return character2;
+    }
+
+    public void SetCharacter2(string value)
+    {
+        character2 = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private int option;
+
+    public int GetOption()
+    {
+        return option;
+    }
+
+    public void SetOption(int value)
+    {
+        option = value;
+    }
+
+    private int option2;
+
+    public int GetOption2()
+    {
+        return option2;
+    }
+
+    public void SetOption2(int value)
+    {
+        option2 = value;
+    }
+
+    private int option3;
+
+    public int GetOption3()
+    {
+        return option3;
+    }
+
+    public void SetOption3(int value)
+    {
+        option3 = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private string value2;
+
+    public string GetValue2()
+    {
+        return value2;
+    }
+
+    public void SetValue2(string value)
+    {
+        value2 = value;
+    }
+
+    private int sortOrder;
+
+    public int GetSortOrder()
+    {
+        return sortOrder;
+    }
+
+    public void SetSortOrder(int value)
+    {
+        sortOrder = value;
+    }
+
+    private Double delay;
+
+    public Double GetDelay()
+    {
+        return delay;
+    }
+
+    public void SetDelay(Double value)
+    {
+        delay = value;
+    }
+
+    private Double originalDelay;
+
+    public Double GetOriginalDelay()
+    {
+        return originalDelay;
+    }
+
+    public void SetOriginalDelay(Double value)
+    {
+        originalDelay = value;
+    }
+
+    private Double startDelayTime;
+
+    public Double GetStartDelayTime()
+    {
+        return startDelayTime;
+    }
+
+    public void SetStartDelayTime(Double value)
+    {
+        startDelayTime = value;
+    }
+
+    private bool useConditions;
+
+    public bool GetUseConditions()
+    {
+        return useConditions;
+    }
+
+    public void SetUseConditions(bool value)
+    {
+        useConditions = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private List<Criterion> criteria;
+
+    public List<Criterion> GetCriteria()
+    {
+        return criteria;
+    }
+
+    public void SetCriteria(List<Criterion> value)
+    {
+        criteria = value;
+    }
 }
 
 public class PlayerReaction : Object
@@ -574,38 +2537,182 @@ public class PlayerReaction : Object
     {
     }
 
-    public PlayerReaction(System.IntPtr ptr) : base(ptr) { }
+    public PlayerReaction(System.IntPtr value) : base(value)
+    {
+    }
 
     public PlayerReaction(string id, string characterToReactTo, List<Critera> critera, Double currentIteration, bool enabled, List<Event> events, string key, string name, bool showInInspector, string type, Double updateIteration, string value, string locationTargetOption)
     {
-        Id = id;
-        CharacterToReactTo = characterToReactTo;
-        Critera = critera;
-        CurrentIteration = currentIteration;
-        Enabled = enabled;
-        Events = events;
-        Key = key;
-        Name = name;
-        ShowInInspector = showInInspector;
-        Type = type;
-        UpdateIteration = updateIteration;
-        Value = value;
-        LocationTargetOption = locationTargetOption;
+        SetId(id);
+        SetCharacterToReactTo(characterToReactTo);
+        SetCritera(critera);
+        SetCurrentIteration(currentIteration);
+        SetEnabled(enabled);
+        SetEvents(events);
+        SetKey(key);
+        SetName(name);
+        SetShowInInspector(showInInspector);
+        SetType(type);
+        SetUpdateIteration(updateIteration);
+        SetValue(value);
+        SetLocationTargetOption(locationTargetOption);
     }
 
-    public string Id { get; set; }
-    public string CharacterToReactTo { get; set; }
-    public List<Critera> Critera { get; set; }
-    public Double CurrentIteration { get; set; }
-    public bool Enabled { get; set; }
-    public List<Event> Events { get; set; }
-    public string Key { get; set; }
-    public string Name { get; set; }
-    public bool ShowInInspector { get; set; }
-    public string Type { get; set; }
-    public Double UpdateIteration { get; set; }
-    public string Value { get; set; }
-    public string LocationTargetOption { get; set; }
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private string characterToReactTo;
+
+    public string GetCharacterToReactTo()
+    {
+        return characterToReactTo;
+    }
+
+    public void SetCharacterToReactTo(string value)
+    {
+        characterToReactTo = value;
+    }
+
+    private List<Critera> critera;
+
+    public List<Critera> GetCritera()
+    {
+        return critera;
+    }
+
+    public void SetCritera(List<Critera> value)
+    {
+        critera = value;
+    }
+
+    private Double currentIteration;
+
+    public Double GetCurrentIteration()
+    {
+        return currentIteration;
+    }
+
+    public void SetCurrentIteration(Double value)
+    {
+        currentIteration = value;
+    }
+
+    private bool enabled;
+
+    public bool GetEnabled()
+    {
+        return enabled;
+    }
+
+    public void SetEnabled(bool value)
+    {
+        enabled = value;
+    }
+
+    private List<Event> events;
+
+    public List<Event> GetEvents()
+    {
+        return events;
+    }
+
+    public void SetEvents(List<Event> value)
+    {
+        events = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private string name;
+
+    public string GetName()
+    {
+        return name;
+    }
+
+    public void SetName(string value)
+    {
+        name = value;
+    }
+
+    private bool showInInspector;
+
+    public bool GetShowInInspector()
+    {
+        return showInInspector;
+    }
+
+    public void SetShowInInspector(bool value)
+    {
+        showInInspector = value;
+    }
+
+    private string type;
+
+    public string GetType()
+    {
+        return type;
+    }
+
+    public void SetType(string value)
+    {
+        type = value;
+    }
+
+    private Double updateIteration;
+
+    public Double GetUpdateIteration()
+    {
+        return updateIteration;
+    }
+
+    public void SetUpdateIteration(Double value)
+    {
+        updateIteration = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private string locationTargetOption;
+
+    public string GetLocationTargetOption()
+    {
+        return locationTargetOption;
+    }
+
+    public void SetLocationTargetOption(string value)
+    {
+        locationTargetOption = value;
+    }
 }
 
 public class MainStory : Object
@@ -614,30 +2721,132 @@ public class MainStory : Object
     {
     }
 
-    public MainStory(System.IntPtr ptr) : base(ptr) { }
+    public MainStory(System.IntPtr value) : base(value)
+    {
+    }
 
     public MainStory(string housePartyVersion, List<ItemOverride> itemOverrides, List<ItemGroupBehavior> itemGroupBehaviors, List<Achievement> achievements, List<string> playerValues, List<CriteriaGroup> criteriaGroups, List<ItemGroup> itemGroups, List<GameStartEvent> gameStartEvents, List<PlayerReaction> playerReactions)
     {
-        HousePartyVersion = housePartyVersion;
-        ItemOverrides = itemOverrides;
-        ItemGroupBehaviors = itemGroupBehaviors;
-        Achievements = achievements;
-        PlayerValues = playerValues;
-        CriteriaGroups = criteriaGroups;
-        ItemGroups = itemGroups;
-        GameStartEvents = gameStartEvents;
-        PlayerReactions = playerReactions;
+        SetHousePartyVersion(housePartyVersion);
+        SetItemOverrides(itemOverrides);
+        SetItemGroupBehaviors(itemGroupBehaviors);
+        SetAchievements(achievements);
+        SetPlayerValues(playerValues);
+        SetCriteriaGroups(criteriaGroups);
+        SetItemGroups(itemGroups);
+        SetGameStartEvents(gameStartEvents);
+        SetPlayerReactions(playerReactions);
     }
 
-    public string HousePartyVersion { get; set; }
-    public List<ItemOverride> ItemOverrides { get; set; }
-    public List<ItemGroupBehavior> ItemGroupBehaviors { get; set; }
-    public List<Achievement> Achievements { get; set; }
-    public List<string> PlayerValues { get; set; }
-    public List<CriteriaGroup> CriteriaGroups { get; set; }
-    public List<ItemGroup> ItemGroups { get; set; }
-    public List<GameStartEvent> GameStartEvents { get; set; }
-    public List<PlayerReaction> PlayerReactions { get; set; }
+    private string housePartyVersion;
+
+    public string GetHousePartyVersion()
+    {
+        return housePartyVersion;
+    }
+
+    public void SetHousePartyVersion(string value)
+    {
+        housePartyVersion = value;
+    }
+
+    private List<ItemOverride> itemOverrides;
+
+    public List<ItemOverride> GetItemOverrides()
+    {
+        return itemOverrides;
+    }
+
+    public void SetItemOverrides(List<ItemOverride> value)
+    {
+        itemOverrides = value;
+    }
+
+    private List<ItemGroupBehavior> itemGroupBehaviors;
+
+    public List<ItemGroupBehavior> GetItemGroupBehaviors()
+    {
+        return itemGroupBehaviors;
+    }
+
+    public void SetItemGroupBehaviors(List<ItemGroupBehavior> value)
+    {
+        itemGroupBehaviors = value;
+    }
+
+    private List<Achievement> achievements;
+
+    public List<Achievement> GetAchievements()
+    {
+        return achievements;
+    }
+
+    public void SetAchievements(List<Achievement> value)
+    {
+        achievements = value;
+    }
+
+    private List<string> playerValues;
+
+    public List<string> GetPlayerValues()
+    {
+        return playerValues;
+    }
+
+    public void SetPlayerValues(List<string> value)
+    {
+        playerValues = value;
+    }
+
+    private List<CriteriaGroup> criteriaGroups;
+
+    public List<CriteriaGroup> GetCriteriaGroups()
+    {
+        return criteriaGroups;
+    }
+
+    public void SetCriteriaGroups(List<CriteriaGroup> value)
+    {
+        criteriaGroups = value;
+    }
+
+    private List<ItemGroup> itemGroups;
+
+    public List<ItemGroup> GetItemGroups()
+    {
+        return itemGroups;
+    }
+
+    public void SetItemGroups(List<ItemGroup> value)
+    {
+        itemGroups = value;
+    }
+
+    private List<GameStartEvent> gameStartEvents;
+
+    public List<GameStartEvent> GetGameStartEvents()
+    {
+        return gameStartEvents;
+    }
+
+    public void SetGameStartEvents(List<GameStartEvent> value)
+    {
+        gameStartEvents = value;
+    }
+
+    private List<PlayerReaction> playerReactions;
+
+    public List<PlayerReaction> GetPlayerReactions()
+    {
+        return playerReactions;
+    }
+
+    public void SetPlayerReactions(List<PlayerReaction> value)
+    {
+        playerReactions = value;
+    }
+
+    //protected new string ToString => "this worked! :)";
 }
 
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
@@ -648,20 +2857,65 @@ public class AlternateText : Object
     {
     }
 
-    public AlternateText(System.IntPtr ptr) : base(ptr) { }
+    public AlternateText(System.IntPtr value) : base(value)
+    {
+    }
 
     public AlternateText(List<Critera> critera, int order, bool show, string text)
     {
-        Critera = critera;
-        Order = order;
-        Show = show;
-        Text = text;
+        SetCritera(critera);
+        SetOrder(order);
+        SetShow(show);
+        SetText(text);
     }
 
-    public List<Critera> Critera { get; set; }
-    public int Order { get; set; }
-    public bool Show { get; set; }
-    public string Text { get; set; }
+    private List<Critera> critera;
+
+    public List<Critera> GetCritera()
+    {
+        return critera;
+    }
+
+    public void SetCritera(List<Critera> value)
+    {
+        critera = value;
+    }
+
+    private int order;
+
+    public int GetOrder()
+    {
+        return order;
+    }
+
+    public void SetOrder(int value)
+    {
+        order = value;
+    }
+
+    private bool show;
+
+    public bool GetShow()
+    {
+        return show;
+    }
+
+    public void SetShow(bool value)
+    {
+        show = value;
+    }
+
+    private string text;
+
+    public string GetText()
+    {
+        return text;
+    }
+
+    public void SetText(string value)
+    {
+        text = value;
+    }
 }
 
 public class CloseEvent : Object
@@ -670,52 +2924,273 @@ public class CloseEvent : Object
     {
     }
 
-    public CloseEvent(System.IntPtr ptr) : base(ptr) { }
+    public CloseEvent(System.IntPtr value) : base(value)
+    {
+    }
 
     public CloseEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
     {
-        SortOrder2 = sortOrder2;
-        Version = version;
-        Id = id;
-        Enabled = enabled;
-        EventType = eventType;
-        Character = character;
-        Character2 = character2;
-        Key = key;
-        Option = option;
-        Option2 = option2;
-        Option3 = option3;
-        Value = value;
-        Value2 = value2;
-        SortOrder = sortOrder;
-        Delay = delay;
-        OriginalDelay = originalDelay;
-        StartDelayTime = startDelayTime;
-        UseConditions = useConditions;
-        DisplayInEditor = displayInEditor;
-        Criteria = criteria;
+        SetSortOrder2(sortOrder2);
+        SetVersion(version);
+        SetId(id);
+        SetEnabled(enabled);
+        SetEventType(eventType);
+        SetCharacter(character);
+        SetCharacter2(character2);
+        SetKey(key);
+        SetOption(option);
+        SetOption2(option2);
+        SetOption3(option3);
+        SetValue(value);
+        SetValue2(value2);
+        SetSortOrder(sortOrder);
+        SetDelay(delay);
+        SetOriginalDelay(originalDelay);
+        SetStartDelayTime(startDelayTime);
+        SetUseConditions(useConditions);
+        SetDisplayInEditor(displayInEditor);
+        SetCriteria(criteria);
     }
 
-    public int SortOrder2 { get; set; }
-    public string Version { get; set; }
-    public string Id { get; set; }
-    public bool Enabled { get; set; }
-    public int EventType { get; set; }
-    public string Character { get; set; }
-    public string Character2 { get; set; }
-    public string Key { get; set; }
-    public int Option { get; set; }
-    public int Option2 { get; set; }
-    public int Option3 { get; set; }
-    public string Value { get; set; }
-    public string Value2 { get; set; }
-    public int SortOrder { get; set; }
-    public Double Delay { get; set; }
-    public Double OriginalDelay { get; set; }
-    public Double StartDelayTime { get; set; }
-    public bool UseConditions { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public List<Criterion> Criteria { get; set; }
+    private int sortOrder2;
+
+    public int GetSortOrder2()
+    {
+        return sortOrder2;
+    }
+
+    public void SetSortOrder2(int value)
+    {
+        sortOrder2 = value;
+    }
+
+    private string version;
+
+    public string GetVersion()
+    {
+        return version;
+    }
+
+    public void SetVersion(string value)
+    {
+        version = value;
+    }
+
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private bool enabled;
+
+    public bool GetEnabled()
+    {
+        return enabled;
+    }
+
+    public void SetEnabled(bool value)
+    {
+        enabled = value;
+    }
+
+    private int eventType;
+
+    public int GetEventType()
+    {
+        return eventType;
+    }
+
+    public void SetEventType(int value)
+    {
+        eventType = value;
+    }
+
+    private string character;
+
+    public string GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(string value)
+    {
+        character = value;
+    }
+
+    private string character2;
+
+    public string GetCharacter2()
+    {
+        return character2;
+    }
+
+    public void SetCharacter2(string value)
+    {
+        character2 = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private int option;
+
+    public int GetOption()
+    {
+        return option;
+    }
+
+    public void SetOption(int value)
+    {
+        option = value;
+    }
+
+    private int option2;
+
+    public int GetOption2()
+    {
+        return option2;
+    }
+
+    public void SetOption2(int value)
+    {
+        option2 = value;
+    }
+
+    private int option3;
+
+    public int GetOption3()
+    {
+        return option3;
+    }
+
+    public void SetOption3(int value)
+    {
+        option3 = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private string value2;
+
+    public string GetValue2()
+    {
+        return value2;
+    }
+
+    public void SetValue2(string value)
+    {
+        value2 = value;
+    }
+
+    private int sortOrder;
+
+    public int GetSortOrder()
+    {
+        return sortOrder;
+    }
+
+    public void SetSortOrder(int value)
+    {
+        sortOrder = value;
+    }
+
+    private Double delay;
+
+    public Double GetDelay()
+    {
+        return delay;
+    }
+
+    public void SetDelay(Double value)
+    {
+        delay = value;
+    }
+
+    private Double originalDelay;
+
+    public Double GetOriginalDelay()
+    {
+        return originalDelay;
+    }
+
+    public void SetOriginalDelay(Double value)
+    {
+        originalDelay = value;
+    }
+
+    private Double startDelayTime;
+
+    public Double GetStartDelayTime()
+    {
+        return startDelayTime;
+    }
+
+    public void SetStartDelayTime(Double value)
+    {
+        startDelayTime = value;
+    }
+
+    private bool useConditions;
+
+    public bool GetUseConditions()
+    {
+        return useConditions;
+    }
+
+    public void SetUseConditions(bool value)
+    {
+        useConditions = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private List<Criterion> criteria;
+
+    public List<Criterion> GetCriteria()
+    {
+        return criteria;
+    }
+
+    public void SetCriteria(List<Criterion> value)
+    {
+        criteria = value;
+    }
 }
 
 public class ResponseCriteria : Object
@@ -724,52 +3199,273 @@ public class ResponseCriteria : Object
     {
     }
 
-    public ResponseCriteria(System.IntPtr ptr) : base(ptr) { }
+    public ResponseCriteria(System.IntPtr value) : base(value)
+    {
+    }
 
     public ResponseCriteria(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, EekEvents.ItemComparisonTypes itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option)
     {
-        BoolValue = boolValue;
-        Character = character;
-        Character2 = character2;
-        CompareType = compareType;
-        DialogueStatus = dialogueStatus;
-        DisplayInEditor = displayInEditor;
-        DoorOptions = doorOptions;
-        EqualsValue = equalsValue;
-        EquationValue = equationValue;
-        ValueFormula = valueFormula;
-        ItemComparison = itemComparison;
-        ItemFromItemGroupComparison = itemFromItemGroupComparison;
-        Key = key;
-        Key2 = key2;
-        Order = order;
-        PlayerInventoryOption = playerInventoryOption;
-        PoseOption = poseOption;
-        SocialStatus = socialStatus;
-        Value = value;
-        Option = option;
+        SetBoolValue(boolValue);
+        SetCharacter(character);
+        SetCharacter2(character2);
+        SetCompareType(compareType);
+        SetDialogueStatus(dialogueStatus);
+        SetDisplayInEditor(displayInEditor);
+        SetDoorOptions(doorOptions);
+        SetEqualsValue(equalsValue);
+        SetEquationValue(equationValue);
+        SetValueFormula(valueFormula);
+        SetItemComparison(itemComparison);
+        SetItemFromItemGroupComparison(itemFromItemGroupComparison);
+        SetKey(key);
+        SetKey2(key2);
+        SetOrder(order);
+        SetPlayerInventoryOption(playerInventoryOption);
+        SetPoseOption(poseOption);
+        SetSocialStatus(socialStatus);
+        SetValue(value);
+        SetOption(option);
     }
 
-    public string BoolValue { get; set; }
-    public string Character { get; set; }
-    public string Character2 { get; set; }
-    public string CompareType { get; set; }
-    public string DialogueStatus { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public string DoorOptions { get; set; }
-    public string EqualsValue { get; set; }
-    public string EquationValue { get; set; }
-    public string ValueFormula { get; set; }
-    public EekEvents.ItemComparisonTypes ItemComparison { get; set; }
-    public EekCharacterEngine.Interaction.InteractiveItem ItemFromItemGroupComparison { get; set; }
-    public string Key { get; set; }
-    public string Key2 { get; set; }
-    public int Order { get; set; }
-    public string PlayerInventoryOption { get; set; }
-    public string PoseOption { get; set; }
-    public string SocialStatus { get; set; }
-    public string Value { get; set; }
-    public int Option { get; set; }
+    private string boolValue;
+
+    public string GetBoolValue()
+    {
+        return boolValue;
+    }
+
+    public void SetBoolValue(string value)
+    {
+        boolValue = value;
+    }
+
+    private string character;
+
+    public string GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(string value)
+    {
+        character = value;
+    }
+
+    private string character2;
+
+    public string GetCharacter2()
+    {
+        return character2;
+    }
+
+    public void SetCharacter2(string value)
+    {
+        character2 = value;
+    }
+
+    private string compareType;
+
+    public string GetCompareType()
+    {
+        return compareType;
+    }
+
+    public void SetCompareType(string value)
+    {
+        compareType = value;
+    }
+
+    private string dialogueStatus;
+
+    public string GetDialogueStatus()
+    {
+        return dialogueStatus;
+    }
+
+    public void SetDialogueStatus(string value)
+    {
+        dialogueStatus = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private string doorOptions;
+
+    public string GetDoorOptions()
+    {
+        return doorOptions;
+    }
+
+    public void SetDoorOptions(string value)
+    {
+        doorOptions = value;
+    }
+
+    private string equalsValue;
+
+    public string GetEqualsValue()
+    {
+        return equalsValue;
+    }
+
+    public void SetEqualsValue(string value)
+    {
+        equalsValue = value;
+    }
+
+    private string equationValue;
+
+    public string GetEquationValue()
+    {
+        return equationValue;
+    }
+
+    public void SetEquationValue(string value)
+    {
+        equationValue = value;
+    }
+
+    private string valueFormula;
+
+    public string GetValueFormula()
+    {
+        return valueFormula;
+    }
+
+    public void SetValueFormula(string value)
+    {
+        valueFormula = value;
+    }
+
+    private EekEvents.ItemComparisonTypes itemComparison;
+
+    public EekEvents.ItemComparisonTypes GetItemComparison()
+    {
+        return itemComparison;
+    }
+
+    public void SetItemComparison(EekEvents.ItemComparisonTypes value)
+    {
+        itemComparison = value;
+    }
+
+    private InteractiveItem itemFromItemGroupComparison;
+
+    public InteractiveItem GetItemFromItemGroupComparison()
+    {
+        return itemFromItemGroupComparison;
+    }
+
+    public void SetItemFromItemGroupComparison(InteractiveItem value)
+    {
+        itemFromItemGroupComparison = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private string key2;
+
+    public string GetKey2()
+    {
+        return key2;
+    }
+
+    public void SetKey2(string value)
+    {
+        key2 = value;
+    }
+
+    private int order;
+
+    public int GetOrder()
+    {
+        return order;
+    }
+
+    public void SetOrder(int value)
+    {
+        order = value;
+    }
+
+    private string playerInventoryOption;
+
+    public string GetPlayerInventoryOption()
+    {
+        return playerInventoryOption;
+    }
+
+    public void SetPlayerInventoryOption(string value)
+    {
+        playerInventoryOption = value;
+    }
+
+    private string poseOption;
+
+    public string GetPoseOption()
+    {
+        return poseOption;
+    }
+
+    public void SetPoseOption(string value)
+    {
+        poseOption = value;
+    }
+
+    private string socialStatus;
+
+    public string GetSocialStatus()
+    {
+        return socialStatus;
+    }
+
+    public void SetSocialStatus(string value)
+    {
+        socialStatus = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private int option;
+
+    public int GetOption()
+    {
+        return option;
+    }
+
+    public void SetOption(int value)
+    {
+        option = value;
+    }
 }
 
 public class ResponseEvent : Object
@@ -778,52 +3474,273 @@ public class ResponseEvent : Object
     {
     }
 
-    public ResponseEvent(System.IntPtr ptr) : base(ptr) { }
+    public ResponseEvent(System.IntPtr value) : base(value)
+    {
+    }
 
     public ResponseEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
     {
-        SortOrder2 = sortOrder2;
-        Version = version;
-        Id = id;
-        Enabled = enabled;
-        EventType = eventType;
-        Character = character;
-        Character2 = character2;
-        Key = key;
-        Option = option;
-        Option2 = option2;
-        Option3 = option3;
-        Value = value;
-        Value2 = value2;
-        SortOrder = sortOrder;
-        Delay = delay;
-        OriginalDelay = originalDelay;
-        StartDelayTime = startDelayTime;
-        UseConditions = useConditions;
-        DisplayInEditor = displayInEditor;
-        Criteria = criteria;
+        SetSortOrder2(sortOrder2);
+        SetVersion(version);
+        SetId(id);
+        SetEnabled(enabled);
+        SetEventType(eventType);
+        SetCharacter(character);
+        SetCharacter2(character2);
+        SetKey(key);
+        SetOption(option);
+        SetOption2(option2);
+        SetOption3(option3);
+        SetValue(value);
+        SetValue2(value2);
+        SetSortOrder(sortOrder);
+        SetDelay(delay);
+        SetOriginalDelay(originalDelay);
+        SetStartDelayTime(startDelayTime);
+        SetUseConditions(useConditions);
+        SetDisplayInEditor(displayInEditor);
+        SetCriteria(criteria);
     }
 
-    public int SortOrder2 { get; set; }
-    public string Version { get; set; }
-    public string Id { get; set; }
-    public bool Enabled { get; set; }
-    public int EventType { get; set; }
-    public string Character { get; set; }
-    public string Character2 { get; set; }
-    public string Key { get; set; }
-    public int Option { get; set; }
-    public int Option2 { get; set; }
-    public int Option3 { get; set; }
-    public string Value { get; set; }
-    public string Value2 { get; set; }
-    public int SortOrder { get; set; }
-    public Double Delay { get; set; }
-    public Double OriginalDelay { get; set; }
-    public Double StartDelayTime { get; set; }
-    public bool UseConditions { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public List<Criterion> Criteria { get; set; }
+    private int sortOrder2;
+
+    public int GetSortOrder2()
+    {
+        return sortOrder2;
+    }
+
+    public void SetSortOrder2(int value)
+    {
+        sortOrder2 = value;
+    }
+
+    private string version;
+
+    public string GetVersion()
+    {
+        return version;
+    }
+
+    public void SetVersion(string value)
+    {
+        version = value;
+    }
+
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private bool enabled;
+
+    public bool GetEnabled()
+    {
+        return enabled;
+    }
+
+    public void SetEnabled(bool value)
+    {
+        enabled = value;
+    }
+
+    private int eventType;
+
+    public int GetEventType()
+    {
+        return eventType;
+    }
+
+    public void SetEventType(int value)
+    {
+        eventType = value;
+    }
+
+    private string character;
+
+    public string GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(string value)
+    {
+        character = value;
+    }
+
+    private string character2;
+
+    public string GetCharacter2()
+    {
+        return character2;
+    }
+
+    public void SetCharacter2(string value)
+    {
+        character2 = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private int option;
+
+    public int GetOption()
+    {
+        return option;
+    }
+
+    public void SetOption(int value)
+    {
+        option = value;
+    }
+
+    private int option2;
+
+    public int GetOption2()
+    {
+        return option2;
+    }
+
+    public void SetOption2(int value)
+    {
+        option2 = value;
+    }
+
+    private int option3;
+
+    public int GetOption3()
+    {
+        return option3;
+    }
+
+    public void SetOption3(int value)
+    {
+        option3 = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private string value2;
+
+    public string GetValue2()
+    {
+        return value2;
+    }
+
+    public void SetValue2(string value)
+    {
+        value2 = value;
+    }
+
+    private int sortOrder;
+
+    public int GetSortOrder()
+    {
+        return sortOrder;
+    }
+
+    public void SetSortOrder(int value)
+    {
+        sortOrder = value;
+    }
+
+    private Double delay;
+
+    public Double GetDelay()
+    {
+        return delay;
+    }
+
+    public void SetDelay(Double value)
+    {
+        delay = value;
+    }
+
+    private Double originalDelay;
+
+    public Double GetOriginalDelay()
+    {
+        return originalDelay;
+    }
+
+    public void SetOriginalDelay(Double value)
+    {
+        originalDelay = value;
+    }
+
+    private Double startDelayTime;
+
+    public Double GetStartDelayTime()
+    {
+        return startDelayTime;
+    }
+
+    public void SetStartDelayTime(Double value)
+    {
+        startDelayTime = value;
+    }
+
+    private bool useConditions;
+
+    public bool GetUseConditions()
+    {
+        return useConditions;
+    }
+
+    public void SetUseConditions(bool value)
+    {
+        useConditions = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private List<Criterion> criteria;
+
+    public List<Criterion> GetCriteria()
+    {
+        return criteria;
+    }
+
+    public void SetCriteria(List<Criterion> value)
+    {
+        criteria = value;
+    }
 }
 
 public class Response : Object
@@ -832,42 +3749,208 @@ public class Response : Object
     {
     }
 
-    public Response(System.IntPtr ptr) : base(ptr) { }
+    public Response(System.IntPtr value) : base(value)
+    {
+    }
 
     public Response(bool selected, string id, bool alwaysDisplay, int next, int order, List<ResponseCriteria> responseCriteria, List<ResponseEvent> responseEvents, bool show, bool showResponseCriteria, bool showResponseEvents, bool testingCriteraOverride, string text, string characterName, int chatterId, bool showInInspector)
     {
-        Selected = selected;
-        Id = id;
-        AlwaysDisplay = alwaysDisplay;
-        Next = next;
-        Order = order;
-        ResponseCriteria = responseCriteria;
-        ResponseEvents = responseEvents;
-        Show = show;
-        ShowResponseCriteria = showResponseCriteria;
-        ShowResponseEvents = showResponseEvents;
-        TestingCriteraOverride = testingCriteraOverride;
-        Text = text;
-        CharacterName = characterName;
-        ChatterId = chatterId;
-        ShowInInspector = showInInspector;
+        SetSelected(selected);
+        SetId(id);
+        SetAlwaysDisplay(alwaysDisplay);
+        SetNext(next);
+        SetOrder(order);
+        SetResponseCriteria(responseCriteria);
+        SetResponseEvents(responseEvents);
+        SetShow(show);
+        SetShowResponseCriteria(showResponseCriteria);
+        SetShowResponseEvents(showResponseEvents);
+        SetTestingCriteraOverride(testingCriteraOverride);
+        SetText(text);
+        SetCharacterName(characterName);
+        SetChatterId(chatterId);
+        SetShowInInspector(showInInspector);
     }
 
-    public bool Selected { get; set; }
-    public string Id { get; set; }
-    public bool AlwaysDisplay { get; set; }
-    public int Next { get; set; }
-    public int Order { get; set; }
-    public List<ResponseCriteria> ResponseCriteria { get; set; }
-    public List<ResponseEvent> ResponseEvents { get; set; }
-    public bool Show { get; set; }
-    public bool ShowResponseCriteria { get; set; }
-    public bool ShowResponseEvents { get; set; }
-    public bool TestingCriteraOverride { get; set; }
-    public string Text { get; set; }
-    public string CharacterName { get; set; }
-    public int ChatterId { get; set; }
-    public bool ShowInInspector { get; set; }
+    private bool selected;
+
+    public bool GetSelected()
+    {
+        return selected;
+    }
+
+    public void SetSelected(bool value)
+    {
+        selected = value;
+    }
+
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private bool alwaysDisplay;
+
+    public bool GetAlwaysDisplay()
+    {
+        return alwaysDisplay;
+    }
+
+    public void SetAlwaysDisplay(bool value)
+    {
+        alwaysDisplay = value;
+    }
+
+    private int next;
+
+    public int GetNext()
+    {
+        return next;
+    }
+
+    public void SetNext(int value)
+    {
+        next = value;
+    }
+
+    private int order;
+
+    public int GetOrder()
+    {
+        return order;
+    }
+
+    public void SetOrder(int value)
+    {
+        order = value;
+    }
+
+    private List<ResponseCriteria> responseCriteria;
+
+    public List<ResponseCriteria> GetResponseCriteria()
+    {
+        return responseCriteria;
+    }
+
+    public void SetResponseCriteria(List<ResponseCriteria> value)
+    {
+        responseCriteria = value;
+    }
+
+    private List<ResponseEvent> responseEvents;
+
+    public List<ResponseEvent> GetResponseEvents()
+    {
+        return responseEvents;
+    }
+
+    public void SetResponseEvents(List<ResponseEvent> value)
+    {
+        responseEvents = value;
+    }
+
+    private bool show;
+
+    public bool GetShow()
+    {
+        return show;
+    }
+
+    public void SetShow(bool value)
+    {
+        show = value;
+    }
+
+    private bool showResponseCriteria;
+
+    public bool GetShowResponseCriteria()
+    {
+        return showResponseCriteria;
+    }
+
+    public void SetShowResponseCriteria(bool value)
+    {
+        showResponseCriteria = value;
+    }
+
+    private bool showResponseEvents;
+
+    public bool GetShowResponseEvents()
+    {
+        return showResponseEvents;
+    }
+
+    public void SetShowResponseEvents(bool value)
+    {
+        showResponseEvents = value;
+    }
+
+    private bool testingCriteraOverride;
+
+    public bool GetTestingCriteraOverride()
+    {
+        return testingCriteraOverride;
+    }
+
+    public void SetTestingCriteraOverride(bool value)
+    {
+        testingCriteraOverride = value;
+    }
+
+    private string text;
+
+    public string GetText()
+    {
+        return text;
+    }
+
+    public void SetText(string value)
+    {
+        text = value;
+    }
+
+    private string characterName;
+
+    public string GetCharacterName()
+    {
+        return characterName;
+    }
+
+    public void SetCharacterName(string value)
+    {
+        characterName = value;
+    }
+
+    private int chatterId;
+
+    public int GetChatterId()
+    {
+        return chatterId;
+    }
+
+    public void SetChatterId(int value)
+    {
+        chatterId = value;
+    }
+
+    private bool showInInspector;
+
+    public bool GetShowInInspector()
+    {
+        return showInInspector;
+    }
+
+    public void SetShowInInspector(bool value)
+    {
+        showInInspector = value;
+    }
 }
 
 public class StartEvent : Object
@@ -876,52 +3959,273 @@ public class StartEvent : Object
     {
     }
 
-    public StartEvent(System.IntPtr ptr) : base(ptr) { }
+    public StartEvent(System.IntPtr value) : base(value)
+    {
+    }
 
     public StartEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
     {
-        SortOrder2 = sortOrder2;
-        Version = version;
-        Id = id;
-        Enabled = enabled;
-        EventType = eventType;
-        Character = character;
-        Character2 = character2;
-        Key = key;
-        Option = option;
-        Option2 = option2;
-        Option3 = option3;
-        Value = value;
-        Value2 = value2;
-        SortOrder = sortOrder;
-        Delay = delay;
-        OriginalDelay = originalDelay;
-        StartDelayTime = startDelayTime;
-        UseConditions = useConditions;
-        DisplayInEditor = displayInEditor;
-        Criteria = criteria;
+        SetSortOrder2(sortOrder2);
+        SetVersion(version);
+        SetId(id);
+        SetEnabled(enabled);
+        SetEventType(eventType);
+        SetCharacter(character);
+        SetCharacter2(character2);
+        SetKey(key);
+        SetOption(option);
+        SetOption2(option2);
+        SetOption3(option3);
+        SetValue(value);
+        SetValue2(value2);
+        SetSortOrder(sortOrder);
+        SetDelay(delay);
+        SetOriginalDelay(originalDelay);
+        SetStartDelayTime(startDelayTime);
+        SetUseConditions(useConditions);
+        SetDisplayInEditor(displayInEditor);
+        SetCriteria(criteria);
     }
 
-    public int SortOrder2 { get; set; }
-    public string Version { get; set; }
-    public string Id { get; set; }
-    public bool Enabled { get; set; }
-    public int EventType { get; set; }
-    public string Character { get; set; }
-    public string Character2 { get; set; }
-    public string Key { get; set; }
-    public int Option { get; set; }
-    public int Option2 { get; set; }
-    public int Option3 { get; set; }
-    public string Value { get; set; }
-    public string Value2 { get; set; }
-    public int SortOrder { get; set; }
-    public Double Delay { get; set; }
-    public Double OriginalDelay { get; set; }
-    public Double StartDelayTime { get; set; }
-    public bool UseConditions { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public List<Criterion> Criteria { get; set; }
+    private int sortOrder2;
+
+    public int GetSortOrder2()
+    {
+        return sortOrder2;
+    }
+
+    public void SetSortOrder2(int value)
+    {
+        sortOrder2 = value;
+    }
+
+    private string version;
+
+    public string GetVersion()
+    {
+        return version;
+    }
+
+    public void SetVersion(string value)
+    {
+        version = value;
+    }
+
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private bool enabled;
+
+    public bool GetEnabled()
+    {
+        return enabled;
+    }
+
+    public void SetEnabled(bool value)
+    {
+        enabled = value;
+    }
+
+    private int eventType;
+
+    public int GetEventType()
+    {
+        return eventType;
+    }
+
+    public void SetEventType(int value)
+    {
+        eventType = value;
+    }
+
+    private string character;
+
+    public string GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(string value)
+    {
+        character = value;
+    }
+
+    private string character2;
+
+    public string GetCharacter2()
+    {
+        return character2;
+    }
+
+    public void SetCharacter2(string value)
+    {
+        character2 = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private int option;
+
+    public int GetOption()
+    {
+        return option;
+    }
+
+    public void SetOption(int value)
+    {
+        option = value;
+    }
+
+    private int option2;
+
+    public int GetOption2()
+    {
+        return option2;
+    }
+
+    public void SetOption2(int value)
+    {
+        option2 = value;
+    }
+
+    private int option3;
+
+    public int GetOption3()
+    {
+        return option3;
+    }
+
+    public void SetOption3(int value)
+    {
+        option3 = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private string value2;
+
+    public string GetValue2()
+    {
+        return value2;
+    }
+
+    public void SetValue2(string value)
+    {
+        value2 = value;
+    }
+
+    private int sortOrder;
+
+    public int GetSortOrder()
+    {
+        return sortOrder;
+    }
+
+    public void SetSortOrder(int value)
+    {
+        sortOrder = value;
+    }
+
+    private Double delay;
+
+    public Double GetDelay()
+    {
+        return delay;
+    }
+
+    public void SetDelay(Double value)
+    {
+        delay = value;
+    }
+
+    private Double originalDelay;
+
+    public Double GetOriginalDelay()
+    {
+        return originalDelay;
+    }
+
+    public void SetOriginalDelay(Double value)
+    {
+        originalDelay = value;
+    }
+
+    private Double startDelayTime;
+
+    public Double GetStartDelayTime()
+    {
+        return startDelayTime;
+    }
+
+    public void SetStartDelayTime(Double value)
+    {
+        startDelayTime = value;
+    }
+
+    private bool useConditions;
+
+    public bool GetUseConditions()
+    {
+        return useConditions;
+    }
+
+    public void SetUseConditions(bool value)
+    {
+        useConditions = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private List<Criterion> criteria;
+
+    public List<Criterion> GetCriteria()
+    {
+        return criteria;
+    }
+
+    public void SetCriteria(List<Criterion> value)
+    {
+        criteria = value;
+    }
 }
 
 public class Dialogue : Object
@@ -930,52 +4234,273 @@ public class Dialogue : Object
     {
     }
 
-    public Dialogue(System.IntPtr ptr) : base(ptr) { }
+    public Dialogue(System.IntPtr value) : base(value)
+    {
+    }
 
     public Dialogue(bool shown, List<AlternateText> alternateTexts, List<CloseEvent> closeEvents, int iD, bool important, List<Response> responses, bool showAcceptedItems, bool showAlternateTexts, bool showCloseValueAdjustments, bool showCritera, bool showGlobalGoodByeResponses, bool playVoice, int voiceID, bool showGlobalResponses, bool doesNotCountAsMet, bool showResponses, bool showStartValueAdjustments, string speakingToCharacterName, List<StartEvent> startEvents, string text)
     {
-        Shown = shown;
-        AlternateTexts = alternateTexts;
-        CloseEvents = closeEvents;
-        ID = iD;
-        Important = important;
-        Responses = responses;
-        ShowAcceptedItems = showAcceptedItems;
-        ShowAlternateTexts = showAlternateTexts;
-        ShowCloseValueAdjustments = showCloseValueAdjustments;
-        ShowCritera = showCritera;
-        ShowGlobalGoodByeResponses = showGlobalGoodByeResponses;
-        PlayVoice = playVoice;
-        VoiceID = voiceID;
-        ShowGlobalResponses = showGlobalResponses;
-        DoesNotCountAsMet = doesNotCountAsMet;
-        ShowResponses = showResponses;
-        ShowStartValueAdjustments = showStartValueAdjustments;
-        SpeakingToCharacterName = speakingToCharacterName;
-        StartEvents = startEvents;
-        Text = text;
+        SetShown(shown);
+        SetAlternateTexts(alternateTexts);
+        SetCloseEvents(closeEvents);
+        SetID(iD);
+        SetImportant(important);
+        SetResponses(responses);
+        SetShowAcceptedItems(showAcceptedItems);
+        SetShowAlternateTexts(showAlternateTexts);
+        SetShowCloseValueAdjustments(showCloseValueAdjustments);
+        SetShowCritera(showCritera);
+        SetShowGlobalGoodByeResponses(showGlobalGoodByeResponses);
+        SetPlayVoice(playVoice);
+        SetVoiceID(voiceID);
+        SetShowGlobalResponses(showGlobalResponses);
+        SetDoesNotCountAsMet(doesNotCountAsMet);
+        SetShowResponses(showResponses);
+        SetShowStartValueAdjustments(showStartValueAdjustments);
+        SetSpeakingToCharacterName(speakingToCharacterName);
+        SetStartEvents(startEvents);
+        SetText(text);
     }
 
-    public bool Shown { get; set; }
-    public List<AlternateText> AlternateTexts { get; set; }
-    public List<CloseEvent> CloseEvents { get; set; }
-    public int ID { get; set; }
-    public bool Important { get; set; }
-    public List<Response> Responses { get; set; }
-    public bool ShowAcceptedItems { get; set; }
-    public bool ShowAlternateTexts { get; set; }
-    public bool ShowCloseValueAdjustments { get; set; }
-    public bool ShowCritera { get; set; }
-    public bool ShowGlobalGoodByeResponses { get; set; }
-    public bool PlayVoice { get; set; }
-    public int VoiceID { get; set; }
-    public bool ShowGlobalResponses { get; set; }
-    public bool DoesNotCountAsMet { get; set; }
-    public bool ShowResponses { get; set; }
-    public bool ShowStartValueAdjustments { get; set; }
-    public string SpeakingToCharacterName { get; set; }
-    public List<StartEvent> StartEvents { get; set; }
-    public string Text { get; set; }
+    private bool shown;
+
+    public bool GetShown()
+    {
+        return shown;
+    }
+
+    public void SetShown(bool value)
+    {
+        shown = value;
+    }
+
+    private List<AlternateText> alternateTexts;
+
+    public List<AlternateText> GetAlternateTexts()
+    {
+        return alternateTexts;
+    }
+
+    public void SetAlternateTexts(List<AlternateText> value)
+    {
+        alternateTexts = value;
+    }
+
+    private List<CloseEvent> closeEvents;
+
+    public List<CloseEvent> GetCloseEvents()
+    {
+        return closeEvents;
+    }
+
+    public void SetCloseEvents(List<CloseEvent> value)
+    {
+        closeEvents = value;
+    }
+
+    private int iD;
+
+    public int GetID()
+    {
+        return iD;
+    }
+
+    public void SetID(int value)
+    {
+        iD = value;
+    }
+
+    private bool important;
+
+    public bool GetImportant()
+    {
+        return important;
+    }
+
+    public void SetImportant(bool value)
+    {
+        important = value;
+    }
+
+    private List<Response> responses;
+
+    public List<Response> GetResponses()
+    {
+        return responses;
+    }
+
+    public void SetResponses(List<Response> value)
+    {
+        responses = value;
+    }
+
+    private bool showAcceptedItems;
+
+    public bool GetShowAcceptedItems()
+    {
+        return showAcceptedItems;
+    }
+
+    public void SetShowAcceptedItems(bool value)
+    {
+        showAcceptedItems = value;
+    }
+
+    private bool showAlternateTexts;
+
+    public bool GetShowAlternateTexts()
+    {
+        return showAlternateTexts;
+    }
+
+    public void SetShowAlternateTexts(bool value)
+    {
+        showAlternateTexts = value;
+    }
+
+    private bool showCloseValueAdjustments;
+
+    public bool GetShowCloseValueAdjustments()
+    {
+        return showCloseValueAdjustments;
+    }
+
+    public void SetShowCloseValueAdjustments(bool value)
+    {
+        showCloseValueAdjustments = value;
+    }
+
+    private bool showCritera;
+
+    public bool GetShowCritera()
+    {
+        return showCritera;
+    }
+
+    public void SetShowCritera(bool value)
+    {
+        showCritera = value;
+    }
+
+    private bool showGlobalGoodByeResponses;
+
+    public bool GetShowGlobalGoodByeResponses()
+    {
+        return showGlobalGoodByeResponses;
+    }
+
+    public void SetShowGlobalGoodByeResponses(bool value)
+    {
+        showGlobalGoodByeResponses = value;
+    }
+
+    private bool playVoice;
+
+    public bool GetPlayVoice()
+    {
+        return playVoice;
+    }
+
+    public void SetPlayVoice(bool value)
+    {
+        playVoice = value;
+    }
+
+    private int voiceID;
+
+    public int GetVoiceID()
+    {
+        return voiceID;
+    }
+
+    public void SetVoiceID(int value)
+    {
+        voiceID = value;
+    }
+
+    private bool showGlobalResponses;
+
+    public bool GetShowGlobalResponses()
+    {
+        return showGlobalResponses;
+    }
+
+    public void SetShowGlobalResponses(bool value)
+    {
+        showGlobalResponses = value;
+    }
+
+    private bool doesNotCountAsMet;
+
+    public bool GetDoesNotCountAsMet()
+    {
+        return doesNotCountAsMet;
+    }
+
+    public void SetDoesNotCountAsMet(bool value)
+    {
+        doesNotCountAsMet = value;
+    }
+
+    private bool showResponses;
+
+    public bool GetShowResponses()
+    {
+        return showResponses;
+    }
+
+    public void SetShowResponses(bool value)
+    {
+        showResponses = value;
+    }
+
+    private bool showStartValueAdjustments;
+
+    public bool GetShowStartValueAdjustments()
+    {
+        return showStartValueAdjustments;
+    }
+
+    public void SetShowStartValueAdjustments(bool value)
+    {
+        showStartValueAdjustments = value;
+    }
+
+    private string speakingToCharacterName;
+
+    public string GetSpeakingToCharacterName()
+    {
+        return speakingToCharacterName;
+    }
+
+    public void SetSpeakingToCharacterName(string value)
+    {
+        speakingToCharacterName = value;
+    }
+
+    private List<StartEvent> startEvents;
+
+    public List<StartEvent> GetStartEvents()
+    {
+        return startEvents;
+    }
+
+    public void SetStartEvents(List<StartEvent> value)
+    {
+        startEvents = value;
+    }
+
+    private string text;
+
+    public string GetText()
+    {
+        return text;
+    }
+
+    public void SetText(string value)
+    {
+        text = value;
+    }
 }
 
 public class GlobalGoodbyeResponse : Object
@@ -984,36 +4509,169 @@ public class GlobalGoodbyeResponse : Object
     {
     }
 
-    public GlobalGoodbyeResponse(System.IntPtr ptr) : base(ptr) { }
+    public GlobalGoodbyeResponse(System.IntPtr value) : base(value)
+    {
+    }
 
     public GlobalGoodbyeResponse(bool selected, string id, bool alwaysDisplay, int next, int order, List<ResponseCriteria> responseCriteria, List<ResponseEvent> responseEvents, bool show, bool showResponseCriteria, bool showResponseEvents, bool testingCriteraOverride, string text)
     {
-        Selected = selected;
-        Id = id;
-        AlwaysDisplay = alwaysDisplay;
-        Next = next;
-        Order = order;
-        ResponseCriteria = responseCriteria;
-        ResponseEvents = responseEvents;
-        Show = show;
-        ShowResponseCriteria = showResponseCriteria;
-        ShowResponseEvents = showResponseEvents;
-        TestingCriteraOverride = testingCriteraOverride;
-        Text = text;
+        SetSelected(selected);
+        SetId(id);
+        SetAlwaysDisplay(alwaysDisplay);
+        SetNext(next);
+        SetOrder(order);
+        SetResponseCriteria(responseCriteria);
+        SetResponseEvents(responseEvents);
+        SetShow(show);
+        SetShowResponseCriteria(showResponseCriteria);
+        SetShowResponseEvents(showResponseEvents);
+        SetTestingCriteraOverride(testingCriteraOverride);
+        SetText(text);
     }
 
-    public bool Selected { get; set; }
-    public string Id { get; set; }
-    public bool AlwaysDisplay { get; set; }
-    public int Next { get; set; }
-    public int Order { get; set; }
-    public List<ResponseCriteria> ResponseCriteria { get; set; }
-    public List<ResponseEvent> ResponseEvents { get; set; }
-    public bool Show { get; set; }
-    public bool ShowResponseCriteria { get; set; }
-    public bool ShowResponseEvents { get; set; }
-    public bool TestingCriteraOverride { get; set; }
-    public string Text { get; set; }
+    private bool selected;
+
+    public bool GetSelected()
+    {
+        return selected;
+    }
+
+    public void SetSelected(bool value)
+    {
+        selected = value;
+    }
+
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private bool alwaysDisplay;
+
+    public bool GetAlwaysDisplay()
+    {
+        return alwaysDisplay;
+    }
+
+    public void SetAlwaysDisplay(bool value)
+    {
+        alwaysDisplay = value;
+    }
+
+    private int next;
+
+    public int GetNext()
+    {
+        return next;
+    }
+
+    public void SetNext(int value)
+    {
+        next = value;
+    }
+
+    private int order;
+
+    public int GetOrder()
+    {
+        return order;
+    }
+
+    public void SetOrder(int value)
+    {
+        order = value;
+    }
+
+    private List<ResponseCriteria> responseCriteria;
+
+    public List<ResponseCriteria> GetResponseCriteria()
+    {
+        return responseCriteria;
+    }
+
+    public void SetResponseCriteria(List<ResponseCriteria> value)
+    {
+        responseCriteria = value;
+    }
+
+    private List<ResponseEvent> responseEvents;
+
+    public List<ResponseEvent> GetResponseEvents()
+    {
+        return responseEvents;
+    }
+
+    public void SetResponseEvents(List<ResponseEvent> value)
+    {
+        responseEvents = value;
+    }
+
+    private bool show;
+
+    public bool GetShow()
+    {
+        return show;
+    }
+
+    public void SetShow(bool value)
+    {
+        show = value;
+    }
+
+    private bool showResponseCriteria;
+
+    public bool GetShowResponseCriteria()
+    {
+        return showResponseCriteria;
+    }
+
+    public void SetShowResponseCriteria(bool value)
+    {
+        showResponseCriteria = value;
+    }
+
+    private bool showResponseEvents;
+
+    public bool GetShowResponseEvents()
+    {
+        return showResponseEvents;
+    }
+
+    public void SetShowResponseEvents(bool value)
+    {
+        showResponseEvents = value;
+    }
+
+    private bool testingCriteraOverride;
+
+    public bool GetTestingCriteraOverride()
+    {
+        return testingCriteraOverride;
+    }
+
+    public void SetTestingCriteraOverride(bool value)
+    {
+        testingCriteraOverride = value;
+    }
+
+    private string text;
+
+    public string GetText()
+    {
+        return text;
+    }
+
+    public void SetText(string value)
+    {
+        text = value;
+    }
 }
 
 public class GlobalResponse : Object
@@ -1022,36 +4680,169 @@ public class GlobalResponse : Object
     {
     }
 
-    public GlobalResponse(System.IntPtr ptr) : base(ptr) { }
+    public GlobalResponse(System.IntPtr value) : base(value)
+    {
+    }
 
     public GlobalResponse(bool selected, string id, bool alwaysDisplay, int next, int order, List<ResponseCriteria> responseCriteria, List<ResponseEvent> responseEvents, bool show, bool showResponseCriteria, bool showResponseEvents, bool testingCriteraOverride, string text)
     {
-        Selected = selected;
-        Id = id;
-        AlwaysDisplay = alwaysDisplay;
-        Next = next;
-        Order = order;
-        ResponseCriteria = responseCriteria;
-        ResponseEvents = responseEvents;
-        Show = show;
-        ShowResponseCriteria = showResponseCriteria;
-        ShowResponseEvents = showResponseEvents;
-        TestingCriteraOverride = testingCriteraOverride;
-        Text = text;
+        SetSelected(selected);
+        SetId(id);
+        SetAlwaysDisplay(alwaysDisplay);
+        SetNext(next);
+        SetOrder(order);
+        SetResponseCriteria(responseCriteria);
+        SetResponseEvents(responseEvents);
+        SetShow(show);
+        SetShowResponseCriteria(showResponseCriteria);
+        SetShowResponseEvents(showResponseEvents);
+        SetTestingCriteraOverride(testingCriteraOverride);
+        SetText(text);
     }
 
-    public bool Selected { get; set; }
-    public string Id { get; set; }
-    public bool AlwaysDisplay { get; set; }
-    public int Next { get; set; }
-    public int Order { get; set; }
-    public List<ResponseCriteria> ResponseCriteria { get; set; }
-    public List<ResponseEvent> ResponseEvents { get; set; }
-    public bool Show { get; set; }
-    public bool ShowResponseCriteria { get; set; }
-    public bool ShowResponseEvents { get; set; }
-    public bool TestingCriteraOverride { get; set; }
-    public string Text { get; set; }
+    private bool selected;
+
+    public bool GetSelected()
+    {
+        return selected;
+    }
+
+    public void SetSelected(bool value)
+    {
+        selected = value;
+    }
+
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private bool alwaysDisplay;
+
+    public bool GetAlwaysDisplay()
+    {
+        return alwaysDisplay;
+    }
+
+    public void SetAlwaysDisplay(bool value)
+    {
+        alwaysDisplay = value;
+    }
+
+    private int next;
+
+    public int GetNext()
+    {
+        return next;
+    }
+
+    public void SetNext(int value)
+    {
+        next = value;
+    }
+
+    private int order;
+
+    public int GetOrder()
+    {
+        return order;
+    }
+
+    public void SetOrder(int value)
+    {
+        order = value;
+    }
+
+    private List<ResponseCriteria> responseCriteria;
+
+    public List<ResponseCriteria> GetResponseCriteria()
+    {
+        return responseCriteria;
+    }
+
+    public void SetResponseCriteria(List<ResponseCriteria> value)
+    {
+        responseCriteria = value;
+    }
+
+    private List<ResponseEvent> responseEvents;
+
+    public List<ResponseEvent> GetResponseEvents()
+    {
+        return responseEvents;
+    }
+
+    public void SetResponseEvents(List<ResponseEvent> value)
+    {
+        responseEvents = value;
+    }
+
+    private bool show;
+
+    public bool GetShow()
+    {
+        return show;
+    }
+
+    public void SetShow(bool value)
+    {
+        show = value;
+    }
+
+    private bool showResponseCriteria;
+
+    public bool GetShowResponseCriteria()
+    {
+        return showResponseCriteria;
+    }
+
+    public void SetShowResponseCriteria(bool value)
+    {
+        showResponseCriteria = value;
+    }
+
+    private bool showResponseEvents;
+
+    public bool GetShowResponseEvents()
+    {
+        return showResponseEvents;
+    }
+
+    public void SetShowResponseEvents(bool value)
+    {
+        showResponseEvents = value;
+    }
+
+    private bool testingCriteraOverride;
+
+    public bool GetTestingCriteraOverride()
+    {
+        return testingCriteraOverride;
+    }
+
+    public void SetTestingCriteraOverride(bool value)
+    {
+        testingCriteraOverride = value;
+    }
+
+    private string text;
+
+    public string GetText()
+    {
+        return text;
+    }
+
+    public void SetText(string value)
+    {
+        text = value;
+    }
 }
 
 public class BackgroundChatter : Object
@@ -1060,34 +4851,156 @@ public class BackgroundChatter : Object
     {
     }
 
-    public BackgroundChatter(System.IntPtr ptr) : base(ptr) { }
+    public BackgroundChatter(System.IntPtr value) : base(value)
+    {
+    }
 
     public BackgroundChatter(int id, string text, List<Critera> critera, bool isConversationStarter, bool showInInspector, string speakingTo, bool overrideCombatRestriction, List<StartEvent> startEvents, List<Response> responses, string pairedEmote, string defaultImportance)
     {
-        Id = id;
-        Text = text;
-        Critera = critera;
-        IsConversationStarter = isConversationStarter;
-        ShowInInspector = showInInspector;
-        SpeakingTo = speakingTo;
-        OverrideCombatRestriction = overrideCombatRestriction;
-        StartEvents = startEvents;
-        Responses = responses;
-        PairedEmote = pairedEmote;
-        DefaultImportance = defaultImportance;
+        SetId(id);
+        SetText(text);
+        SetCritera(critera);
+        SetIsConversationStarter(isConversationStarter);
+        SetShowInInspector(showInInspector);
+        SetSpeakingTo(speakingTo);
+        SetOverrideCombatRestriction(overrideCombatRestriction);
+        SetStartEvents(startEvents);
+        SetResponses(responses);
+        SetPairedEmote(pairedEmote);
+        SetDefaultImportance(defaultImportance);
     }
 
-    public int Id { get; set; }
-    public string Text { get; set; }
-    public List<Critera> Critera { get; set; }
-    public bool IsConversationStarter { get; set; }
-    public bool ShowInInspector { get; set; }
-    public string SpeakingTo { get; set; }
-    public bool OverrideCombatRestriction { get; set; }
-    public List<StartEvent> StartEvents { get; set; }
-    public List<Response> Responses { get; set; }
-    public string PairedEmote { get; set; }
-    public string DefaultImportance { get; set; }
+    private int id;
+
+    public int GetId()
+    {
+        return id;
+    }
+
+    public void SetId(int value)
+    {
+        id = value;
+    }
+
+    private string text;
+
+    public string GetText()
+    {
+        return text;
+    }
+
+    public void SetText(string value)
+    {
+        text = value;
+    }
+
+    private List<Critera> critera;
+
+    public List<Critera> GetCritera()
+    {
+        return critera;
+    }
+
+    public void SetCritera(List<Critera> value)
+    {
+        critera = value;
+    }
+
+    private bool isConversationStarter;
+
+    public bool GetIsConversationStarter()
+    {
+        return isConversationStarter;
+    }
+
+    public void SetIsConversationStarter(bool value)
+    {
+        isConversationStarter = value;
+    }
+
+    private bool showInInspector;
+
+    public bool GetShowInInspector()
+    {
+        return showInInspector;
+    }
+
+    public void SetShowInInspector(bool value)
+    {
+        showInInspector = value;
+    }
+
+    private string speakingTo;
+
+    public string GetSpeakingTo()
+    {
+        return speakingTo;
+    }
+
+    public void SetSpeakingTo(string value)
+    {
+        speakingTo = value;
+    }
+
+    private bool overrideCombatRestriction;
+
+    public bool GetOverrideCombatRestriction()
+    {
+        return overrideCombatRestriction;
+    }
+
+    public void SetOverrideCombatRestriction(bool value)
+    {
+        overrideCombatRestriction = value;
+    }
+
+    private List<StartEvent> startEvents;
+
+    public List<StartEvent> GetStartEvents()
+    {
+        return startEvents;
+    }
+
+    public void SetStartEvents(List<StartEvent> value)
+    {
+        startEvents = value;
+    }
+
+    private List<Response> responses;
+
+    public List<Response> GetResponses()
+    {
+        return responses;
+    }
+
+    public void SetResponses(List<Response> value)
+    {
+        responses = value;
+    }
+
+    private string pairedEmote;
+
+    public string GetPairedEmote()
+    {
+        return pairedEmote;
+    }
+
+    public void SetPairedEmote(string value)
+    {
+        pairedEmote = value;
+    }
+
+    private string defaultImportance;
+
+    public string GetDefaultImportance()
+    {
+        return defaultImportance;
+    }
+
+    public void SetDefaultImportance(string value)
+    {
+        defaultImportance = value;
+    }
 }
 
 public class Valuee : Object
@@ -1096,16 +5009,39 @@ public class Valuee : Object
     {
     }
 
-    public Valuee(System.IntPtr ptr) : base(ptr) { }
+    public Valuee(System.IntPtr value) : base(value)
+    {
+    }
 
     public Valuee(string type, int value)
     {
-        Type = type;
-        Value = value;
+        SetType(type);
+        SetValue(value);
     }
 
-    public string Type { get; set; }
-    public int Value { get; set; }
+    private string type;
+
+    public string GetType()
+    {
+        return type;
+    }
+
+    public void SetType(string value)
+    {
+        type = value;
+    }
+
+    private int value;
+
+    public int GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(int value)
+    {
+        this.value = value;
+    }
 }
 
 public class Personality : Object
@@ -1114,14 +5050,26 @@ public class Personality : Object
     {
     }
 
-    public Personality(System.IntPtr ptr) : base(ptr) { }
+    public Personality(System.IntPtr value) : base(value)
+    {
+    }
 
     public Personality(List<Valuee> values)
     {
-        Values = values;
+        SetValues(values);
     }
 
-    public List<Valuee> Values { get; set; }
+    private List<Valuee> values;
+
+    public List<Valuee> GetValues()
+    {
+        return values;
+    }
+
+    public void SetValues(List<Valuee> value)
+    {
+        values = value;
+    }
 }
 
 public class ExtendedDetail : Object
@@ -1130,16 +5078,39 @@ public class ExtendedDetail : Object
     {
     }
 
-    public ExtendedDetail(System.IntPtr ptr) : base(ptr) { }
+    public ExtendedDetail(System.IntPtr value) : base(value)
+    {
+    }
 
     public ExtendedDetail(int value, string details)
     {
-        Value = value;
-        Details = details;
+        SetValue(value);
+        SetDetails(details);
     }
 
-    public int Value { get; set; }
-    public string Details { get; set; }
+    private int value;
+
+    public int GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(int value)
+    {
+        this.value = value;
+    }
+
+    private string details;
+
+    public string GetDetails()
+    {
+        return details;
+    }
+
+    public void SetDetails(string value)
+    {
+        details = value;
+    }
 }
 
 public class Quest : Object
@@ -1148,44 +5119,221 @@ public class Quest : Object
     {
     }
 
-    public Quest(System.IntPtr ptr) : base(ptr) { }
+    public Quest(System.IntPtr value) : base(value)
+    {
+    }
 
     public Quest(string characterName, int completeAt, int currentValue, string details, string completedDetails, string failedDetails, List<ExtendedDetail> extendedDetails, string iD, string name, bool obtainOnStart, bool seenByPlayer, bool showProgress, string status, int obtainedDateTime, int lastUpdatedDateTime, bool showInInspector)
     {
-        CharacterName = characterName;
-        CompleteAt = completeAt;
-        CurrentValue = currentValue;
-        Details = details;
-        CompletedDetails = completedDetails;
-        FailedDetails = failedDetails;
-        ExtendedDetails = extendedDetails;
-        ID = iD;
-        Name = name;
-        ObtainOnStart = obtainOnStart;
-        SeenByPlayer = seenByPlayer;
-        ShowProgress = showProgress;
-        Status = status;
-        ObtainedDateTime = obtainedDateTime;
-        LastUpdatedDateTime = lastUpdatedDateTime;
-        ShowInInspector = showInInspector;
+        SetCharacterName(characterName);
+        SetCompleteAt(completeAt);
+        SetCurrentValue(currentValue);
+        SetDetails(details);
+        SetCompletedDetails(completedDetails);
+        SetFailedDetails(failedDetails);
+        SetExtendedDetails(extendedDetails);
+        SetID(iD);
+        SetName(name);
+        SetObtainOnStart(obtainOnStart);
+        SetSeenByPlayer(seenByPlayer);
+        SetShowProgress(showProgress);
+        SetStatus(status);
+        SetObtainedDateTime(obtainedDateTime);
+        SetLastUpdatedDateTime(lastUpdatedDateTime);
+        SetShowInInspector(showInInspector);
     }
 
-    public string CharacterName { get; set; }
-    public int CompleteAt { get; set; }
-    public int CurrentValue { get; set; }
-    public string Details { get; set; }
-    public string CompletedDetails { get; set; }
-    public string FailedDetails { get; set; }
-    public List<ExtendedDetail> ExtendedDetails { get; set; }
-    public string ID { get; set; }
-    public string Name { get; set; }
-    public bool ObtainOnStart { get; set; }
-    public bool SeenByPlayer { get; set; }
-    public bool ShowProgress { get; set; }
-    public string Status { get; set; }
-    public int ObtainedDateTime { get; set; }
-    public int LastUpdatedDateTime { get; set; }
-    public bool ShowInInspector { get; set; }
+    private string characterName;
+
+    public string GetCharacterName()
+    {
+        return characterName;
+    }
+
+    public void SetCharacterName(string value)
+    {
+        characterName = value;
+    }
+
+    private int completeAt;
+
+    public int GetCompleteAt()
+    {
+        return completeAt;
+    }
+
+    public void SetCompleteAt(int value)
+    {
+        completeAt = value;
+    }
+
+    private int currentValue;
+
+    public int GetCurrentValue()
+    {
+        return currentValue;
+    }
+
+    public void SetCurrentValue(int value)
+    {
+        currentValue = value;
+    }
+
+    private string details;
+
+    public string GetDetails()
+    {
+        return details;
+    }
+
+    public void SetDetails(string value)
+    {
+        details = value;
+    }
+
+    private string completedDetails;
+
+    public string GetCompletedDetails()
+    {
+        return completedDetails;
+    }
+
+    public void SetCompletedDetails(string value)
+    {
+        completedDetails = value;
+    }
+
+    private string failedDetails;
+
+    public string GetFailedDetails()
+    {
+        return failedDetails;
+    }
+
+    public void SetFailedDetails(string value)
+    {
+        failedDetails = value;
+    }
+
+    private List<ExtendedDetail> extendedDetails;
+
+    public List<ExtendedDetail> GetExtendedDetails()
+    {
+        return extendedDetails;
+    }
+
+    public void SetExtendedDetails(List<ExtendedDetail> value)
+    {
+        extendedDetails = value;
+    }
+
+    private string iD;
+
+    public string GetID()
+    {
+        return iD;
+    }
+
+    public void SetID(string value)
+    {
+        iD = value;
+    }
+
+    private string name;
+
+    public string GetName()
+    {
+        return name;
+    }
+
+    public void SetName(string value)
+    {
+        name = value;
+    }
+
+    private bool obtainOnStart;
+
+    public bool GetObtainOnStart()
+    {
+        return obtainOnStart;
+    }
+
+    public void SetObtainOnStart(bool value)
+    {
+        obtainOnStart = value;
+    }
+
+    private bool seenByPlayer;
+
+    public bool GetSeenByPlayer()
+    {
+        return seenByPlayer;
+    }
+
+    public void SetSeenByPlayer(bool value)
+    {
+        seenByPlayer = value;
+    }
+
+    private bool showProgress;
+
+    public bool GetShowProgress()
+    {
+        return showProgress;
+    }
+
+    public void SetShowProgress(bool value)
+    {
+        showProgress = value;
+    }
+
+    private string status;
+
+    public string GetStatus()
+    {
+        return status;
+    }
+
+    public void SetStatus(string value)
+    {
+        status = value;
+    }
+
+    private int obtainedDateTime;
+
+    public int GetObtainedDateTime()
+    {
+        return obtainedDateTime;
+    }
+
+    public void SetObtainedDateTime(int value)
+    {
+        obtainedDateTime = value;
+    }
+
+    private int lastUpdatedDateTime;
+
+    public int GetLastUpdatedDateTime()
+    {
+        return lastUpdatedDateTime;
+    }
+
+    public void SetLastUpdatedDateTime(int value)
+    {
+        lastUpdatedDateTime = value;
+    }
+
+    private bool showInInspector;
+
+    public bool GetShowInInspector()
+    {
+        return showInInspector;
+    }
+
+    public void SetShowInInspector(bool value)
+    {
+        showInInspector = value;
+    }
 }
 
 public class Reaction : Object
@@ -1194,38 +5342,182 @@ public class Reaction : Object
     {
     }
 
-    public Reaction(System.IntPtr ptr) : base(ptr) { }
+    public Reaction(System.IntPtr value) : base(value)
+    {
+    }
 
     public Reaction(string id, string characterToReactTo, List<Critera> critera, Double currentIteration, bool enabled, List<Event> events, string key, string name, bool showInInspector, string type, Double updateIteration, string value, string locationTargetOption)
     {
-        Id = id;
-        CharacterToReactTo = characterToReactTo;
-        Critera = critera;
-        CurrentIteration = currentIteration;
-        Enabled = enabled;
-        Events = events;
-        Key = key;
-        Name = name;
-        ShowInInspector = showInInspector;
-        Type = type;
-        UpdateIteration = updateIteration;
-        Value = value;
-        LocationTargetOption = locationTargetOption;
+        SetId(id);
+        SetCharacterToReactTo(characterToReactTo);
+        SetCritera(critera);
+        SetCurrentIteration(currentIteration);
+        SetEnabled(enabled);
+        SetEvents(events);
+        SetKey(key);
+        SetName(name);
+        SetShowInInspector(showInInspector);
+        SetType(type);
+        SetUpdateIteration(updateIteration);
+        SetValue(value);
+        SetLocationTargetOption(locationTargetOption);
     }
 
-    public string Id { get; set; }
-    public string CharacterToReactTo { get; set; }
-    public List<Critera> Critera { get; set; }
-    public Double CurrentIteration { get; set; }
-    public bool Enabled { get; set; }
-    public List<Event> Events { get; set; }
-    public string Key { get; set; }
-    public string Name { get; set; }
-    public bool ShowInInspector { get; set; }
-    public string Type { get; set; }
-    public Double UpdateIteration { get; set; }
-    public string Value { get; set; }
-    public string LocationTargetOption { get; set; }
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private string characterToReactTo;
+
+    public string GetCharacterToReactTo()
+    {
+        return characterToReactTo;
+    }
+
+    public void SetCharacterToReactTo(string value)
+    {
+        characterToReactTo = value;
+    }
+
+    private List<Critera> critera;
+
+    public List<Critera> GetCritera()
+    {
+        return critera;
+    }
+
+    public void SetCritera(List<Critera> value)
+    {
+        critera = value;
+    }
+
+    private Double currentIteration;
+
+    public Double GetCurrentIteration()
+    {
+        return currentIteration;
+    }
+
+    public void SetCurrentIteration(Double value)
+    {
+        currentIteration = value;
+    }
+
+    private bool enabled;
+
+    public bool GetEnabled()
+    {
+        return enabled;
+    }
+
+    public void SetEnabled(bool value)
+    {
+        enabled = value;
+    }
+
+    private List<Event> events;
+
+    public List<Event> GetEvents()
+    {
+        return events;
+    }
+
+    public void SetEvents(List<Event> value)
+    {
+        events = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private string name;
+
+    public string GetName()
+    {
+        return name;
+    }
+
+    public void SetName(string value)
+    {
+        name = value;
+    }
+
+    private bool showInInspector;
+
+    public bool GetShowInInspector()
+    {
+        return showInInspector;
+    }
+
+    public void SetShowInInspector(bool value)
+    {
+        showInInspector = value;
+    }
+
+    private string type;
+
+    public string GetType()
+    {
+        return type;
+    }
+
+    public void SetType(string value)
+    {
+        type = value;
+    }
+
+    private Double updateIteration;
+
+    public Double GetUpdateIteration()
+    {
+        return updateIteration;
+    }
+
+    public void SetUpdateIteration(Double value)
+    {
+        updateIteration = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private string locationTargetOption;
+
+    public string GetLocationTargetOption()
+    {
+        return locationTargetOption;
+    }
+
+    public void SetLocationTargetOption(string value)
+    {
+        locationTargetOption = value;
+    }
 }
 
 public class OnAcceptEvent : Object
@@ -1234,52 +5526,273 @@ public class OnAcceptEvent : Object
     {
     }
 
-    public OnAcceptEvent(System.IntPtr ptr) : base(ptr) { }
+    public OnAcceptEvent(System.IntPtr value) : base(value)
+    {
+    }
 
     public OnAcceptEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
     {
-        SortOrder2 = sortOrder2;
-        Version = version;
-        Id = id;
-        Enabled = enabled;
-        EventType = eventType;
-        Character = character;
-        Character2 = character2;
-        Key = key;
-        Option = option;
-        Option2 = option2;
-        Option3 = option3;
-        Value = value;
-        Value2 = value2;
-        SortOrder = sortOrder;
-        Delay = delay;
-        OriginalDelay = originalDelay;
-        StartDelayTime = startDelayTime;
-        UseConditions = useConditions;
-        DisplayInEditor = displayInEditor;
-        Criteria = criteria;
+        SetSortOrder2(sortOrder2);
+        SetVersion(version);
+        SetId(id);
+        SetEnabled(enabled);
+        SetEventType(eventType);
+        SetCharacter(character);
+        SetCharacter2(character2);
+        SetKey(key);
+        SetOption(option);
+        SetOption2(option2);
+        SetOption3(option3);
+        SetValue(value);
+        SetValue2(value2);
+        SetSortOrder(sortOrder);
+        SetDelay(delay);
+        SetOriginalDelay(originalDelay);
+        SetStartDelayTime(startDelayTime);
+        SetUseConditions(useConditions);
+        SetDisplayInEditor(displayInEditor);
+        SetCriteria(criteria);
     }
 
-    public int SortOrder2 { get; set; }
-    public string Version { get; set; }
-    public string Id { get; set; }
-    public bool Enabled { get; set; }
-    public int EventType { get; set; }
-    public string Character { get; set; }
-    public string Character2 { get; set; }
-    public string Key { get; set; }
-    public int Option { get; set; }
-    public int Option2 { get; set; }
-    public int Option3 { get; set; }
-    public string Value { get; set; }
-    public string Value2 { get; set; }
-    public int SortOrder { get; set; }
-    public Double Delay { get; set; }
-    public Double OriginalDelay { get; set; }
-    public Double StartDelayTime { get; set; }
-    public bool UseConditions { get; set; }
-    public bool DisplayInEditor { get; set; }
-    public List<Criterion> Criteria { get; set; }
+    private int sortOrder2;
+
+    public int GetSortOrder2()
+    {
+        return sortOrder2;
+    }
+
+    public void SetSortOrder2(int value)
+    {
+        sortOrder2 = value;
+    }
+
+    private string version;
+
+    public string GetVersion()
+    {
+        return version;
+    }
+
+    public void SetVersion(string value)
+    {
+        version = value;
+    }
+
+    private string id;
+
+    public string GetId()
+    {
+        return id;
+    }
+
+    public void SetId(string value)
+    {
+        id = value;
+    }
+
+    private bool enabled;
+
+    public bool GetEnabled()
+    {
+        return enabled;
+    }
+
+    public void SetEnabled(bool value)
+    {
+        enabled = value;
+    }
+
+    private int eventType;
+
+    public int GetEventType()
+    {
+        return eventType;
+    }
+
+    public void SetEventType(int value)
+    {
+        eventType = value;
+    }
+
+    private string character;
+
+    public string GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(string value)
+    {
+        character = value;
+    }
+
+    private string character2;
+
+    public string GetCharacter2()
+    {
+        return character2;
+    }
+
+    public void SetCharacter2(string value)
+    {
+        character2 = value;
+    }
+
+    private string key;
+
+    public string GetKey()
+    {
+        return key;
+    }
+
+    public void SetKey(string value)
+    {
+        key = value;
+    }
+
+    private int option;
+
+    public int GetOption()
+    {
+        return option;
+    }
+
+    public void SetOption(int value)
+    {
+        option = value;
+    }
+
+    private int option2;
+
+    public int GetOption2()
+    {
+        return option2;
+    }
+
+    public void SetOption2(int value)
+    {
+        option2 = value;
+    }
+
+    private int option3;
+
+    public int GetOption3()
+    {
+        return option3;
+    }
+
+    public void SetOption3(int value)
+    {
+        option3 = value;
+    }
+
+    private string value;
+
+    public string GetValue()
+    {
+        return value;
+    }
+
+    public void SetValue(string value)
+    {
+        this.value = value;
+    }
+
+    private string value2;
+
+    public string GetValue2()
+    {
+        return value2;
+    }
+
+    public void SetValue2(string value)
+    {
+        value2 = value;
+    }
+
+    private int sortOrder;
+
+    public int GetSortOrder()
+    {
+        return sortOrder;
+    }
+
+    public void SetSortOrder(int value)
+    {
+        sortOrder = value;
+    }
+
+    private Double delay;
+
+    public Double GetDelay()
+    {
+        return delay;
+    }
+
+    public void SetDelay(Double value)
+    {
+        delay = value;
+    }
+
+    private Double originalDelay;
+
+    public Double GetOriginalDelay()
+    {
+        return originalDelay;
+    }
+
+    public void SetOriginalDelay(Double value)
+    {
+        originalDelay = value;
+    }
+
+    private Double startDelayTime;
+
+    public Double GetStartDelayTime()
+    {
+        return startDelayTime;
+    }
+
+    public void SetStartDelayTime(Double value)
+    {
+        startDelayTime = value;
+    }
+
+    private bool useConditions;
+
+    public bool GetUseConditions()
+    {
+        return useConditions;
+    }
+
+    public void SetUseConditions(bool value)
+    {
+        useConditions = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
+
+    private List<Criterion> criteria;
+
+    public List<Criterion> GetCriteria()
+    {
+        return criteria;
+    }
+
+    public void SetCriteria(List<Criterion> value)
+    {
+        criteria = value;
+    }
 }
 
 public class StoryItem : Object
@@ -1288,22 +5801,78 @@ public class StoryItem : Object
     {
     }
 
-    public StoryItem(System.IntPtr ptr) : base(ptr) { }
+    public StoryItem(System.IntPtr value) : base(value)
+    {
+    }
 
     public StoryItem(List<Critera> critera, string itemName, List<OnAcceptEvent> onAcceptEvents, List<Object> onRefuseEvents, bool displayInEditor)
     {
-        Critera = critera;
-        ItemName = itemName;
-        OnAcceptEvents = onAcceptEvents;
-        OnRefuseEvents = onRefuseEvents;
-        DisplayInEditor = displayInEditor;
+        SetCritera(critera);
+        SetItemName(itemName);
+        SetOnAcceptEvents(onAcceptEvents);
+        SetOnRefuseEvents(onRefuseEvents);
+        SetDisplayInEditor(displayInEditor);
     }
 
-    public List<Critera> Critera { get; set; }
-    public string ItemName { get; set; }
-    public List<OnAcceptEvent> OnAcceptEvents { get; set; }
-    public List<Object> OnRefuseEvents { get; set; }
-    public bool DisplayInEditor { get; set; }
+    private List<Critera> critera;
+
+    public List<Critera> GetCritera()
+    {
+        return critera;
+    }
+
+    public void SetCritera(List<Critera> value)
+    {
+        critera = value;
+    }
+
+    private string itemName;
+
+    public string GetItemName()
+    {
+        return itemName;
+    }
+
+    public void SetItemName(string value)
+    {
+        itemName = value;
+    }
+
+    private List<OnAcceptEvent> onAcceptEvents;
+
+    public List<OnAcceptEvent> GetOnAcceptEvents()
+    {
+        return onAcceptEvents;
+    }
+
+    public void SetOnAcceptEvents(List<OnAcceptEvent> value)
+    {
+        onAcceptEvents = value;
+    }
+
+    private List<Object> onRefuseEvents;
+
+    public List<Object> GetOnRefuseEvents()
+    {
+        return onRefuseEvents;
+    }
+
+    public void SetOnRefuseEvents(List<Object> value)
+    {
+        onRefuseEvents = value;
+    }
+
+    private bool displayInEditor;
+
+    public bool GetDisplayInEditor()
+    {
+        return displayInEditor;
+    }
+
+    public void SetDisplayInEditor(bool value)
+    {
+        displayInEditor = value;
+    }
 }
 
 public class CharacterStory : Object
@@ -1312,40 +5881,206 @@ public class CharacterStory : Object
     {
     }
 
-    public CharacterStory(System.IntPtr ptr) : base(ptr) { }
+    public CharacterStory(System.IntPtr value) : base(value)
+    {
+    }
 
     public CharacterStory(string characterName, string currentAspect, int dialogueID, List<Dialogue> dialogues, List<GlobalGoodbyeResponse> globalGoodbyeResponses, List<GlobalResponse> globalResponses, string housePartyVersion, List<BackgroundChatter> backgroundChatter, bool lockCharacterSelection, Personality personality, List<Quest> quests, List<Reaction> reactions, List<StoryItem> storyItems, List<Object> characterItemGroupInteractions, List<string> storyValues)
     {
-        CharacterName = characterName;
-        CurrentAspect = currentAspect;
-        DialogueID = dialogueID;
-        Dialogues = dialogues;
-        GlobalGoodbyeResponses = globalGoodbyeResponses;
-        GlobalResponses = globalResponses;
-        HousePartyVersion = housePartyVersion;
-        BackgroundChatter = backgroundChatter;
-        LockCharacterSelection = lockCharacterSelection;
-        Personality = personality;
-        Quests = quests;
-        Reactions = reactions;
-        StoryItems = storyItems;
-        CharacterItemGroupInteractions = characterItemGroupInteractions;
-        StoryValues = storyValues;
+        SetCharacterName(characterName);
+        SetCurrentAspect(currentAspect);
+        SetDialogueID(dialogueID);
+        SetDialogues(dialogues);
+        SetGlobalGoodbyeResponses(globalGoodbyeResponses);
+        SetGlobalResponses(globalResponses);
+        SetHousePartyVersion(housePartyVersion);
+        SetBackgroundChatter(backgroundChatter);
+        SetLockCharacterSelection(lockCharacterSelection);
+        SetPersonality(personality);
+        SetQuests(quests);
+        SetReactions(reactions);
+        SetStoryItems(storyItems);
+        SetCharacterItemGroupInteractions(characterItemGroupInteractions);
+        SetStoryValues(storyValues);
     }
 
-    public string CharacterName { get; set; }
-    public string CurrentAspect { get; set; }
-    public int DialogueID { get; set; }
-    public List<Dialogue> Dialogues { get; set; }
-    public List<GlobalGoodbyeResponse> GlobalGoodbyeResponses { get; set; }
-    public List<GlobalResponse> GlobalResponses { get; set; }
-    public string HousePartyVersion { get; set; }
-    public List<BackgroundChatter> BackgroundChatter { get; set; }
-    public bool LockCharacterSelection { get; set; }
-    public Personality Personality { get; set; }
-    public List<Quest> Quests { get; set; }
-    public List<Reaction> Reactions { get; set; }
-    public List<StoryItem> StoryItems { get; set; }
-    public List<Object> CharacterItemGroupInteractions { get; set; }
-    public List<string> StoryValues { get; set; }
+    private string characterName;
+
+    public string GetCharacterName()
+    {
+        return characterName;
+    }
+
+    public void SetCharacterName(string value)
+    {
+        characterName = value;
+    }
+
+    private string currentAspect;
+
+    public string GetCurrentAspect()
+    {
+        return currentAspect;
+    }
+
+    public void SetCurrentAspect(string value)
+    {
+        currentAspect = value;
+    }
+
+    private int dialogueID;
+
+    public int GetDialogueID()
+    {
+        return dialogueID;
+    }
+
+    public void SetDialogueID(int value)
+    {
+        dialogueID = value;
+    }
+
+    private List<Dialogue> dialogues;
+
+    public List<Dialogue> GetDialogues()
+    {
+        return dialogues;
+    }
+
+    public void SetDialogues(List<Dialogue> value)
+    {
+        dialogues = value;
+    }
+
+    private List<GlobalGoodbyeResponse> globalGoodbyeResponses;
+
+    public List<GlobalGoodbyeResponse> GetGlobalGoodbyeResponses()
+    {
+        return globalGoodbyeResponses;
+    }
+
+    public void SetGlobalGoodbyeResponses(List<GlobalGoodbyeResponse> value)
+    {
+        globalGoodbyeResponses = value;
+    }
+
+    private List<GlobalResponse> globalResponses;
+
+    public List<GlobalResponse> GetGlobalResponses()
+    {
+        return globalResponses;
+    }
+
+    public void SetGlobalResponses(List<GlobalResponse> value)
+    {
+        globalResponses = value;
+    }
+
+    private string housePartyVersion;
+
+    public string GetHousePartyVersion()
+    {
+        return housePartyVersion;
+    }
+
+    public void SetHousePartyVersion(string value)
+    {
+        housePartyVersion = value;
+    }
+
+    private List<BackgroundChatter> backgroundChatter;
+
+    public List<BackgroundChatter> GetBackgroundChatter()
+    {
+        return backgroundChatter;
+    }
+
+    public void SetBackgroundChatter(List<BackgroundChatter> value)
+    {
+        backgroundChatter = value;
+    }
+
+    private bool lockCharacterSelection;
+
+    public bool GetLockCharacterSelection()
+    {
+        return lockCharacterSelection;
+    }
+
+    public void SetLockCharacterSelection(bool value)
+    {
+        lockCharacterSelection = value;
+    }
+
+    private Personality personality;
+
+    public Personality GetPersonality()
+    {
+        return personality;
+    }
+
+    public void SetPersonality(Personality value)
+    {
+        personality = value;
+    }
+
+    private List<Quest> quests;
+
+    public List<Quest> GetQuests()
+    {
+        return quests;
+    }
+
+    public void SetQuests(List<Quest> value)
+    {
+        quests = value;
+    }
+
+    private List<Reaction> reactions;
+
+    public List<Reaction> GetReactions()
+    {
+        return reactions;
+    }
+
+    public void SetReactions(List<Reaction> value)
+    {
+        reactions = value;
+    }
+
+    private List<StoryItem> storyItems;
+
+    public List<StoryItem> GetStoryItems()
+    {
+        return storyItems;
+    }
+
+    public void SetStoryItems(List<StoryItem> value)
+    {
+        storyItems = value;
+    }
+
+    private List<Object> characterItemGroupInteractions;
+
+    public List<Object> GetCharacterItemGroupInteractions()
+    {
+        return characterItemGroupInteractions;
+    }
+
+    public void SetCharacterItemGroupInteractions(List<Object> value)
+    {
+        characterItemGroupInteractions = value;
+    }
+
+    private List<string> storyValues;
+
+    public List<string> GetStoryValues()
+    {
+        return storyValues;
+    }
+
+    public void SetStoryValues(List<string> value)
+    {
+        storyValues = value;
+    }
 }

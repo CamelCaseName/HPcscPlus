@@ -1,19 +1,23 @@
 ﻿using EekCharacterEngine.Interaction;
 using Il2CppSystem;
 using Il2CppSystem.Collections.Generic;
+using UnhollowerRuntimeLib;
 
+//todo add constructor with no args,extending base construcotr and defining cosntructor body like this 
+//public MyCustomComponent() : base(ClassInjector.DerivedConstructorPointer<MyCustomComponent>()) => ClassInjector.DerivedConstructorBody(this);
+//to all classes here
 public class Criterion : Object
 {
-    public Criterion()
-    {
-    }
+    public Criterion() : base(ClassInjector.DerivedConstructorPointer<Criterion>()) => ClassInjector.DerivedConstructorBody(this);
 
     public Criterion(System.IntPtr value) : base(value)
     {
     }
 
-    public Criterion(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, EekEvents.ItemComparisonTypes itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option)
+    public Criterion(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, EekEvents.ItemComparisonTypes itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option) : base(ClassInjector.DerivedConstructorPointer<Criterion>())
     {
+        ClassInjector.DerivedConstructorBody(this);
+
         SetBoolValue(boolValue);
         SetCharacter(character);
         SetCharacter2(character2);
@@ -279,16 +283,16 @@ public class Criterion : Object
 
 public class OnTakeActionEvent : Object
 {
-    public OnTakeActionEvent()
-    {
-    }
+
+    public OnTakeActionEvent() : base(ClassInjector.DerivedConstructorPointer<OnTakeActionEvent>()) => ClassInjector.DerivedConstructorBody(this);
 
     public OnTakeActionEvent(System.IntPtr value) : base(value)
     {
     }
 
-    public OnTakeActionEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
+    public OnTakeActionEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria) : base(ClassInjector.DerivedConstructorPointer<OnTakeActionEvent>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetSortOrder2(sortOrder2);
         SetVersion(version);
         SetId(id);
@@ -554,16 +558,16 @@ public class OnTakeActionEvent : Object
 
 public class ItemAction : Object
 {
-    public ItemAction()
-    {
-    }
+
+    public ItemAction() : base(ClassInjector.DerivedConstructorPointer<ItemAction>()) => ClassInjector.DerivedConstructorBody(this);
 
     public ItemAction(System.IntPtr value) : base(value)
     {
     }
 
-    public ItemAction(string actionName, List<Criterion> criteria, bool displayInEditor, List<OnTakeActionEvent> onTakeActionEvents)
+    public ItemAction(string actionName, List<Criterion> criteria, bool displayInEditor, List<OnTakeActionEvent> onTakeActionEvents) : base(ClassInjector.DerivedConstructorPointer<ItemAction>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetActionName(actionName);
         SetCriteria(criteria);
         SetDisplayInEditor(displayInEditor);
@@ -621,16 +625,16 @@ public class ItemAction : Object
 
 public class OnSuccessEvent : Object
 {
-    public OnSuccessEvent()
-    {
-    }
+
+    public OnSuccessEvent() : base(ClassInjector.DerivedConstructorPointer<OnSuccessEvent>()) => ClassInjector.DerivedConstructorBody(this);
 
     public OnSuccessEvent(System.IntPtr value) : base(value)
     {
     }
 
-    public OnSuccessEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
+    public OnSuccessEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria) : base(ClassInjector.DerivedConstructorPointer<OnSuccessEvent>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetSortOrder2(sortOrder2);
         SetVersion(version);
         SetId(id);
@@ -896,16 +900,16 @@ public class OnSuccessEvent : Object
 
 public class UseWith : Object
 {
-    public UseWith()
-    {
-    }
+
+    public UseWith() : base(ClassInjector.DerivedConstructorPointer<UseWith>()) => ClassInjector.DerivedConstructorBody(this);
 
     public UseWith(System.IntPtr value) : base(value)
     {
     }
 
-    public UseWith(List<Criterion> criteria, string customCantDoThatMessage, bool displayInEditor, string itemName, List<OnSuccessEvent> onSuccessEvents)
+    public UseWith(List<Criterion> criteria, string customCantDoThatMessage, bool displayInEditor, string itemName, List<OnSuccessEvent> onSuccessEvents) : base(ClassInjector.DerivedConstructorPointer<UseWith>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetCriteria(criteria);
         SetCustomCantDoThatMessage(customCantDoThatMessage);
         SetDisplayInEditor(displayInEditor);
@@ -976,16 +980,16 @@ public class UseWith : Object
 
 public class ItemOverride : Object
 {
-    public ItemOverride()
-    {
-    }
+
+    public ItemOverride() : base(ClassInjector.DerivedConstructorPointer<ItemOverride>()) => ClassInjector.DerivedConstructorBody(this);
 
     public ItemOverride(System.IntPtr value) : base(value)
     {
     }
 
-    public ItemOverride(string id, bool displayInEditor, string displayName, List<ItemAction> itemActions, string itemName, List<UseWith> useWiths, bool useDefaultRadialOptions)
+    public ItemOverride(string id, bool displayInEditor, string displayName, List<ItemAction> itemActions, string itemName, List<UseWith> useWiths, bool useDefaultRadialOptions) : base(ClassInjector.DerivedConstructorPointer<ItemOverride>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetId(id);
         SetDisplayInEditor(displayInEditor);
         SetDisplayName(displayName);
@@ -1082,16 +1086,16 @@ public class ItemOverride : Object
 
 public class ItemGroupBehavior : Object
 {
-    public ItemGroupBehavior()
-    {
-    }
+
+    public ItemGroupBehavior() : base(ClassInjector.DerivedConstructorPointer<ItemGroupBehavior>()) => ClassInjector.DerivedConstructorBody(this);
 
     public ItemGroupBehavior(System.IntPtr value) : base(value)
     {
     }
 
-    public ItemGroupBehavior(string id, string name, string groupName, bool displayInEditor, List<ItemAction> itemActions, List<string> useWiths)
+    public ItemGroupBehavior(string id, string name, string groupName, bool displayInEditor, List<ItemAction> itemActions, List<string> useWiths) : base(ClassInjector.DerivedConstructorPointer<ItemGroupBehavior>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetId(id);
         SetName(name);
         SetGroupName(groupName);
@@ -1175,16 +1179,16 @@ public class ItemGroupBehavior : Object
 
 public class Achievement : Object
 {
-    public Achievement()
-    {
-    }
+
+    public Achievement() : base(ClassInjector.DerivedConstructorPointer<Achievement>()) => ClassInjector.DerivedConstructorBody(this);
 
     public Achievement(System.IntPtr value) : base(value)
     {
     }
 
-    public Achievement(string description, string id, string image, string name, bool showInEditor, string steamName)
+    public Achievement(string description, string id, string image, string name, bool showInEditor, string steamName) : base(ClassInjector.DerivedConstructorPointer<Achievement>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetDescription(description);
         SetId(id);
         SetImage(image);
@@ -1268,16 +1272,16 @@ public class Achievement : Object
 
 public class CriteriaList2 : Object
 {
-    public CriteriaList2()
-    {
-    }
+
+    public CriteriaList2() : base(ClassInjector.DerivedConstructorPointer<CriteriaList2>()) => ClassInjector.DerivedConstructorBody(this);
 
     public CriteriaList2(System.IntPtr value) : base(value)
     {
     }
 
-    public CriteriaList2(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, EekEvents.ItemComparisonTypes itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option)
+    public CriteriaList2(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, EekEvents.ItemComparisonTypes itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option) : base(ClassInjector.DerivedConstructorPointer<CriteriaList2>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetBoolValue(boolValue);
         SetCharacter(character);
         SetCharacter2(character2);
@@ -1543,16 +1547,16 @@ public class CriteriaList2 : Object
 
 public class CriteriaList1 : Object
 {
-    public CriteriaList1()
-    {
-    }
+
+    public CriteriaList1() : base(ClassInjector.DerivedConstructorPointer<CriteriaList1>()) => ClassInjector.DerivedConstructorBody(this);
 
     public CriteriaList1(System.IntPtr value) : base(value)
     {
     }
 
-    public CriteriaList1(List<CriteriaList2> criteriaList)
+    public CriteriaList1(List<CriteriaList2> criteriaList) : base(ClassInjector.DerivedConstructorPointer<CriteriaList1>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         CriteriaList = criteriaList;
     }
 
@@ -1561,16 +1565,16 @@ public class CriteriaList1 : Object
 
 public class CriteriaGroup : Object
 {
-    public CriteriaGroup()
-    {
-    }
+
+    public CriteriaGroup() : base(ClassInjector.DerivedConstructorPointer<CriteriaGroup>()) => ClassInjector.DerivedConstructorBody(this);
 
     public CriteriaGroup(System.IntPtr value) : base(value)
     {
     }
 
-    public CriteriaGroup(string id, string name, bool displayInEditor, string passCondition, List<CriteriaList1> criteriaList)
+    public CriteriaGroup(string id, string name, bool displayInEditor, string passCondition, List<CriteriaList1> criteriaList) : base(ClassInjector.DerivedConstructorPointer<CriteriaGroup>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetId(id);
         SetName(name);
         SetDisplayInEditor(displayInEditor);
@@ -1641,16 +1645,16 @@ public class CriteriaGroup : Object
 
 public class ItemGroup : Object
 {
-    public ItemGroup()
-    {
-    }
+
+    public ItemGroup() : base(ClassInjector.DerivedConstructorPointer<ItemGroup>()) => ClassInjector.DerivedConstructorBody(this);
 
     public ItemGroup(System.IntPtr value) : base(value)
     {
     }
 
-    public ItemGroup(string id, string name, bool displayInEditor, List<string> itemsInGroup)
+    public ItemGroup(string id, string name, bool displayInEditor, List<string> itemsInGroup) : base(ClassInjector.DerivedConstructorPointer<ItemGroup>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetId(id);
         SetName(name);
         SetDisplayInEditor(displayInEditor);
@@ -1708,16 +1712,16 @@ public class ItemGroup : Object
 
 public class GameStartEvent : Object
 {
-    public GameStartEvent()
-    {
-    }
+
+    public GameStartEvent() : base(ClassInjector.DerivedConstructorPointer<GameStartEvent>()) => ClassInjector.DerivedConstructorBody(this);
 
     public GameStartEvent(System.IntPtr value) : base(value)
     {
     }
 
-    public GameStartEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
+    public GameStartEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria) : base(ClassInjector.DerivedConstructorPointer<GameStartEvent>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetSortOrder2(sortOrder2);
         SetVersion(version);
         SetId(id);
@@ -1983,16 +1987,16 @@ public class GameStartEvent : Object
 
 public class Critera : Object
 {
-    public Critera()
-    {
-    }
+
+    public Critera() : base(ClassInjector.DerivedConstructorPointer<Critera>()) => ClassInjector.DerivedConstructorBody(this);
 
     public Critera(System.IntPtr value) : base(value)
     {
     }
 
-    public Critera(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, EekEvents.ItemComparisonTypes itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option)
+    public Critera(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, EekEvents.ItemComparisonTypes itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option) : base(ClassInjector.DerivedConstructorPointer<Critera>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetBoolValue(boolValue);
         SetCharacter(character);
         SetCharacter2(character2);
@@ -2258,16 +2262,16 @@ public class Critera : Object
 
 public class Event : Object
 {
-    public Event()
-    {
-    }
+
+    public Event() : base(ClassInjector.DerivedConstructorPointer<Event>()) => ClassInjector.DerivedConstructorBody(this);
 
     public Event(System.IntPtr value) : base(value)
     {
     }
 
-    public Event(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
+    public Event(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria) : base(ClassInjector.DerivedConstructorPointer<Event>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetSortOrder2(sortOrder2);
         SetVersion(version);
         SetId(id);
@@ -2533,16 +2537,16 @@ public class Event : Object
 
 public class PlayerReaction : Object
 {
-    public PlayerReaction()
-    {
-    }
+
+    public PlayerReaction() : base(ClassInjector.DerivedConstructorPointer<PlayerReaction>()) => ClassInjector.DerivedConstructorBody(this);
 
     public PlayerReaction(System.IntPtr value) : base(value)
     {
     }
 
-    public PlayerReaction(string id, string characterToReactTo, List<Critera> critera, Double currentIteration, bool enabled, List<Event> events, string key, string name, bool showInInspector, string type, Double updateIteration, string value, string locationTargetOption)
+    public PlayerReaction(string id, string characterToReactTo, List<Critera> critera, Double currentIteration, bool enabled, List<Event> events, string key, string name, bool showInInspector, string type, Double updateIteration, string value, string locationTargetOption) : base(ClassInjector.DerivedConstructorPointer<PlayerReaction>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetId(id);
         SetCharacterToReactTo(characterToReactTo);
         SetCritera(critera);
@@ -2717,16 +2721,16 @@ public class PlayerReaction : Object
 
 public class MainStory : Object
 {
-    public MainStory()
-    {
-    }
+
+    public MainStory() : base(ClassInjector.DerivedConstructorPointer<MainStory>()) => ClassInjector.DerivedConstructorBody(this);
 
     public MainStory(System.IntPtr value) : base(value)
     {
     }
 
-    public MainStory(string housePartyVersion, List<ItemOverride> itemOverrides, List<ItemGroupBehavior> itemGroupBehaviors, List<Achievement> achievements, List<string> playerValues, List<CriteriaGroup> criteriaGroups, List<ItemGroup> itemGroups, List<GameStartEvent> gameStartEvents, List<PlayerReaction> playerReactions)
+    public MainStory(string housePartyVersion, List<ItemOverride> itemOverrides, List<ItemGroupBehavior> itemGroupBehaviors, List<Achievement> achievements, List<string> playerValues, List<CriteriaGroup> criteriaGroups, List<ItemGroup> itemGroups, List<GameStartEvent> gameStartEvents, List<PlayerReaction> playerReactions) : base(ClassInjector.DerivedConstructorPointer<MainStory>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetHousePartyVersion(housePartyVersion);
         SetItemOverrides(itemOverrides);
         SetItemGroupBehaviors(itemGroupBehaviors);
@@ -2853,16 +2857,16 @@ public class MainStory : Object
 
 public class AlternateText : Object
 {
-    public AlternateText()
-    {
-    }
+
+    public AlternateText() : base(ClassInjector.DerivedConstructorPointer<AlternateText>()) => ClassInjector.DerivedConstructorBody(this);
 
     public AlternateText(System.IntPtr value) : base(value)
     {
     }
 
-    public AlternateText(List<Critera> critera, int order, bool show, string text)
+    public AlternateText(List<Critera> critera, int order, bool show, string text) : base(ClassInjector.DerivedConstructorPointer<AlternateText>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetCritera(critera);
         SetOrder(order);
         SetShow(show);
@@ -2920,16 +2924,16 @@ public class AlternateText : Object
 
 public class CloseEvent : Object
 {
-    public CloseEvent()
-    {
-    }
+
+    public CloseEvent() : base(ClassInjector.DerivedConstructorPointer<CloseEvent>()) => ClassInjector.DerivedConstructorBody(this);
 
     public CloseEvent(System.IntPtr value) : base(value)
     {
     }
 
-    public CloseEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
+    public CloseEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria) : base(ClassInjector.DerivedConstructorPointer<CloseEvent>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetSortOrder2(sortOrder2);
         SetVersion(version);
         SetId(id);
@@ -3195,16 +3199,16 @@ public class CloseEvent : Object
 
 public class ResponseCriteria : Object
 {
-    public ResponseCriteria()
-    {
-    }
+
+    public ResponseCriteria() : base(ClassInjector.DerivedConstructorPointer<ResponseCriteria>()) => ClassInjector.DerivedConstructorBody(this);
 
     public ResponseCriteria(System.IntPtr value) : base(value)
     {
     }
 
-    public ResponseCriteria(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, EekEvents.ItemComparisonTypes itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option)
+    public ResponseCriteria(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, EekEvents.ItemComparisonTypes itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option) : base(ClassInjector.DerivedConstructorPointer<ResponseCriteria>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetBoolValue(boolValue);
         SetCharacter(character);
         SetCharacter2(character2);
@@ -3470,16 +3474,16 @@ public class ResponseCriteria : Object
 
 public class ResponseEvent : Object
 {
-    public ResponseEvent()
-    {
-    }
+
+    public ResponseEvent() : base(ClassInjector.DerivedConstructorPointer<ResponseEvent>()) => ClassInjector.DerivedConstructorBody(this);
 
     public ResponseEvent(System.IntPtr value) : base(value)
     {
     }
 
-    public ResponseEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
+    public ResponseEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria) : base(ClassInjector.DerivedConstructorPointer<ResponseEvent>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetSortOrder2(sortOrder2);
         SetVersion(version);
         SetId(id);
@@ -3745,16 +3749,16 @@ public class ResponseEvent : Object
 
 public class Response : Object
 {
-    public Response()
-    {
-    }
+
+    public Response() : base(ClassInjector.DerivedConstructorPointer<Response>()) => ClassInjector.DerivedConstructorBody(this);
 
     public Response(System.IntPtr value) : base(value)
     {
     }
 
-    public Response(bool selected, string id, bool alwaysDisplay, int next, int order, List<ResponseCriteria> responseCriteria, List<ResponseEvent> responseEvents, bool show, bool showResponseCriteria, bool showResponseEvents, bool testingCriteraOverride, string text, string characterName, int chatterId, bool showInInspector)
+    public Response(bool selected, string id, bool alwaysDisplay, int next, int order, List<ResponseCriteria> responseCriteria, List<ResponseEvent> responseEvents, bool show, bool showResponseCriteria, bool showResponseEvents, bool testingCriteraOverride, string text, string characterName, int chatterId, bool showInInspector) : base(ClassInjector.DerivedConstructorPointer<Response>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetSelected(selected);
         SetId(id);
         SetAlwaysDisplay(alwaysDisplay);
@@ -3955,16 +3959,16 @@ public class Response : Object
 
 public class StartEvent : Object
 {
-    public StartEvent()
-    {
-    }
+
+    public StartEvent() : base(ClassInjector.DerivedConstructorPointer<StartEvent>()) => ClassInjector.DerivedConstructorBody(this);
 
     public StartEvent(System.IntPtr value) : base(value)
     {
     }
 
-    public StartEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
+    public StartEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria) : base(ClassInjector.DerivedConstructorPointer<StartEvent>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetSortOrder2(sortOrder2);
         SetVersion(version);
         SetId(id);
@@ -4230,16 +4234,15 @@ public class StartEvent : Object
 
 public class Dialogue : Object
 {
-    public Dialogue()
-    {
-    }
+    public Dialogue() : base(ClassInjector.DerivedConstructorPointer<Dialogue>()) => ClassInjector.DerivedConstructorBody(this);
 
     public Dialogue(System.IntPtr value) : base(value)
     {
     }
 
-    public Dialogue(bool shown, List<AlternateText> alternateTexts, List<CloseEvent> closeEvents, int iD, bool important, List<Response> responses, bool showAcceptedItems, bool showAlternateTexts, bool showCloseValueAdjustments, bool showCritera, bool showGlobalGoodByeResponses, bool playVoice, int voiceID, bool showGlobalResponses, bool doesNotCountAsMet, bool showResponses, bool showStartValueAdjustments, string speakingToCharacterName, List<StartEvent> startEvents, string text)
+    public Dialogue(bool shown, List<AlternateText> alternateTexts, List<CloseEvent> closeEvents, int iD, bool important, List<Response> responses, bool showAcceptedItems, bool showAlternateTexts, bool showCloseValueAdjustments, bool showCritera, bool showGlobalGoodByeResponses, bool playVoice, int voiceID, bool showGlobalResponses, bool doesNotCountAsMet, bool showResponses, bool showStartValueAdjustments, string speakingToCharacterName, List<StartEvent> startEvents, string text) : base(ClassInjector.DerivedConstructorPointer<Dialogue>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetShown(shown);
         SetAlternateTexts(alternateTexts);
         SetCloseEvents(closeEvents);
@@ -4505,16 +4508,15 @@ public class Dialogue : Object
 
 public class GlobalGoodbyeResponse : Object
 {
-    public GlobalGoodbyeResponse()
-    {
-    }
+    public GlobalGoodbyeResponse() : base(ClassInjector.DerivedConstructorPointer<GlobalGoodbyeResponse>()) => ClassInjector.DerivedConstructorBody(this);
 
     public GlobalGoodbyeResponse(System.IntPtr value) : base(value)
     {
     }
 
-    public GlobalGoodbyeResponse(bool selected, string id, bool alwaysDisplay, int next, int order, List<ResponseCriteria> responseCriteria, List<ResponseEvent> responseEvents, bool show, bool showResponseCriteria, bool showResponseEvents, bool testingCriteraOverride, string text)
+    public GlobalGoodbyeResponse(bool selected, string id, bool alwaysDisplay, int next, int order, List<ResponseCriteria> responseCriteria, List<ResponseEvent> responseEvents, bool show, bool showResponseCriteria, bool showResponseEvents, bool testingCriteraOverride, string text) : base(ClassInjector.DerivedConstructorPointer<GlobalGoodbyeResponse>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetSelected(selected);
         SetId(id);
         SetAlwaysDisplay(alwaysDisplay);
@@ -4676,16 +4678,15 @@ public class GlobalGoodbyeResponse : Object
 
 public class GlobalResponse : Object
 {
-    public GlobalResponse()
-    {
-    }
+    public GlobalResponse() : base(ClassInjector.DerivedConstructorPointer<GlobalResponse>()) => ClassInjector.DerivedConstructorBody(this);
 
     public GlobalResponse(System.IntPtr value) : base(value)
     {
     }
 
-    public GlobalResponse(bool selected, string id, bool alwaysDisplay, int next, int order, List<ResponseCriteria> responseCriteria, List<ResponseEvent> responseEvents, bool show, bool showResponseCriteria, bool showResponseEvents, bool testingCriteraOverride, string text)
+    public GlobalResponse(bool selected, string id, bool alwaysDisplay, int next, int order, List<ResponseCriteria> responseCriteria, List<ResponseEvent> responseEvents, bool show, bool showResponseCriteria, bool showResponseEvents, bool testingCriteraOverride, string text) : base(ClassInjector.DerivedConstructorPointer<GlobalResponse>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetSelected(selected);
         SetId(id);
         SetAlwaysDisplay(alwaysDisplay);
@@ -4847,16 +4848,15 @@ public class GlobalResponse : Object
 
 public class BackgroundChatter : Object
 {
-    public BackgroundChatter()
-    {
-    }
+    public BackgroundChatter() : base(ClassInjector.DerivedConstructorPointer<BackgroundChatter>()) => ClassInjector.DerivedConstructorBody(this);
 
     public BackgroundChatter(System.IntPtr value) : base(value)
     {
     }
 
-    public BackgroundChatter(int id, string text, List<Critera> critera, bool isConversationStarter, bool showInInspector, string speakingTo, bool overrideCombatRestriction, List<StartEvent> startEvents, List<Response> responses, string pairedEmote, string defaultImportance)
+    public BackgroundChatter(int id, string text, List<Critera> critera, bool isConversationStarter, bool showInInspector, string speakingTo, bool overrideCombatRestriction, List<StartEvent> startEvents, List<Response> responses, string pairedEmote, string defaultImportance) : base(ClassInjector.DerivedConstructorPointer<BackgroundChatter>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetId(id);
         SetText(text);
         SetCritera(critera);
@@ -5005,16 +5005,15 @@ public class BackgroundChatter : Object
 
 public class Valuee : Object
 {
-    public Valuee()
-    {
-    }
+    public Valuee() : base(ClassInjector.DerivedConstructorPointer<Valuee>()) => ClassInjector.DerivedConstructorBody(this);
 
     public Valuee(System.IntPtr value) : base(value)
     {
     }
 
-    public Valuee(string type, int value)
+    public Valuee(string type, int value) : base(ClassInjector.DerivedConstructorPointer<Valuee>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetType(type);
         SetValue(value);
     }
@@ -5046,16 +5045,15 @@ public class Valuee : Object
 
 public class Personality : Object
 {
-    public Personality()
-    {
-    }
+    public Personality() : base(ClassInjector.DerivedConstructorPointer<Personality>()) => ClassInjector.DerivedConstructorBody(this);
 
     public Personality(System.IntPtr value) : base(value)
     {
     }
 
-    public Personality(List<Valuee> values)
+    public Personality(List<Valuee> values) : base(ClassInjector.DerivedConstructorPointer<Personality>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetValues(values);
     }
 
@@ -5074,16 +5072,15 @@ public class Personality : Object
 
 public class ExtendedDetail : Object
 {
-    public ExtendedDetail()
-    {
-    }
+    public ExtendedDetail() : base(ClassInjector.DerivedConstructorPointer<ExtendedDetail>()) => ClassInjector.DerivedConstructorBody(this);
 
     public ExtendedDetail(System.IntPtr value) : base(value)
     {
     }
 
-    public ExtendedDetail(int value, string details)
+    public ExtendedDetail(int value, string details) : base(ClassInjector.DerivedConstructorPointer<ExtendedDetail>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetValue(value);
         SetDetails(details);
     }
@@ -5115,16 +5112,15 @@ public class ExtendedDetail : Object
 
 public class Quest : Object
 {
-    public Quest()
-    {
-    }
+    public Quest() : base(ClassInjector.DerivedConstructorPointer<Quest>()) => ClassInjector.DerivedConstructorBody(this);
 
     public Quest(System.IntPtr value) : base(value)
     {
     }
 
-    public Quest(string characterName, int completeAt, int currentValue, string details, string completedDetails, string failedDetails, List<ExtendedDetail> extendedDetails, string iD, string name, bool obtainOnStart, bool seenByPlayer, bool showProgress, string status, int obtainedDateTime, int lastUpdatedDateTime, bool showInInspector)
+    public Quest(string characterName, int completeAt, int currentValue, string details, string completedDetails, string failedDetails, List<ExtendedDetail> extendedDetails, string iD, string name, bool obtainOnStart, bool seenByPlayer, bool showProgress, string status, int obtainedDateTime, int lastUpdatedDateTime, bool showInInspector) : base(ClassInjector.DerivedConstructorPointer<Quest>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetCharacterName(characterName);
         SetCompleteAt(completeAt);
         SetCurrentValue(currentValue);
@@ -5338,16 +5334,15 @@ public class Quest : Object
 
 public class Reaction : Object
 {
-    public Reaction()
-    {
-    }
+    public Reaction() : base(ClassInjector.DerivedConstructorPointer<Reaction>()) => ClassInjector.DerivedConstructorBody(this);
 
     public Reaction(System.IntPtr value) : base(value)
     {
     }
 
-    public Reaction(string id, string characterToReactTo, List<Critera> critera, Double currentIteration, bool enabled, List<Event> events, string key, string name, bool showInInspector, string type, Double updateIteration, string value, string locationTargetOption)
+    public Reaction(string id, string characterToReactTo, List<Critera> critera, Double currentIteration, bool enabled, List<Event> events, string key, string name, bool showInInspector, string type, Double updateIteration, string value, string locationTargetOption) : base(ClassInjector.DerivedConstructorPointer<Reaction>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetId(id);
         SetCharacterToReactTo(characterToReactTo);
         SetCritera(critera);
@@ -5522,16 +5517,15 @@ public class Reaction : Object
 
 public class OnAcceptEvent : Object
 {
-    public OnAcceptEvent()
-    {
-    }
+    public OnAcceptEvent() : base(ClassInjector.DerivedConstructorPointer<OnAcceptEvent>()) => ClassInjector.DerivedConstructorBody(this);
 
     public OnAcceptEvent(System.IntPtr value) : base(value)
     {
     }
 
-    public OnAcceptEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria)
+    public OnAcceptEvent(int sortOrder2, string version, string id, bool enabled, int eventType, string character, string character2, string key, int option, int option2, int option3, string value, string value2, int sortOrder, Double delay, Double originalDelay, Double startDelayTime, bool useConditions, bool displayInEditor, List<Criterion> criteria) : base(ClassInjector.DerivedConstructorPointer<OnAcceptEvent>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetSortOrder2(sortOrder2);
         SetVersion(version);
         SetId(id);
@@ -5797,16 +5791,15 @@ public class OnAcceptEvent : Object
 
 public class StoryItem : Object
 {
-    public StoryItem()
-    {
-    }
+    public StoryItem() : base(ClassInjector.DerivedConstructorPointer<StoryItem>()) => ClassInjector.DerivedConstructorBody(this);
 
     public StoryItem(System.IntPtr value) : base(value)
     {
     }
 
-    public StoryItem(List<Critera> critera, string itemName, List<OnAcceptEvent> onAcceptEvents, List<Object> onRefuseEvents, bool displayInEditor)
+    public StoryItem(List<Critera> critera, string itemName, List<OnAcceptEvent> onAcceptEvents, List<Object> onRefuseEvents, bool displayInEditor) : base(ClassInjector.DerivedConstructorPointer<StoryItem>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetCritera(critera);
         SetItemName(itemName);
         SetOnAcceptEvents(onAcceptEvents);
@@ -5877,16 +5870,15 @@ public class StoryItem : Object
 
 public class CharacterStory : Object
 {
-    public CharacterStory()
-    {
-    }
+    public CharacterStory() : base(ClassInjector.DerivedConstructorPointer<CharacterStory>()) => ClassInjector.DerivedConstructorBody(this);
 
     public CharacterStory(System.IntPtr value) : base(value)
     {
     }
 
-    public CharacterStory(string characterName, string currentAspect, int dialogueID, List<Dialogue> dialogues, List<GlobalGoodbyeResponse> globalGoodbyeResponses, List<GlobalResponse> globalResponses, string housePartyVersion, List<BackgroundChatter> backgroundChatter, bool lockCharacterSelection, Personality personality, List<Quest> quests, List<Reaction> reactions, List<StoryItem> storyItems, List<Object> characterItemGroupInteractions, List<string> storyValues)
+    public CharacterStory(string characterName, string currentAspect, int dialogueID, List<Dialogue> dialogues, List<GlobalGoodbyeResponse> globalGoodbyeResponses, List<GlobalResponse> globalResponses, string housePartyVersion, List<BackgroundChatter> backgroundChatter, bool lockCharacterSelection, Personality personality, List<Quest> quests, List<Reaction> reactions, List<StoryItem> storyItems, List<Object> characterItemGroupInteractions, List<string> storyValues) : base(ClassInjector.DerivedConstructorPointer<CharacterStory>())
     {
+        ClassInjector.DerivedConstructorBody(this);
         SetCharacterName(characterName);
         SetCurrentAspect(currentAspect);
         SetDialogueID(dialogueID);

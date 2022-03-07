@@ -7,11 +7,10 @@ using Il2CppSystem.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using EekEvents.Stories;
-using MelonLoader.TinyJSON;
 using UnhollowerRuntimeLib;
 using Il2CppSystem.Reflection;
 using Il2CppSystem.Runtime.InteropServices;
-using Newtonsoft.Json;
+using Object = Il2CppSystem.Object;
 
 namespace Project
 {
@@ -295,42 +294,37 @@ namespace Project
 
         public MainStory ParseJsonToStory(string tempS)
         {
-            MainStory mainStory = new MainStory();
 
             List<string> tokens = SplitJson(tempS);
 
-            SetObjectValues(tokens, out mainStory);
+            MainStory mainStory = SetObjectValues<MainStory>(tokens);
 
             MelonLogger.Msg("returning object");
 
             return mainStory;
         }
 
-        private void SetObjectValues<T>(List<string> tokens, out T returnedObject)
+        private T SetObjectValues<T>(List<string> tokens) where T : new()
         {
-            //Todo continue expüloring the issues here
-            MelonLogger.Msg("getting constructor");
-            ConstructorInfo cInfo = Il2CppType.Of<T>().GetConstructor(new UnhollowerBaseLib.Il2CppReferenceArray<Type>(new Type[] { }));
-            MelonLogger.Msg("invoking contructor");
-            Il2CppSystem.Object constructed = cInfo.Invoke(new Il2CppSystem.Object[0]);
-            MelonLogger.Msg("converting returned object to type T");
-            MelonLogger.Msg(cInfo.ToString());
-            MelonLogger.Msg(Il2CppType.Of<T>().ToString());
-            MelonLogger.Msg(cInfo.DeclaringType.ToString());
-            MelonLogger.Msg(cInfo.ReflectedType.ToString());
-            if (constructed is T t)
+            Type type = Il2CppType.Of<T>();
+            T constructed = new T();
+            MelonLogger.Msg($"object is of T : {type.Name}");
+            //if we can create a new T, get all methods, then calling all set methods using reflection, filling them up with the objects we need
+
+            var methodInfos = type.GetMethods();
+            MelonLogger.Msg($"Got {methodInfos.Count} methods for type {type.Name}");
+
+            foreach (var methodInfo in methodInfos)
             {
-                MelonLogger.Msg("object is of type T");
-                returnedObject = t;
-            }
-            else
-            {
-                MelonLogger.Msg("called base constructor by using default");
-                returnedObject = default;
+                LogMethodInfo(methodInfo);
             }
 
-            MelonLogger.Msg(returnedObject);
+            return constructed;
+        }
 
+        public void LogMethodInfo(MethodInfo methodInfo)
+        {
+            MelonLogger.Msg($"{(methodInfo.IsPublic ? "public" : "private")} {methodInfo.ReturnType.Name} {methodInfo.Name} : {methodInfo.GetParametersCount()} parameters");
         }
 
         private List<string> SplitJson(string tempS)
@@ -345,7 +339,7 @@ namespace Project
                 seperators.Add(charry);
             }
             List<char> numbers = new List<char>();
-            foreach (char numbah in "0123456789.")
+            foreach (char numbah in "0123456789.null")
             {
                 numbers.Add(numbah);
             }
@@ -680,7 +674,7 @@ namespace Project
                     if (CharacterStoryObjects[i] != null)
                     {
                         /*
-                        Il2CppSystem.Object story = CharacterStoryObjects[i];
+                        Object story = CharacterStoryObjects[i];
 
                         MelonLogger.Msg("trying to access the Object methods to return the field with methodinfo via reflection");
 
@@ -695,7 +689,7 @@ namespace Project
                         MethodInfo GetCharacterNameMethod = type.GetMethod("GetCharacterName");
 
                         MelonLogger.Msg("invoking Method");
-                        Il2CppSystem.Object ret = GetCharacterNameMethod.Invoke(story, null);
+                        Object ret = GetCharacterNameMethod.Invoke(story, null);
 
                         MelonLogger.Msg("accessing returned object");
                         MelonLogger.Msg($"size of ret: {Marshal.SizeOf(ret)}");

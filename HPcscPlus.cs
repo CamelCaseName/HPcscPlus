@@ -154,6 +154,15 @@ namespace Project
         private MainStory MainStoryObject;
         private readonly CharacterStory[] CharacterStoryObjects = new CharacterStory[17];
 
+        public enum JsonLabels
+        {
+            START_OBJECT,
+            END_OBJECT,
+            START_LIST,
+            END_LIST,
+            NULL
+        }
+
         //methods
 
         //on quit
@@ -304,21 +313,129 @@ namespace Project
             return mainStory;
         }
 
-        private T SetObjectValues<T>(List<string> tokens) where T : new()
+        private Type FindTypeName(string typeToSearch)
         {
+            if (typeToSearch == "Criteria")
+            {
+                typeToSearch = "Criterion";
+            }
+            else if (typeToSearch == "CriteriaList")
+            {
+                typeToSearch = "CriteriaList1";
+            }
+            else
+            {
+                typeToSearch.Remove(typeToSearch.Length - 2, 1);
+            }
+            Type ret = Type.GetType(typeToSearch);
+
+            return ret;
+        }
+
+        private T SetObjectValues<T>(List<string> tokens) where T : Object, new()
+        {
+            //iterate through tokens until we reach a start of an object, in the first case the mainstory
+            bool startNotFound = true;
+            while (startNotFound)
+            {
+                MelonLogger.Msg($"TOKEN: {tokens[0]}");
+                //go to first start or remove token
+                if (tokens[0] == JsonLabels.START_OBJECT.ToString())
+                {
+                    startNotFound = false;
+                    tokens.RemoveAt(0);
+                }
+                else
+                {
+                    tokens.RemoveAt(0);
+                }
+            }
+
             Type type = Il2CppType.Of<T>();
             T constructed = new T();
             MelonLogger.Msg($"object is of T : {type.Name}");
-            //if we can create a new T, get all methods, then calling all set methods using reflection, filling them up with the objects we need
 
+            //if we can create a new T, get all methods, then calling all set methods using reflection, filling them up with the objects we need
             var methodInfos = type.GetMethods();
             MelonLogger.Msg($"Got {methodInfos.Count} methods for type {type.Name}");
 
-            foreach (var methodInfo in methodInfos)
+            //go through tokens to call the method we need, weith the token after as argument. 
+            bool stayInWhileFieldGetter = true;
+            string lastToken = "";
+            while (stayInWhileFieldGetter)
             {
-                LogMethodInfo(methodInfo);
-            }
+                string token = tokens[0];
+                if (token.Length > 2)
+                {
+                    MelonLogger.Msg($"TOKEN: {token}, {token.Length}");
 
+                    //object starts
+                    if (token == JsonLabels.START_OBJECT.ToString())
+                    {
+                        //get type from lastToken, then add value by recursively calling this method
+                        //maybe add a enum/dict with lookups for the names
+                    }
+                    //list starts
+                    else if (token == JsonLabels.START_LIST.ToString())
+                    {
+
+                        //create list, then go back to creating objects, then at end we stop and move on in the og object the list is part of
+                        //get type of the list elements, name of them in lastToken
+
+                        //get type from method signature !!
+                        foreach (MethodInfo methodInfo in methodInfos)
+                        {
+                            if (methodInfo.Name == $"Get{lastToken}")
+                            {
+                                Object list = Activator.CreateInstance(methodInfo.ReturnType);
+                                MethodInfo listAdd = methodInfo.ReturnType.GetMethod("Add");
+                                LogMethodInfo(methodInfo);
+                                LogMethodInfo(listAdd);
+                            }
+                        }
+
+
+
+                    }
+                    else if (token == JsonLabels.END_LIST.ToString())
+                    {
+                        //end list, return to ~~monke~~ the object we were on lul
+                    }
+                    else if (token == JsonLabels.END_OBJECT.ToString())
+                    {
+                        //return lol
+                        return constructed;
+                    }
+                    //else field starts
+                    else
+                    {
+                        if (tokens[1] != JsonLabels.START_LIST.ToString() && tokens[1] != JsonLabels.START_OBJECT.ToString())
+                        {
+                            foreach (MethodInfo methodInfo in methodInfos)
+                            {
+                                if (methodInfo.Name == $"Set{token}")
+                                {
+                                    lastToken = token;
+                                    tokens.RemoveAt(0);
+                                    token = tokens[0];
+                                    MelonLogger.Msg($"TOKEN: {token}");
+
+
+                                    if (token != JsonLabels.START_OBJECT.ToString() && token != JsonLabels.START_LIST.ToString()
+                                        && token != JsonLabels.END_OBJECT.ToString() && token != JsonLabels.END_LIST.ToString())
+                                    {
+                                        MelonLogger.Msg($"Set method found, trying to invoke {methodInfo.Name} with {token} as the parameter");
+                                        methodInfo.Invoke(constructed, new UnhollowerBaseLib.Il2CppReferenceArray<Object>(new Object[] { token }));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    lastToken = token;
+                }
+                tokens.RemoveAt(0);
+            }
+            //to keep the method gods happy
             return constructed;
         }
 
@@ -360,24 +477,20 @@ namespace Project
                     //add char to builder regardless of what it is
                     builderString += c;
                 }
-                else if (seperators.Contains(c) && builderString != "" && !inValueString)
+                else if (seperators.Contains(c) && !inValueString)
                 {
                     //if we hit a seperator, add nonempty strings and clear string builder
-                    tokens.Add(builderString);
-                    if (c == '[') tokens.Add("START-ARRAY");
-                    if (c == ']') tokens.Add("END-ARRAY");
-                    if (c == '{') tokens.Add("START-OBJECT");
-                    if (c == '}') tokens.Add("END-OBJECT");
+                    if (builderString.Length > 0) tokens.Add(builderString);
+                    if (c == '[') tokens.Add(JsonLabels.START_LIST.ToString());
+                    if (c == ']') tokens.Add(JsonLabels.END_LIST.ToString());
+                    if (c == '{') tokens.Add(JsonLabels.START_OBJECT.ToString());
+                    if (c == '}') tokens.Add(JsonLabels.END_OBJECT.ToString());
                     builderString = "";
                 }
                 else
                 {
                     if (numbers.Contains(c))
                     {
-                        /*if(builderString.Length == 0)
-                        {
-                            builderString += "NUMBER";
-                        }*/
                         //add char, in names and stuff
                         builderString += c;
                     }

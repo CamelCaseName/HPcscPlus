@@ -1557,10 +1557,20 @@ public class CriteriaList1 : Object
     public CriteriaList1(List<CriteriaList2> criteriaList) : base(ClassInjector.DerivedConstructorPointer<CriteriaList1>())
     {
         ClassInjector.DerivedConstructorBody(this);
-        CriteriaList = criteriaList;
+        SetCriteriaList(criteriaList);
     }
 
-    public List<CriteriaList2> CriteriaList { get; set; }
+    private List<CriteriaList2> criteriaList;
+
+    public List<CriteriaList2> GetCriteriaList()
+    {
+        return criteriaList;
+    }
+
+    public void SetCriteriaList(List<CriteriaList2> value)
+    {
+        criteriaList = value;
+    }
 }
 
 public class CriteriaGroup : Object

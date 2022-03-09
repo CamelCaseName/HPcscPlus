@@ -1,15 +1,14 @@
-﻿using EekEvents;
-using EekCharacterEngine;
-using MelonLoader;
+﻿using EekCharacterEngine;
+using EekEvents;
+using EekEvents.Stories;
 using Il2CppSystem;
 using Il2CppSystem.Collections.Generic;
 using Il2CppSystem.IO;
+using Il2CppSystem.Reflection;
+using MelonLoader;
+using UnhollowerRuntimeLib;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using EekEvents.Stories;
-using UnhollowerRuntimeLib;
-using Il2CppSystem.Reflection;
-using Il2CppSystem.Runtime.InteropServices;
 using Object = Il2CppSystem.Object;
 
 namespace Project
@@ -17,9 +16,6 @@ namespace Project
     public class HPcscPlus : MelonMod
     {
         public bool InGameMain = false;
-
-        //private const int EditorCharacterSelectionHeight = 60;
-        private readonly int EditorHeight = Screen.height;
 
         private const int EditorWidth = 800;
 
@@ -41,7 +37,7 @@ namespace Project
             "Stephanie",
             "Vickie"
         };
-
+        private readonly CharacterStory[] CharacterStoryObjects = new CharacterStory[17];
         private readonly string[] ClothingPieces = new string[] {
             "Top",
             "Bottom",
@@ -51,7 +47,6 @@ namespace Project
             "Accessory",
             "StrapOn"
         };
-
         private readonly string[] ClothingSets = new string[] {
             "Any Set",
             "Set 0",
@@ -106,8 +101,9 @@ namespace Project
                 CompareTypes.Vision
             };
 
+        //private const int EditorCharacterSelectionHeight = 60;
+        private readonly int EditorHeight = Screen.height;
         private readonly int EditorX = Screen.width - EditorWidth;
-
         private readonly int EditorY = 0;
 
         private readonly GUILayoutOption[] Opt = new GUILayoutOption[0];
@@ -117,7 +113,7 @@ namespace Project
         private CharacterStoryData _selectedStory;
 
         private int AlternateTextScrollPosition;
-
+        private string CurrentStoryFolder;
         private int DialogueScrollPosition;
 
         //default options, cant create others due to il2cpp limitations
@@ -125,13 +121,28 @@ namespace Project
 
         private GameManager GameManagerInstance;
 
+        private StoryData MainStoryData;
+        private MainStory MainStoryObject;
+        private bool secondLayerCriteriaList = false;
         private int SelectionIndex = 0;
 
         //attributes
         private bool ShowEditor = false;
+
         private List<CharacterStoryData> Stories;
         private bool StoriesSet = false;
         private bool StorySelected = false;
+        private Type[] StoryTypes;
+
+        public enum JsonLabels
+        {
+            START_OBJECT,
+            END_OBJECT,
+            START_LIST,
+            END_LIST,
+            NULL
+        }
+
         private CharacterStoryData SelectedStory
         {
             get
@@ -149,103 +160,7 @@ namespace Project
                 }
             }
         }
-        private StoryData MainStoryData;
-        private string CurrentStoryFolder;
-        private MainStory MainStoryObject;
-        private readonly CharacterStory[] CharacterStoryObjects = new CharacterStory[17];
-
-        public enum JsonLabels
-        {
-            START_OBJECT,
-            END_OBJECT,
-            START_LIST,
-            END_LIST,
-            NULL
-        }
-
         //methods
-
-        //on quit
-        public override void OnApplicationQuit()
-        {
-
-        }
-
-        //on start
-        public override void OnApplicationStart()
-        {
-
-            ClassInjector.RegisterTypeInIl2Cpp<Criterion>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<OnTakeActionEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ItemAction>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<OnSuccessEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<UseWith>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ItemOverride>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ItemGroupBehavior>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Achievement>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<CriteriaList2>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<CriteriaList1>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<CriteriaGroup>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ItemGroup>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<GameStartEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Critera>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Event>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<PlayerReaction>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<MainStory>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<AlternateText>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<CloseEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ResponseCriteria>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ResponseEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Response>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<StartEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Dialogue>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<GlobalGoodbyeResponse>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<GlobalResponse>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<BackgroundChatter>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Valuee>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Personality>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ExtendedDetail>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Quest>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Reaction>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<OnAcceptEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<StoryItem>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<CharacterStory>(true);
-
-
-
-            EditorWindow = new Rect(EditorX, EditorY, EditorWidth, EditorHeight);
-        }
-
-        //every time ui is updated
-        public override void OnGUI()
-        {
-            if (InGameMain && ShowEditor)
-            {
-
-                //also do keys and mouse by events:
-                //Event currentEvent = Event.current;
-                //then get event type via the .type
-
-                //create character selection sliders
-                //Wrap everything in the designated GUI Area
-                GUILayout.BeginArea(EditorWindow, (GUIStyle)"Box");
-                //GUILayout.BeginArea(EditorWindow, "cscPlus", "Box");
-                GUILayout.BeginVertical(Opt);
-
-                DisplayCharacterStorySelector();
-
-                if (StorySelected)
-                {
-                    DisplayDialogueParts();
-                    //todo show save and then also reload the story
-                    //todo export on save so it is really saved
-                }
-
-                //end all
-                GUILayout.EndVertical();
-                GUILayout.EndArea();
-            }
-        }
 
         public void LoadAndParseCurrentStory()
         {
@@ -296,210 +211,125 @@ namespace Project
             MelonLogger.Msg(System.ConsoleColor.Green, "Done parsing :)");
         }
 
-        public CharacterStory ParseJsonToCharacterStory(string tempS)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public MainStory ParseJsonToStory(string tempS)
-        {
-
-            List<string> tokens = SplitJson(tempS);
-
-            MainStory mainStory = SetObjectValues<MainStory>(tokens);
-
-            MelonLogger.Msg("returning object");
-
-            return mainStory;
-        }
-
-        private Type FindTypeName(string typeToSearch)
-        {
-            if (typeToSearch == "Criteria")
-            {
-                typeToSearch = "Criterion";
-            }
-            else if (typeToSearch == "CriteriaList")
-            {
-                typeToSearch = "CriteriaList1";
-            }
-            else
-            {
-                typeToSearch.Remove(typeToSearch.Length - 2, 1);
-            }
-            Type ret = Type.GetType(typeToSearch);
-
-            return ret;
-        }
-
-        private T SetObjectValues<T>(List<string> tokens) where T : Object, new()
-        {
-            //iterate through tokens until we reach a start of an object, in the first case the mainstory
-            bool startNotFound = true;
-            while (startNotFound)
-            {
-                MelonLogger.Msg($"TOKEN: {tokens[0]}");
-                //go to first start or remove token
-                if (tokens[0] == JsonLabels.START_OBJECT.ToString())
-                {
-                    startNotFound = false;
-                    tokens.RemoveAt(0);
-                }
-                else
-                {
-                    tokens.RemoveAt(0);
-                }
-            }
-
-            Type type = Il2CppType.Of<T>();
-            T constructed = new T();
-            MelonLogger.Msg($"object is of T : {type.Name}");
-
-            //if we can create a new T, get all methods, then calling all set methods using reflection, filling them up with the objects we need
-            var methodInfos = type.GetMethods();
-            MelonLogger.Msg($"Got {methodInfos.Count} methods for type {type.Name}");
-
-            //go through tokens to call the method we need, weith the token after as argument. 
-            bool stayInWhileFieldGetter = true;
-            string lastToken = "";
-            while (stayInWhileFieldGetter)
-            {
-                string token = tokens[0];
-                if (token.Length > 2)
-                {
-                    MelonLogger.Msg($"TOKEN: {token}, {token.Length}");
-
-                    //object starts
-                    if (token == JsonLabels.START_OBJECT.ToString())
-                    {
-                        //get type from lastToken, then add value by recursively calling this method
-                        //maybe add a enum/dict with lookups for the names
-                    }
-                    //list starts
-                    else if (token == JsonLabels.START_LIST.ToString())
-                    {
-
-                        //create list, then go back to creating objects, then at end we stop and move on in the og object the list is part of
-                        //get type of the list elements, name of them in lastToken
-
-                        //get type from method signature !!
-                        foreach (MethodInfo methodInfo in methodInfos)
-                        {
-                            if (methodInfo.Name == $"Get{lastToken}")
-                            {
-                                Object list = Activator.CreateInstance(methodInfo.ReturnType);
-                                MethodInfo listAdd = methodInfo.ReturnType.GetMethod("Add");
-                                LogMethodInfo(methodInfo);
-                                LogMethodInfo(listAdd);
-                            }
-                        }
-
-
-
-                    }
-                    else if (token == JsonLabels.END_LIST.ToString())
-                    {
-                        //end list, return to ~~monke~~ the object we were on lul
-                    }
-                    else if (token == JsonLabels.END_OBJECT.ToString())
-                    {
-                        //return lol
-                        return constructed;
-                    }
-                    //else field starts
-                    else
-                    {
-                        if (tokens[1] != JsonLabels.START_LIST.ToString() && tokens[1] != JsonLabels.START_OBJECT.ToString())
-                        {
-                            foreach (MethodInfo methodInfo in methodInfos)
-                            {
-                                if (methodInfo.Name == $"Set{token}")
-                                {
-                                    lastToken = token;
-                                    tokens.RemoveAt(0);
-                                    token = tokens[0];
-                                    MelonLogger.Msg($"TOKEN: {token}");
-
-
-                                    if (token != JsonLabels.START_OBJECT.ToString() && token != JsonLabels.START_LIST.ToString()
-                                        && token != JsonLabels.END_OBJECT.ToString() && token != JsonLabels.END_LIST.ToString())
-                                    {
-                                        MelonLogger.Msg($"Set method found, trying to invoke {methodInfo.Name} with {token} as the parameter");
-                                        methodInfo.Invoke(constructed, new UnhollowerBaseLib.Il2CppReferenceArray<Object>(new Object[] { token }));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    lastToken = token;
-                }
-                tokens.RemoveAt(0);
-            }
-            //to keep the method gods happy
-            return constructed;
-        }
-
         public void LogMethodInfo(MethodInfo methodInfo)
         {
             MelonLogger.Msg($"{(methodInfo.IsPublic ? "public" : "private")} {methodInfo.ReturnType.Name} {methodInfo.Name} : {methodInfo.GetParametersCount()} parameters");
         }
 
-        private List<string> SplitJson(string tempS)
+        //on quit
+        public override void OnApplicationQuit()
         {
-            List<string> tokens = new List<string>();
-
-            bool inValueString = false;
-            string builderString = "";
-            List<char> seperators = new List<char>();
-            foreach (char charry in "{}[],:")
-            {
-                seperators.Add(charry);
-            }
-            List<char> numbers = new List<char>();
-            foreach (char numbah in "0123456789.null")
-            {
-                numbers.Add(numbah);
-            }
-
-            foreach (char c in tempS)
-            {
-                //entering string
-                if (!inValueString && c == '"')
-                {
-                    inValueString = true;
-                }
-                else if (inValueString && c == '"')
-                {
-                    inValueString = false;
-                }
-                else if (inValueString)
-                {
-                    //add char to builder regardless of what it is
-                    builderString += c;
-                }
-                else if (seperators.Contains(c) && !inValueString)
-                {
-                    //if we hit a seperator, add nonempty strings and clear string builder
-                    if (builderString.Length > 0) tokens.Add(builderString);
-                    if (c == '[') tokens.Add(JsonLabels.START_LIST.ToString());
-                    if (c == ']') tokens.Add(JsonLabels.END_LIST.ToString());
-                    if (c == '{') tokens.Add(JsonLabels.START_OBJECT.ToString());
-                    if (c == '}') tokens.Add(JsonLabels.END_OBJECT.ToString());
-                    builderString = "";
-                }
-                else
-                {
-                    if (numbers.Contains(c))
-                    {
-                        //add char, in names and stuff
-                        builderString += c;
-                    }
-                }
-            }
-
-            return tokens;
         }
 
+        //on start
+        public override void OnApplicationStart()
+        {
+            ClassInjector.RegisterTypeInIl2Cpp<Criterion>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<OnTakeActionEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ItemAction>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<OnSuccessEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<UseWith>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ItemOverride>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ItemGroupBehavior>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Achievement>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<CriteriaList2>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<CriteriaList1>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<CriteriaGroup>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ItemGroup>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<GameStartEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Critera>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Event>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<PlayerReaction>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<MainStory>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<AlternateText>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<CloseEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ResponseCriteria>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ResponseEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Response>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<StartEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Dialogue>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<GlobalGoodbyeResponse>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<GlobalResponse>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<BackgroundChatter>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Valuee>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Personality>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<ExtendedDetail>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Quest>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<Reaction>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<OnAcceptEvent>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<StoryItem>(true);
+            ClassInjector.RegisterTypeInIl2Cpp<CharacterStory>(true);
+
+            StoryTypes = new Type[] {
+                Il2CppType.Of<Criterion>(),
+                Il2CppType.Of<OnTakeActionEvent>(),
+                Il2CppType.Of<ItemAction>(),
+                Il2CppType.Of<OnSuccessEvent>(),
+                Il2CppType.Of<UseWith>(),
+                Il2CppType.Of<ItemOverride>(),
+                Il2CppType.Of<ItemGroupBehavior>(),
+                Il2CppType.Of<Achievement>(),
+                Il2CppType.Of<CriteriaList2>(),
+                Il2CppType.Of<CriteriaList1>(),
+                Il2CppType.Of<CriteriaGroup>(),
+                Il2CppType.Of<ItemGroup>(),
+                Il2CppType.Of<GameStartEvent>(),
+                Il2CppType.Of<Critera>(),
+                Il2CppType.Of<Event>(),
+                Il2CppType.Of<PlayerReaction>(),
+                Il2CppType.Of<MainStory>(),
+                Il2CppType.Of<AlternateText>(),
+                Il2CppType.Of<CloseEvent>(),
+                Il2CppType.Of<ResponseCriteria>(),
+                Il2CppType.Of<ResponseEvent>(),
+                Il2CppType.Of<Response>(),
+                Il2CppType.Of<StartEvent>(),
+                Il2CppType.Of<Dialogue>(),
+                Il2CppType.Of<GlobalGoodbyeResponse>(),
+                Il2CppType.Of<GlobalResponse>(),
+                Il2CppType.Of<BackgroundChatter>(),
+                Il2CppType.Of<Valuee>(),
+                Il2CppType.Of<Personality>(),
+                Il2CppType.Of<ExtendedDetail>(),
+                Il2CppType.Of<Quest>(),
+                Il2CppType.Of<Reaction>(),
+                Il2CppType.Of<OnAcceptEvent>(),
+                Il2CppType.Of<StoryItem>(),
+                Il2CppType.Of<CharacterStory>()
+            };
+
+            EditorWindow = new Rect(EditorX, EditorY, EditorWidth, EditorHeight);
+        }
+
+        //every time ui is updated
+        public override void OnGUI()
+        {
+            if (InGameMain && ShowEditor)
+            {
+                //also do keys and mouse by events:
+                //Event currentEvent = Event.current;
+                //then get event type via the .type
+
+                //create character selection sliders
+                //Wrap everything in the designated GUI Area
+                GUILayout.BeginArea(EditorWindow, (GUIStyle)"Box");
+                //GUILayout.BeginArea(EditorWindow, "cscPlus", "Box");
+                GUILayout.BeginVertical(Opt);
+
+                DisplayCharacterStorySelector();
+
+                if (StorySelected)
+                {
+                    DisplayDialogueParts();
+                    //todo show save and then also reload the story
+                    //todo export on save so it is really saved
+                }
+
+                //end all
+                GUILayout.EndVertical();
+                GUILayout.EndArea();
+            }
+        }
         //when the main game scene was loaded
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
@@ -541,6 +371,22 @@ namespace Project
                     ShowEditor = !ShowEditor;
                 }
             }
+        }
+
+        public CharacterStory ParseJsonToCharacterStory(string tempS)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public MainStory ParseJsonToStory(string tempS)
+        {
+            List<string> tokens = SplitJson(tempS);
+
+            MainStory mainStory = SetObjectValues<MainStory>(tokens, Il2CppType.Of<MainStory>());
+
+            MelonLogger.Msg("returning object");
+
+            return mainStory;
         }
 
         private string ConstrainLength(string input)
@@ -629,8 +475,6 @@ namespace Project
                 //order of the dialogue
                 dialogue.AlternateTexts[AlternateTextScrollPosition].Order = DisplayNumberHorizontal(dialogue.AlternateTexts[AlternateTextScrollPosition].Order, 0, int.MaxValue, "Sort Order");
                 dialogue.AlternateTexts[AlternateTextScrollPosition].Critera = DisplayCriteria(dialogue.AlternateTexts[AlternateTextScrollPosition].Critera);
-
-
             }
             else
             {
@@ -646,7 +490,6 @@ namespace Project
 
         private BoolCritera DisplayBoolValueSelector(BoolCritera boolValue)
         {
-
             if (GUILayout.Toggle(boolValue == BoolCritera.True, boolValue.ToString(), Opt))
             {
                 boolValue = BoolCritera.True;
@@ -674,7 +517,6 @@ namespace Project
             }
             //fallback
             if (!found) index = 0;
-
 
             //display compare type and selection
             index = DisplayNumberBlock(index, 0, Characters.Length - 1, $"{textBefore}{Characters[index]}", ">", "<", false);
@@ -712,47 +554,6 @@ namespace Project
             GUILayout.EndHorizontal();
         }
 
-        private string DisplayClothingSelector(string clothing)
-        {
-            if (!int.TryParse(clothing, out int clothing_i)) clothing_i = 0;
-            clothing_i = DisplayNumberBlock(clothing_i, 0, ClothingPieces.Length - 1, ClothingPieces[clothing_i], ">", "<");
-            return clothing_i.ToString();
-        }
-
-        private int DisplayClothingSetSelector(int option)
-        {
-            option = DisplayNumberBlock(option, 0, ClothingSets.Length - 1, ClothingSets[option], ">", "<", false);
-            return option;
-        }
-
-        private Criteria DisplayCompareTypeClothing(Criteria criterion)
-        {
-            //character as character for condition, clothing as value, clothing set as option (none 0, number afterwards), boolvalue as value
-            criterion.Character = DisplayCharacterSelector(criterion.Character, "");
-            //try parsing, if it fails fall back to 0
-            criterion.Value = DisplayClothingSelector(criterion.Value);
-            criterion.Option = DisplayClothingSetSelector(criterion.Option);
-            criterion.BoolValue = DisplayBoolValueSelector(criterion.BoolValue);
-            return criterion;
-        }
-
-        private Criteria DisplayCompareTypeCompareValues(Criteria criterion)
-        {
-            //character as character, character as character2, comparison as valueformula, value1 as key, value2 as key2
-            criterion.Character = DisplayCharacterSelector(criterion.Character, "");
-            criterion.Key = DisplayCharacterValueSelector(criterion.Key, criterion.Character);
-            criterion.ValueFormula = DisplayValueFormulaSelector(criterion.ValueFormula);
-            criterion.Character2 = DisplayCharacterSelector(criterion.Character2, "");
-            criterion.Key2 = DisplayCharacterValueSelector(criterion.Key2, criterion.Character2);
-            return criterion;
-        }
-
-        private ValueSpecificFormulas DisplayValueFormulaSelector(ValueSpecificFormulas valueFormula)
-        {
-            valueFormula = (ValueSpecificFormulas)DisplayNumberBlock((int)valueFormula, 0, 3, valueFormula.ToString(), ">", "<", false);
-            return valueFormula;
-        }
-
         private string DisplayCharacterValueSelector(string key, string characterName)
         {
             //EekEvents.Values.ValueStore.InitializeValues(characterName);
@@ -764,8 +565,6 @@ namespace Project
             //var temp = EekEvents.Values.ValueStore.GetValues(characterName)._items;
             //SaveLoadManager.PerformAutoSave();
             //var temp = SaveLoadManager.autoSave.NPCs[0].Values.ToArray();
-
-
 
             if (temp.Count <= 0)
             {
@@ -851,6 +650,41 @@ namespace Project
             return key;
         }
 
+        private string DisplayClothingSelector(string clothing)
+        {
+            if (!int.TryParse(clothing, out int clothing_i)) clothing_i = 0;
+            clothing_i = DisplayNumberBlock(clothing_i, 0, ClothingPieces.Length - 1, ClothingPieces[clothing_i], ">", "<");
+            return clothing_i.ToString();
+        }
+
+        private int DisplayClothingSetSelector(int option)
+        {
+            option = DisplayNumberBlock(option, 0, ClothingSets.Length - 1, ClothingSets[option], ">", "<", false);
+            return option;
+        }
+
+        private Criteria DisplayCompareTypeClothing(Criteria criterion)
+        {
+            //character as character for condition, clothing as value, clothing set as option (none 0, number afterwards), boolvalue as value
+            criterion.Character = DisplayCharacterSelector(criterion.Character, "");
+            //try parsing, if it fails fall back to 0
+            criterion.Value = DisplayClothingSelector(criterion.Value);
+            criterion.Option = DisplayClothingSetSelector(criterion.Option);
+            criterion.BoolValue = DisplayBoolValueSelector(criterion.BoolValue);
+            return criterion;
+        }
+
+        private Criteria DisplayCompareTypeCompareValues(Criteria criterion)
+        {
+            //character as character, character as character2, comparison as valueformula, value1 as key, value2 as key2
+            criterion.Character = DisplayCharacterSelector(criterion.Character, "");
+            criterion.Key = DisplayCharacterValueSelector(criterion.Key, criterion.Character);
+            criterion.ValueFormula = DisplayValueFormulaSelector(criterion.ValueFormula);
+            criterion.Character2 = DisplayCharacterSelector(criterion.Character2, "");
+            criterion.Key2 = DisplayCharacterValueSelector(criterion.Key2, criterion.Character2);
+            return criterion;
+        }
+
         private CompareTypes DisplayCompareTypes(CompareTypes type)
         {
             GUILayout.BeginVertical(Opt);
@@ -882,143 +716,188 @@ namespace Project
                 case CompareTypes.Never:
                     //Nothing?
                     break;
+
                 case CompareTypes.Clothing:
                     criterion = DisplayCompareTypeClothing(criterion);
                     break;
+
                 case CompareTypes.CoinFlip:
                     //nothing needed, its 50/50 anyways
                     break;
+
                 case CompareTypes.CompareValues:
                     criterion = DisplayCompareTypeCompareValues(criterion);
                     break;
+
                 case CompareTypes.CriteriaGroup:
                     //criteriagroup(id) as key, true/false as option (0/1)
                     break;
+
                 case CompareTypes.CutScene:
-                    //todo: no idea what is needed
+                    //no idea what is needed
                     break;
+
                 case CompareTypes.Dialogue:
                     //Character as character, dialogie id as value, dialogue status as dialogue status
                     break;
+
                 case CompareTypes.Distance:
                     //Object name 1 as key(typed), Object name 2 as key2(typed), equal value as equationvalue, distance as value
                     break;
+
                 case CompareTypes.Door:
                     //dor name as key, door option as dooroption
                     break;
+
                 case CompareTypes.IntimacyPartner:
-                    //character as charater, equals value as equalsvalue, character 2 as value 
+                    //character as charater, equals value as equalsvalue, character 2 as value
                     break;
+
                 case CompareTypes.IntimacyState:
                     //character as character, equals vlaue as equalsvalue, state as value
                     break;
+
                 case CompareTypes.InZone:
                     //character as character, zone name as key, state as boolvalue
                     break;
+
                 case CompareTypes.InVicinity:
                     //character as character, character as character2, state as boolvalue
                     break;
+
                 case CompareTypes.InVicinityAndVision:
                     //same as invicinity
                     break;
+
                 case CompareTypes.Item:
                     //item as key, item comparison as itemcomparison, character as character, state as boolvalue
                     //or it not involved with characters(no "To/By")
                     //item as key, item comparison as itemcomparison, state as boolvalue
                     break;
+
                 case CompareTypes.IsOnlyInVicinityOf:
                     //same as invicinity
                     break;
+
                 case CompareTypes.IsOnlyInVisionOf:
                     //same as invicinity
                     break;
+
                 case CompareTypes.IsOnlyInVicinityAndVisionOf:
                     //same as invicinity
                     break;
+
                 case CompareTypes.IsAloneWithPlayer:
                     //character as character, value as boolvalue
                     break;
+
                 case CompareTypes.IsCharacterEnabled:
                     //character as character, value as boolvalue
                     break;
+
                 case CompareTypes.IsCurrentlyBeingUsed:
                     //item name as key, value as boolvalue
                     break;
+
                 case CompareTypes.IsCurrentlyUsing:
                     //character as character, item as key, state as boolvalue
                     break;
+
                 case CompareTypes.IsExplicitGameVersion:
                     //state as boolvalue
                     break;
+
                 case CompareTypes.IsInFrontOf:
                     //character as character2, characetr as character, state as boolvalue
                     break;
+
                 case CompareTypes.IsInHouse:
                     //character as character, state as boolvalue
                     break;
+
                 case CompareTypes.IsNewGame:
                     //state as boolvalue
                     break;
+
                 case CompareTypes.IsZoneEmpty:
                     //zone as key, state as boolvalue
                     break;
+
                 case CompareTypes.ItemFromItemGroup:
                     //greyed out in csc
                     break;
+
                 case CompareTypes.MetByPlayer:
                     //character as character, value as boolvalue
                     break;
+
                 case CompareTypes.Personality:
                     //character as character, personality type as key, comparison as equationvalue, value as boolvalue
                     break;
+
                 case CompareTypes.IsBeingSpokenTo:
                     //character as character, value as boolvalue
                     break;
+
                 case CompareTypes.PlayerBeingSpokenTo:
                     //value as boolvalue
                     break;
+
                 case CompareTypes.PlayerGender:
                     //gender as value
                     break;
+
                 case CompareTypes.PlayerInventory:
                     //has item: item as key, value as boolvalue
                     //has at least one item: value as boolvalue
                     break;
+
                 case CompareTypes.Posing:
                     //is currently posing: character as character, value as boolvalue
                     //current pose: character as character, pose id as value, value as boolvalue
                     break;
+
                 case CompareTypes.Property:
                     //character as character, property id as value, value as boolvalue
                     break;
+
                 case CompareTypes.Quest:
                     //quest id as key, quest name as key2, value as boolvalue
                     break;
+
                 case CompareTypes.SameZoneAs:
                     //character as character, character as character2, value as boolvalue
                     break;
+
                 case CompareTypes.Social:
                     //for one: character as character, status as social status, comparison as equationvalue, value as value
                     //for two: character as character, character as character2, status as social status, comparison as equationvalue, value as value
                     break;
+
                 case CompareTypes.State:
                     //character as character, state id as value, value as boolvalue
                     break;
+
                 case CompareTypes.Value:
                     //character as character, value name as key, comparison as equationvalue, value as value
                     break;
+
                 case CompareTypes.Vision:
                     //character as character, character as character2, value as boolvalue
                     break;
+
                 case CompareTypes.PlayerPrefs:
                     //value name as key, comparison as equationvalue, value as value
                     break;
+
                 case CompareTypes.UseLegacyIntimacy:
                     //state as boolvalue
                     break;
+
                 case CompareTypes.None:
                     //none, duh :)
                     break;
+
                 default:
                     break;
             }
@@ -1174,9 +1053,8 @@ namespace Project
             //alternate texts
             DisplayAlternateTexts(dialogue);
 
-
             //todo the rest like events, responses and so on
-            //todo add toggle/list what to edit from the dialogue, same with all the other things you can edit 
+            //todo add toggle/list what to edit from the dialogue, same with all the other things you can edit
 
             GUILayout.EndVertical();
             //end scrolling portion for the story components
@@ -1253,6 +1131,12 @@ namespace Project
             return number;
         }
 
+        private ValueSpecificFormulas DisplayValueFormulaSelector(ValueSpecificFormulas valueFormula)
+        {
+            valueFormula = (ValueSpecificFormulas)DisplayNumberBlock((int)valueFormula, 0, 3, valueFormula.ToString(), ">", "<", false);
+            return valueFormula;
+        }
+
         private Criteria DuplicateCriterion(Criteria criterion)
         {
             Criteria tempCriterion = new Criteria
@@ -1282,6 +1166,38 @@ namespace Project
             return tempCriterion;
         }
 
+        private Type FindTypeName(string typeToSearch)
+        {
+            MelonLogger.Msg($"TYPE SEARCH: {typeToSearch}");
+            if (typeToSearch == "Criteria")
+            {
+                typeToSearch = "Criterion";
+            }
+            else if (typeToSearch == "CriteriaList")
+            {
+                if (secondLayerCriteriaList) typeToSearch = "CriteriaList2";
+                else typeToSearch = "CriteriaList1";
+            }
+            else
+            {
+                typeToSearch = typeToSearch.Remove(typeToSearch.Length - 1, 1);
+            }
+            MelonLogger.Msg($"TYPE SEARCH: adjusted name: {typeToSearch}");
+            Type ret = new Type();
+
+            foreach (Type t in StoryTypes)
+            {
+                if (t.Name == typeToSearch)
+                {
+                    ret = t;
+                    break;
+                }
+            }
+            MelonLogger.Msg($"TYPE SEARCH: Type found: {ret.Name}");
+
+            return ret;
+        }
+
         private string RemoveVAHints(string input)
         {
             bool inVAHint = false;
@@ -1303,6 +1219,213 @@ namespace Project
             }
 
             return output;
+        }
+
+        private T SetObjectValues<T>(List<string> tokens, Type type) where T : Object, new()
+        {
+            //iterate through tokens until we reach a start of an object, in the first case the mainstory
+            bool startNotFound = true;
+            while (startNotFound)
+            {
+                //MelonLogger.Msg(System.ConsoleColor.DarkGray, $"TOKEN0: {tokens[0]}");
+                //go to first start or remove token
+                if (tokens[0] == JsonLabels.START_OBJECT.ToString())
+                {
+                    startNotFound = false;
+                    tokens.RemoveAt(0);
+                }
+                else
+                {
+                    tokens.RemoveAt(0);
+                }
+            }
+
+            Object retObject = Activator.CreateInstance(type);
+            MelonLogger.Msg($"object is of T : {type.Name}");
+
+            //if we can create a new T, get all methods, then calling all set methods using reflection, filling them up with the objects we need
+            var methodInfos = type.GetMethods();
+            //MelonLogger.Msg($"Got {methodInfos.Count} methods for type {type.Name}");
+
+            //go through tokens to call the method we need, weith the token after as argument.
+            bool stayInWhileFieldGetter = true;
+            string lastToken = "";
+            while (stayInWhileFieldGetter)
+            {
+                string token = tokens[0];
+                //MelonLogger.Msg(System.ConsoleColor.DarkGray, $"TOKEN1: {token}");
+
+                //list starts
+                if (token == JsonLabels.START_LIST.ToString())
+                {
+                    //create list, then go back to creating objects, then at end we stop and move on in the og object the list is part of
+                    //get type of the list elements, name of them in lastToken
+
+                    //get type from method signature !!
+                    MethodInfo getList = new MethodInfo();
+                    MethodInfo setList = new MethodInfo();
+
+                    foreach (MethodInfo methodInfo in methodInfos)
+                    {
+                        if (methodInfo.Name == $"Get{lastToken}")
+                        {
+                            getList = methodInfo;
+                        }
+                        else if (methodInfo.Name == $"Set{lastToken}")
+                        {
+                            setList = methodInfo;
+                        }
+                    }
+
+                    //get new tokens
+                    tokens.RemoveAt(0);
+                    token = tokens[0];
+
+                    Type listType = getList.ReturnType;
+                    Object list = Activator.CreateInstance(listType);
+                    MethodInfo listAdd = listType.GetMethod("Add");
+                    //LogMethodInfo(listAdd);
+                    //MelonLogger.Msg("Got List.Add() for the correct type");
+
+                    //as long as we did not reach the end of the list, end it
+                    while (tokens[0] != JsonLabels.END_LIST.ToString())
+                    {
+                        //MelonLogger.Msg(System.ConsoleColor.DarkGray, $"TOKEN2: {token}");
+                        //MelonLogger.Msg("creating object to add to the list");
+                        Object objectToAdd = SetObjectValues<Object>(tokens, FindTypeName(lastToken));
+                        //MelonLogger.Msg("created object");
+                        listAdd.Invoke(list, new UnhollowerBaseLib.Il2CppReferenceArray<Object>(new Object[] { objectToAdd }));
+                        MelonLogger.Msg("added object to list");
+                    }
+                    //add list
+                    MelonLogger.Msg("adding list");
+                    setList.Invoke(retObject, new UnhollowerBaseLib.Il2CppReferenceArray<Object>(new Object[] { list }));
+                }
+                else if (token == JsonLabels.END_OBJECT.ToString())
+                {
+                    tokens.RemoveAt(0);
+                    //return lol
+                    return (T)retObject;
+                }
+                //else field starts
+                else
+                {
+                    if (tokens[1] != JsonLabels.START_LIST.ToString() && tokens[1] != JsonLabels.START_OBJECT.ToString())
+                    {
+                        foreach (MethodInfo methodInfo in methodInfos)
+                        {
+                            if (methodInfo.Name == $"Set{token}")
+                            {
+                                lastToken = token;
+                                tokens.RemoveAt(0);
+                                token = tokens[0];
+                                //MelonLogger.Msg(System.ConsoleColor.DarkGray, $"TOKEN3: {token}");
+
+                                //get method parameter type so we can cast the string to the correct object
+                                Type pType = methodInfo.GetParameterTypes()[0];
+
+                                //try parsing if necessary, defaults to new constructor like values
+                                Object tokenObject = TryParseAll(pType, token);
+
+                                //MelonLogger.Msg($"Trying to invoke {methodInfo.Name} with {token} as the parameter");
+                                methodInfo.Invoke(retObject, new UnhollowerBaseLib.Il2CppReferenceArray<Object>(new Object[] { tokenObject }));
+                                MelonLogger.Msg(System.ConsoleColor.Green, "Invoke successful!");
+                                break;
+                            }
+                        }
+                    }
+                }
+                lastToken = token;
+                tokens.RemoveAt(0);
+            }
+            //to keep the method gods happy
+            return (T)retObject;
+        }
+
+        private List<string> SplitJson(string tempS)
+        {
+            List<string> tokens = new List<string>();
+
+            bool inValueString = false;
+            string builderString = "";
+            List<char> seperators = new List<char>();
+            foreach (char charry in "{}[],:")
+            {
+                seperators.Add(charry);
+            }
+            List<char> numbers = new List<char>();
+            foreach (char numbah in "0123456789.nullfasetr")
+            {
+                numbers.Add(numbah);
+            }
+
+            foreach (char c in tempS)
+            {
+                //entering string
+                if (!inValueString && c == '"')
+                {
+                    inValueString = true;
+                }
+                else if (inValueString && c == '"')
+                {
+                    inValueString = false;
+                }
+                else if (inValueString)
+                {
+                    //add char to builder regardless of what it is
+                    builderString += c;
+                }
+                else if (seperators.Contains(c) && !inValueString)
+                {
+                    //if we hit a seperator, add nonempty strings and clear string builder
+                    if (builderString.Length > 0) tokens.Add(builderString);
+                    if (c == '[') tokens.Add(JsonLabels.START_LIST.ToString());
+                    if (c == ']') tokens.Add(JsonLabels.END_LIST.ToString());
+                    if (c == '{') tokens.Add(JsonLabels.START_OBJECT.ToString());
+                    if (c == '}') tokens.Add(JsonLabels.END_OBJECT.ToString());
+                    builderString = "";
+                }
+                else
+                {
+                    if (numbers.Contains(c))
+                    {
+                        //add char, in names and stuff
+                        builderString += c;
+                    }
+                }
+            }
+
+            return tokens;
+        }
+
+        private Object TryParseAll(Type type, string token)
+        {
+            try
+            {
+                MelonLogger.Msg($"Type to convert to: {type.FullName}, token: {token}");
+                //try casting the types, revert to default if failed
+                switch (type.FullName)
+                {
+                    case "System.Boolean":
+                        return new Boolean { m_value = bool.Parse(token) }.BoxIl2CppObject();
+                    //case "System.Double":
+                        //return new String { m_value = double.Parse(token, System.Globalization.NumberStyles.Float) }.BoxIl2CppObject();
+                    case "System.Int32":
+                        return new Int32 { m_value = int.Parse(token, System.Globalization.NumberStyles.Integer) }.BoxIl2CppObject();
+                    case "System.String":
+                        return token;
+
+                    //default null for all other kind of objects
+                    default:
+                        return null;
+                }
+            }
+            catch
+            {
+                MelonLogger.Msg($"Something went wrong while parsing to {type.FullName}, token: {token}");
+                //return default if failed
+                return default;
+            }
         }
     }
 }

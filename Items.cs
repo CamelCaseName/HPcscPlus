@@ -3,6 +3,7 @@ using Il2CppSystem;
 using Il2CppSystem.Collections.Generic;
 using UnhollowerRuntimeLib;
 
+//todo add singleton and unload chain to every class in here, lists also need to be cleared/disposed
 namespace Project
 {
     public class Criterion : Object
@@ -2732,8 +2733,17 @@ namespace Project
 
     public class MainStory : Object
     {
+        static MainStory instance;
 
-        public MainStory() : base(ClassInjector.DerivedConstructorPointer<MainStory>()) => ClassInjector.DerivedConstructorBody(this);
+        public MainStory() : base(ClassInjector.DerivedConstructorPointer<MainStory>()) { 
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            instance = null;
+        }
 
         public MainStory(System.IntPtr value) : base(value)
         {
@@ -5881,7 +5891,17 @@ namespace Project
 
     public class CharacterStory : Object
     {
-        public CharacterStory() : base(ClassInjector.DerivedConstructorPointer<CharacterStory>()) => ClassInjector.DerivedConstructorBody(this);
+        private CharacterStory instance;
+
+        public CharacterStory() : base(ClassInjector.DerivedConstructorPointer<CharacterStory>()) { 
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            instance = null;
+        }
 
         public CharacterStory(System.IntPtr value) : base(value)
         {

@@ -388,7 +388,6 @@ namespace Project
 
             MelonLogger.Msg("returning object");
 
-            GC.KeepAlive(mainStory);
             return mainStory;
         }
 
@@ -1309,17 +1308,11 @@ namespace Project
                     //add list
                     //MelonLogger.Msg("adding list");
                     setList.Invoke(retObject, CreateReferenceArray(list));
-
-                    //keep object uncollected up until it has been added, can the be collected with scope exit
-                    GC.KeepAlive(list);
-                    GC.KeepAlive(retObject);
                 }
                 else if (token == JsonLabels.END_OBJECT.ToString())
                 {
                     tokens.RemoveAt(0);
 
-                    //keep alive so we do not run in to the dangers of it getting collected before returning
-                    GC.KeepAlive(retObject);
                     return (T)retObject;
                 }
                 //else field starts
@@ -1344,7 +1337,6 @@ namespace Project
 
                                 methodInfo.Invoke(retObject, CreateReferenceArray(tokenObject));
                                 MelonLogger.Msg(System.ConsoleColor.Green, $"Invoke successful! ({methodInfo.Name} with {token} as the parameter)");
-                                GC.KeepAlive(retObject);
                                 break;
                             }
                         }
@@ -1352,8 +1344,6 @@ namespace Project
                 }
                 lastToken = token;
                 tokens.RemoveAt(0);
-                //keep object alive :)
-                GC.KeepAlive(retObject);
             }
         }
 

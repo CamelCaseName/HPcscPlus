@@ -7,7 +7,9 @@ namespace Project
 {
     public class Criterion : Object
     {
-        public Criterion() : base(ClassInjector.DerivedConstructorPointer<Criterion>()) => ClassInjector.DerivedConstructorBody(this);
+        public Criterion() : base(ClassInjector.DerivedConstructorPointer<Criterion>()) { 
+            ClassInjector.DerivedConstructorBody(this);
+        }
 
         public Criterion(System.IntPtr value) : base(value)
         {

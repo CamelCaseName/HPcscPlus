@@ -6,6 +6,7 @@ using Il2CppSystem.Collections.Generic;
 using Il2CppSystem.IO;
 using Il2CppSystem.Reflection;
 using MelonLoader;
+using UnhollowerBaseLib;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -224,41 +225,42 @@ namespace Project
         //on start
         public override void OnApplicationStart()
         {
-            ClassInjector.RegisterTypeInIl2Cpp<Criterion>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<OnTakeActionEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ItemAction>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<OnSuccessEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<UseWith>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ItemOverride>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ItemGroupBehavior>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Achievement>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<CriteriaList2>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<CriteriaList1>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<CriteriaGroup>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ItemGroup>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<GameStartEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Critera>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Event>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<PlayerReaction>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<MainStory>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<AlternateText>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<CloseEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ResponseCriteria>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ResponseEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Response>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<StartEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Dialogue>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<GlobalGoodbyeResponse>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<GlobalResponse>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<BackgroundChatter>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Valuee>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Personality>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<ExtendedDetail>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Quest>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<Reaction>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<OnAcceptEvent>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<StoryItem>(true);
-            ClassInjector.RegisterTypeInIl2Cpp<CharacterStory>(true);
+
+            ClassInjector.RegisterTypeInIl2Cpp<Criterion>();
+            ClassInjector.RegisterTypeInIl2Cpp<OnTakeActionEvent>();
+            ClassInjector.RegisterTypeInIl2Cpp<ItemAction>();
+            ClassInjector.RegisterTypeInIl2Cpp<OnSuccessEvent>();
+            ClassInjector.RegisterTypeInIl2Cpp<UseWith>();
+            ClassInjector.RegisterTypeInIl2Cpp<ItemOverride>();
+            ClassInjector.RegisterTypeInIl2Cpp<ItemGroupBehavior>();
+            ClassInjector.RegisterTypeInIl2Cpp<Achievement>();
+            ClassInjector.RegisterTypeInIl2Cpp<CriteriaList2>();
+            ClassInjector.RegisterTypeInIl2Cpp<CriteriaList1>();
+            ClassInjector.RegisterTypeInIl2Cpp<CriteriaGroup>();
+            ClassInjector.RegisterTypeInIl2Cpp<ItemGroup>();
+            ClassInjector.RegisterTypeInIl2Cpp<GameStartEvent>();
+            ClassInjector.RegisterTypeInIl2Cpp<Critera>();
+            ClassInjector.RegisterTypeInIl2Cpp<Event>();
+            ClassInjector.RegisterTypeInIl2Cpp<PlayerReaction>();
+            ClassInjector.RegisterTypeInIl2Cpp<MainStory>();
+            ClassInjector.RegisterTypeInIl2Cpp<AlternateText>();
+            ClassInjector.RegisterTypeInIl2Cpp<CloseEvent>();
+            ClassInjector.RegisterTypeInIl2Cpp<ResponseCriteria>();
+            ClassInjector.RegisterTypeInIl2Cpp<ResponseEvent>();
+            ClassInjector.RegisterTypeInIl2Cpp<Response>();
+            ClassInjector.RegisterTypeInIl2Cpp<StartEvent>();
+            ClassInjector.RegisterTypeInIl2Cpp<Dialogue>();
+            ClassInjector.RegisterTypeInIl2Cpp<GlobalGoodbyeResponse>();
+            ClassInjector.RegisterTypeInIl2Cpp<GlobalResponse>();
+            ClassInjector.RegisterTypeInIl2Cpp<BackgroundChatter>();
+            ClassInjector.RegisterTypeInIl2Cpp<Valuee>();
+            ClassInjector.RegisterTypeInIl2Cpp<Personality>();
+            ClassInjector.RegisterTypeInIl2Cpp<ExtendedDetail>();
+            ClassInjector.RegisterTypeInIl2Cpp<Quest>();
+            ClassInjector.RegisterTypeInIl2Cpp<Reaction>();
+            ClassInjector.RegisterTypeInIl2Cpp<OnAcceptEvent>();
+            ClassInjector.RegisterTypeInIl2Cpp<StoryItem>();
+            ClassInjector.RegisterTypeInIl2Cpp<CharacterStory>();
 
             StoryTypes = new Type[] {
                 Il2CppType.Of<Criterion>(),
@@ -382,10 +384,11 @@ namespace Project
         {
             List<string> tokens = SplitJson(tempS);
 
-            MainStory mainStory = SetObjectValues<MainStory>(tokens, Il2CppType.Of<MainStory>());
+            MainStory mainStory = SetObjectValues<MainStory>(tokens, Il2CppType.Of<MainStory>(), new Boolean());
 
             MelonLogger.Msg("returning object");
 
+            GC.KeepAlive(mainStory);
             return mainStory;
         }
 
@@ -1168,21 +1171,27 @@ namespace Project
 
         private Type FindTypeName(string typeToSearch)
         {
-            MelonLogger.Msg($"TYPE SEARCH: {typeToSearch}");
+            //MelonLogger.Msg($"TYPE SEARCH: {typeToSearch}");
             if (typeToSearch == "Criteria")
             {
                 typeToSearch = "Criterion";
             }
             else if (typeToSearch == "CriteriaList")
             {
-                if (secondLayerCriteriaList) typeToSearch = "CriteriaList2";
-                else typeToSearch = "CriteriaList1";
+                if (secondLayerCriteriaList)
+                {
+                    typeToSearch = "CriteriaList2";
+                }
+                else
+                {
+                    typeToSearch = "CriteriaList1";
+                }
             }
             else
             {
                 typeToSearch = typeToSearch.Remove(typeToSearch.Length - 1, 1);
             }
-            MelonLogger.Msg($"TYPE SEARCH: adjusted name: {typeToSearch}");
+            //MelonLogger.Msg($"TYPE SEARCH: adjusted name: {typeToSearch}");
             Type ret = new Type();
 
             foreach (Type t in StoryTypes)
@@ -1193,7 +1202,7 @@ namespace Project
                     break;
                 }
             }
-            MelonLogger.Msg($"TYPE SEARCH: Type found: {ret.Name}");
+            //MelonLogger.Msg($"TYPE SEARCH: Type found: {ret.Name}");
 
             return ret;
         }
@@ -1221,7 +1230,7 @@ namespace Project
             return output;
         }
 
-        private T SetObjectValues<T>(List<string> tokens, Type type) where T : Object, new()
+        private T SetObjectValues<T>(List<string> tokens, Type type, Boolean isSecondLayerCriteriaList) where T : Object, new()
         {
             //iterate through tokens until we reach a start of an object, in the first case the mainstory
             bool startNotFound = true;
@@ -1241,16 +1250,14 @@ namespace Project
             }
 
             Object retObject = Activator.CreateInstance(type);
-            MelonLogger.Msg($"object is of T : {type.Name}");
+            MelonLogger.Msg(System.ConsoleColor.DarkGray, $"Created object of type {type.Name}");
 
             //if we can create a new T, get all methods, then calling all set methods using reflection, filling them up with the objects we need
             var methodInfos = type.GetMethods();
-            //MelonLogger.Msg($"Got {methodInfos.Count} methods for type {type.Name}");
 
             //go through tokens to call the method we need, weith the token after as argument.
-            bool stayInWhileFieldGetter = true;
             string lastToken = "";
-            while (stayInWhileFieldGetter)
+            while (true)
             {
                 string token = tokens[0];
                 //MelonLogger.Msg(System.ConsoleColor.DarkGray, $"TOKEN1: {token}");
@@ -1284,27 +1291,35 @@ namespace Project
                     Type listType = getList.ReturnType;
                     Object list = Activator.CreateInstance(listType);
                     MethodInfo listAdd = listType.GetMethod("Add");
-                    //LogMethodInfo(listAdd);
-                    //MelonLogger.Msg("Got List.Add() for the correct type");
 
                     //as long as we did not reach the end of the list, end it
                     while (tokens[0] != JsonLabels.END_LIST.ToString())
                     {
                         //MelonLogger.Msg(System.ConsoleColor.DarkGray, $"TOKEN2: {token}");
-                        //MelonLogger.Msg("creating object to add to the list");
-                        Object objectToAdd = SetObjectValues<Object>(tokens, FindTypeName(lastToken));
-                        //MelonLogger.Msg("created object");
-                        listAdd.Invoke(list, new UnhollowerBaseLib.Il2CppReferenceArray<Object>(new Object[] { objectToAdd }));
-                        MelonLogger.Msg("added object to list");
+                        Boolean secondLayerStarted = new Boolean();
+                        if (!isSecondLayerCriteriaList.m_value && lastToken == "CriteriaList")
+                        {
+                            secondLayerStarted.m_value = true;
+                            isSecondLayerCriteriaList.m_value = true;
+                        }
+                        Object objectToAdd = SetObjectValues<Object>(tokens, FindTypeName(lastToken), secondLayerStarted);
+                        listAdd.Invoke(list, CreateReferenceArray(objectToAdd));
+                        isSecondLayerCriteriaList.m_value = false;
                     }
                     //add list
-                    MelonLogger.Msg("adding list");
-                    setList.Invoke(retObject, new UnhollowerBaseLib.Il2CppReferenceArray<Object>(new Object[] { list }));
+                    //MelonLogger.Msg("adding list");
+                    setList.Invoke(retObject, CreateReferenceArray(list));
+
+                    //keep object uncollected up until it has been added, can the be collected with scope exit
+                    GC.KeepAlive(list);
+                    GC.KeepAlive(retObject);
                 }
                 else if (token == JsonLabels.END_OBJECT.ToString())
                 {
                     tokens.RemoveAt(0);
-                    //return lol
+
+                    //keep alive so we do not run in to the dangers of it getting collected before returning
+                    GC.KeepAlive(retObject);
                     return (T)retObject;
                 }
                 //else field starts
@@ -1327,9 +1342,9 @@ namespace Project
                                 //try parsing if necessary, defaults to new constructor like values
                                 Object tokenObject = TryParseAll(pType, token);
 
-                                //MelonLogger.Msg($"Trying to invoke {methodInfo.Name} with {token} as the parameter");
-                                methodInfo.Invoke(retObject, new UnhollowerBaseLib.Il2CppReferenceArray<Object>(new Object[] { tokenObject }));
-                                MelonLogger.Msg(System.ConsoleColor.Green, "Invoke successful!");
+                                methodInfo.Invoke(retObject, CreateReferenceArray(tokenObject));
+                                MelonLogger.Msg(System.ConsoleColor.Green, $"Invoke successful! ({methodInfo.Name} with {token} as the parameter)");
+                                GC.KeepAlive(retObject);
                                 break;
                             }
                         }
@@ -1337,9 +1352,14 @@ namespace Project
                 }
                 lastToken = token;
                 tokens.RemoveAt(0);
+                //keep object alive :)
+                GC.KeepAlive(retObject);
             }
-            //to keep the method gods happy
-            return (T)retObject;
+        }
+
+        private static Il2CppReferenceArray<Object> CreateReferenceArray(Object tokenObject)
+        {
+            return new Il2CppReferenceArray<Object>(new Object[] { tokenObject });
         }
 
         private List<string> SplitJson(string tempS)
@@ -1402,14 +1422,14 @@ namespace Project
         {
             try
             {
-                MelonLogger.Msg($"Type to convert to: {type.FullName}, token: {token}");
+                //MelonLogger.Msg($"Type to convert to: {type.FullName}, token: {token}");
                 //try casting the types, revert to default if failed
                 switch (type.FullName)
                 {
                     case "System.Boolean":
                         return new Boolean { m_value = bool.Parse(token) }.BoxIl2CppObject();
                     //case "System.Double":
-                        //return new String { m_value = double.Parse(token, System.Globalization.NumberStyles.Float) }.BoxIl2CppObject();
+                    //return new String { m_value = double.Parse(token, System.Globalization.NumberStyles.Float) }.BoxIl2CppObject();
                     case "System.Int32":
                         return new Int32 { m_value = int.Parse(token, System.Globalization.NumberStyles.Integer) }.BoxIl2CppObject();
                     case "System.String":
@@ -1422,7 +1442,7 @@ namespace Project
             }
             catch
             {
-                MelonLogger.Msg($"Something went wrong while parsing to {type.FullName}, token: {token}");
+                MelonLogger.Msg(System.ConsoleColor.DarkRed, $"Something went wrong while parsing to {type.FullName}, token: {token}");
                 //return default if failed
                 return default;
             }

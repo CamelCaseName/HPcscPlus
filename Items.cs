@@ -8,15 +8,24 @@ namespace Project
 {
     public class Criterion : Object
     {
-        public Criterion() : base(ClassInjector.DerivedConstructorPointer<Criterion>()) { 
+        private Criterion instance;
+
+        public Criterion() : base(ClassInjector.DerivedConstructorPointer<Criterion>())
+        {
             ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            instance = null;
         }
 
         public Criterion(System.IntPtr value) : base(value)
         {
         }
 
-        public Criterion(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, int itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option) : base(ClassInjector.DerivedConstructorPointer<Criterion>())
+        public Criterion(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, string itemComparison, string itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option) : base(ClassInjector.DerivedConstructorPointer<Criterion>())
         {
             ClassInjector.DerivedConstructorBody(this);
 
@@ -162,26 +171,26 @@ namespace Project
             valueFormula = value;
         }
 
-        private int itemComparison;
+        private string itemComparison;
 
-        public int GetItemComparison()
+        public string GetItemComparison()
         {
             return itemComparison;
         }
 
-        public void SetItemComparison(int value)
+        public void SetItemComparison(string value)
         {
             itemComparison = value;
         }
 
-        private InteractiveItem itemFromItemGroupComparison;
+        private string itemFromItemGroupComparison;
 
-        public InteractiveItem GetItemFromItemGroupComparison()
+        public string GetItemFromItemGroupComparison()
         {
             return itemFromItemGroupComparison;
         }
 
-        public void SetItemFromItemGroupComparison(InteractiveItem value)
+        public void SetItemFromItemGroupComparison(string value)
         {
             itemFromItemGroupComparison = value;
         }
@@ -285,8 +294,23 @@ namespace Project
 
     public class OnTakeActionEvent : Object
     {
+        private OnTakeActionEvent instance;
 
-        public OnTakeActionEvent() : base(ClassInjector.DerivedConstructorPointer<OnTakeActionEvent>()) => ClassInjector.DerivedConstructorBody(this);
+        public OnTakeActionEvent() : base(ClassInjector.DerivedConstructorPointer<OnTakeActionEvent>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            foreach (var item in criteria)
+            {
+                item.Unload();
+            }
+            criteria = null;
+            instance = null;
+        }
 
         public OnTakeActionEvent(System.IntPtr value) : base(value)
         {
@@ -560,8 +584,28 @@ namespace Project
 
     public class ItemAction : Object
     {
+        private ItemAction instance;
 
-        public ItemAction() : base(ClassInjector.DerivedConstructorPointer<ItemAction>()) => ClassInjector.DerivedConstructorBody(this);
+        public ItemAction() : base(ClassInjector.DerivedConstructorPointer<ItemAction>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            foreach (var item in criteria)
+            {
+                item.Unload();
+            }
+            criteria = null;
+            foreach (var item in onTakeActionEvents)
+            {
+                item.Unload();
+            }
+            onTakeActionEvents = null;
+            instance = null;
+        }
 
         public ItemAction(System.IntPtr value) : base(value)
         {
@@ -627,8 +671,23 @@ namespace Project
 
     public class OnSuccessEvent : Object
     {
+        private OnSuccessEvent instance;
 
-        public OnSuccessEvent() : base(ClassInjector.DerivedConstructorPointer<OnSuccessEvent>()) => ClassInjector.DerivedConstructorBody(this);
+        public OnSuccessEvent() : base(ClassInjector.DerivedConstructorPointer<OnSuccessEvent>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            foreach (var item in criteria)
+            {
+                item.Unload();
+            }
+            criteria = null;
+            instance = null;
+        }
 
         public OnSuccessEvent(System.IntPtr value) : base(value)
         {
@@ -902,8 +961,28 @@ namespace Project
 
     public class UseWith : Object
     {
+        private UseWith instance;
 
-        public UseWith() : base(ClassInjector.DerivedConstructorPointer<UseWith>()) => ClassInjector.DerivedConstructorBody(this);
+        public UseWith() : base(ClassInjector.DerivedConstructorPointer<UseWith>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            foreach (var item in criteria)
+            {
+                item.Unload();
+            }
+            criteria = null;
+            foreach (var item in onSuccessEvents)
+            {
+                item.Unload();
+            }
+            onSuccessEvents = null;
+            instance = null;
+        }
 
         public UseWith(System.IntPtr value) : base(value)
         {
@@ -982,8 +1061,28 @@ namespace Project
 
     public class ItemOverride : Object
     {
+        private ItemOverride instance;
 
-        public ItemOverride() : base(ClassInjector.DerivedConstructorPointer<ItemOverride>()) => ClassInjector.DerivedConstructorBody(this);
+        public ItemOverride() : base(ClassInjector.DerivedConstructorPointer<ItemOverride>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            foreach (var item in itemActions)
+            {
+                item.Unload();
+            }
+            itemActions = null;
+            foreach (var item in useWiths)
+            {
+                item.Unload();
+            }
+            useWiths = null;
+            instance = null;
+        }
 
         public ItemOverride(System.IntPtr value) : base(value)
         {
@@ -1088,8 +1187,24 @@ namespace Project
 
     public class ItemGroupBehavior : Object
     {
+        private ItemGroupBehavior instance;
 
-        public ItemGroupBehavior() : base(ClassInjector.DerivedConstructorPointer<ItemGroupBehavior>()) => ClassInjector.DerivedConstructorBody(this);
+        public ItemGroupBehavior() : base(ClassInjector.DerivedConstructorPointer<ItemGroupBehavior>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            foreach (var item in itemActions)
+            {
+                item.Unload();
+            }
+            itemActions = null;
+            useWiths = null;
+            instance = null;
+        }
 
         public ItemGroupBehavior(System.IntPtr value) : base(value)
         {
@@ -1181,8 +1296,18 @@ namespace Project
 
     public class Achievement : Object
     {
+        private Achievement instance;
 
-        public Achievement() : base(ClassInjector.DerivedConstructorPointer<Achievement>()) => ClassInjector.DerivedConstructorBody(this);
+        public Achievement() : base(ClassInjector.DerivedConstructorPointer<Achievement>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            instance = null;
+        }
 
         public Achievement(System.IntPtr value) : base(value)
         {
@@ -1274,14 +1399,24 @@ namespace Project
 
     public class CriteriaList2 : Object
     {
+        private CriteriaList2 instance;
 
-        public CriteriaList2() : base(ClassInjector.DerivedConstructorPointer<CriteriaList2>()) => ClassInjector.DerivedConstructorBody(this);
+        public CriteriaList2() : base(ClassInjector.DerivedConstructorPointer<CriteriaList2>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            instance = null;
+        }
 
         public CriteriaList2(System.IntPtr value) : base(value)
         {
         }
 
-        public CriteriaList2(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, int itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option) : base(ClassInjector.DerivedConstructorPointer<CriteriaList2>())
+        public CriteriaList2(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, string itemComparison, string itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option) : base(ClassInjector.DerivedConstructorPointer<CriteriaList2>())
         {
             ClassInjector.DerivedConstructorBody(this);
             SetBoolValue(boolValue);
@@ -1426,26 +1561,26 @@ namespace Project
             valueFormula = value;
         }
 
-        private int itemComparison;
+        private string itemComparison;
 
-        public int GetItemComparison()
+        public string GetItemComparison()
         {
             return itemComparison;
         }
 
-        public void SetItemComparison(int value)
+        public void SetItemComparison(string value)
         {
             itemComparison = value;
         }
 
-        private InteractiveItem itemFromItemGroupComparison;
+        private string itemFromItemGroupComparison;
 
-        public InteractiveItem GetItemFromItemGroupComparison()
+        public string GetItemFromItemGroupComparison()
         {
             return itemFromItemGroupComparison;
         }
 
-        public void SetItemFromItemGroupComparison(InteractiveItem value)
+        public void SetItemFromItemGroupComparison(string value)
         {
             itemFromItemGroupComparison = value;
         }
@@ -1549,8 +1684,23 @@ namespace Project
 
     public class CriteriaList1 : Object
     {
+        private CriteriaList1 instance;
 
-        public CriteriaList1() : base(ClassInjector.DerivedConstructorPointer<CriteriaList1>()) => ClassInjector.DerivedConstructorBody(this);
+        public CriteriaList1() : base(ClassInjector.DerivedConstructorPointer<CriteriaList1>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            foreach (var item in criteriaList)
+            {
+                item.Unload();
+            }
+            criteriaList = null;
+            instance = null;
+        }
 
         public CriteriaList1(System.IntPtr value) : base(value)
         {
@@ -1577,8 +1727,23 @@ namespace Project
 
     public class CriteriaGroup : Object
     {
+        private CriteriaGroup instance;
 
-        public CriteriaGroup() : base(ClassInjector.DerivedConstructorPointer<CriteriaGroup>()) => ClassInjector.DerivedConstructorBody(this);
+        public CriteriaGroup() : base(ClassInjector.DerivedConstructorPointer<CriteriaGroup>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            foreach (var item in criteriaList)
+            {
+                item.Unload();
+            }
+            criteriaList = null;
+            instance = null;
+        }
 
         public CriteriaGroup(System.IntPtr value) : base(value)
         {
@@ -1657,8 +1822,19 @@ namespace Project
 
     public class ItemGroup : Object
     {
+        private ItemGroup instance;
 
-        public ItemGroup() : base(ClassInjector.DerivedConstructorPointer<ItemGroup>()) => ClassInjector.DerivedConstructorBody(this);
+        public ItemGroup() : base(ClassInjector.DerivedConstructorPointer<ItemGroup>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            itemsInGroup = null;
+            instance = null;
+        }
 
         public ItemGroup(System.IntPtr value) : base(value)
         {
@@ -1724,8 +1900,23 @@ namespace Project
 
     public class GameStartEvent : Object
     {
+        private GameStartEvent instance;
 
-        public GameStartEvent() : base(ClassInjector.DerivedConstructorPointer<GameStartEvent>()) => ClassInjector.DerivedConstructorBody(this);
+        public GameStartEvent() : base(ClassInjector.DerivedConstructorPointer<GameStartEvent>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            foreach (var item in criteria)
+            {
+                item.Unload();
+            }
+            criteria = null;
+            instance = null;
+        }
 
         public GameStartEvent(System.IntPtr value) : base(value)
         {
@@ -1999,14 +2190,24 @@ namespace Project
 
     public class Critera : Object
     {
+        private Critera instance;
 
-        public Critera() : base(ClassInjector.DerivedConstructorPointer<Critera>()) => ClassInjector.DerivedConstructorBody(this);
+        public Critera() : base(ClassInjector.DerivedConstructorPointer<Critera>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            instance = null;
+        }
 
         public Critera(System.IntPtr value) : base(value)
         {
         }
 
-        public Critera(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, int itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option) : base(ClassInjector.DerivedConstructorPointer<Critera>())
+        public Critera(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, string itemComparison, string itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option) : base(ClassInjector.DerivedConstructorPointer<Critera>())
         {
             ClassInjector.DerivedConstructorBody(this);
             SetBoolValue(boolValue);
@@ -2151,26 +2352,26 @@ namespace Project
             valueFormula = value;
         }
 
-        private int itemComparison;
+        private string itemComparison;
 
-        public int GetItemComparison()
+        public string GetItemComparison()
         {
             return itemComparison;
         }
 
-        public void SetItemComparison(int value)
+        public void SetItemComparison(string value)
         {
             itemComparison = value;
         }
 
-        private InteractiveItem itemFromItemGroupComparison;
+        private string itemFromItemGroupComparison;
 
-        public InteractiveItem GetItemFromItemGroupComparison()
+        public string GetItemFromItemGroupComparison()
         {
             return itemFromItemGroupComparison;
         }
 
-        public void SetItemFromItemGroupComparison(InteractiveItem value)
+        public void SetItemFromItemGroupComparison(string value)
         {
             itemFromItemGroupComparison = value;
         }
@@ -2274,8 +2475,23 @@ namespace Project
 
     public class Event : Object
     {
+        private Event instance;
 
-        public Event() : base(ClassInjector.DerivedConstructorPointer<Event>()) => ClassInjector.DerivedConstructorBody(this);
+        public Event() : base(ClassInjector.DerivedConstructorPointer<Event>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            foreach (var item in criteria)
+            {
+                item.Unload();
+            }
+            criteria = null;
+            instance = null;
+        }
 
         public Event(System.IntPtr value) : base(value)
         {
@@ -2549,8 +2765,28 @@ namespace Project
 
     public class PlayerReaction : Object
     {
+        private PlayerReaction instance;
 
-        public PlayerReaction() : base(ClassInjector.DerivedConstructorPointer<PlayerReaction>()) => ClassInjector.DerivedConstructorBody(this);
+        public PlayerReaction() : base(ClassInjector.DerivedConstructorPointer<PlayerReaction>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance = this;
+        }
+
+        public void Unload()
+        {
+            foreach (var item in critera)
+            {
+                item.Unload();
+            }
+            critera = null;
+            foreach (var item in events)
+            {
+                item.Unload();
+            }
+            events = null;
+            instance = null;
+        }
 
         public PlayerReaction(System.IntPtr value) : base(value)
         {
@@ -2735,13 +2971,49 @@ namespace Project
     {
         static MainStory instance;
 
-        public MainStory() : base(ClassInjector.DerivedConstructorPointer<MainStory>()) { 
+        public MainStory() : base(ClassInjector.DerivedConstructorPointer<MainStory>())
+        {
             ClassInjector.DerivedConstructorBody(this);
             instance = this;
         }
 
         public void Unload()
         {
+            foreach (var item in itemOverrides)
+            {
+                item.Unload();
+            }
+            itemOverrides = null;
+            foreach (var item in itemGroupBehaviors)
+            {
+                item.Unload();
+            }
+            itemGroupBehaviors = null;
+            foreach (var item in achievements)
+            {
+                item.Unload();
+            }
+            achievements = null;
+            foreach (var item in criteriaGroups)
+            {
+                item.Unload();
+            }
+            criteriaGroups = null;
+            foreach (var item in itemGroups)
+            {
+                item.Unload();
+            }
+            itemGroups = null;
+            foreach (var item in gameStartEvents)
+            {
+                item.Unload();
+            }
+            gameStartEvents = null;
+            foreach (var item in playerReactions)
+            {
+                item.Unload();
+            }
+            playerReactions = null;
             instance = null;
         }
 
@@ -3227,7 +3499,7 @@ namespace Project
         {
         }
 
-        public ResponseCriteria(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, int itemComparison, InteractiveItem itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option) : base(ClassInjector.DerivedConstructorPointer<ResponseCriteria>())
+        public ResponseCriteria(string boolValue, string character, string character2, string compareType, string dialogueStatus, bool displayInEditor, string doorOptions, string equalsValue, string equationValue, string valueFormula, string itemComparison, string itemFromItemGroupComparison, string key, string key2, int order, string playerInventoryOption, string poseOption, string socialStatus, string value, int option) : base(ClassInjector.DerivedConstructorPointer<ResponseCriteria>())
         {
             ClassInjector.DerivedConstructorBody(this);
             SetBoolValue(boolValue);
@@ -3372,26 +3644,26 @@ namespace Project
             valueFormula = value;
         }
 
-        private int itemComparison;
+        private string itemComparison;
 
-        public int GetItemComparison()
+        public string GetItemComparison()
         {
             return itemComparison;
         }
 
-        public void SetItemComparison(int value)
+        public void SetItemComparison(string value)
         {
             itemComparison = value;
         }
 
-        private InteractiveItem itemFromItemGroupComparison;
+        private string itemFromItemGroupComparison;
 
-        public InteractiveItem GetItemFromItemGroupComparison()
+        public string GetItemFromItemGroupComparison()
         {
             return itemFromItemGroupComparison;
         }
 
-        public void SetItemFromItemGroupComparison(InteractiveItem value)
+        public void SetItemFromItemGroupComparison(string value)
         {
             itemFromItemGroupComparison = value;
         }
@@ -5893,7 +6165,8 @@ namespace Project
     {
         private CharacterStory instance;
 
-        public CharacterStory() : base(ClassInjector.DerivedConstructorPointer<CharacterStory>()) { 
+        public CharacterStory() : base(ClassInjector.DerivedConstructorPointer<CharacterStory>())
+        {
             ClassInjector.DerivedConstructorBody(this);
             instance = this;
         }

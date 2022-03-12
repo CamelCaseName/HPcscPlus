@@ -22,6 +22,7 @@ namespace Project
 
         public Criterion(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private string boolValue;
@@ -288,6 +289,7 @@ namespace Project
 
         public OnTakeActionEvent(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
 
@@ -560,6 +562,7 @@ namespace Project
 
         public ItemAction(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
 
@@ -635,6 +638,7 @@ namespace Project
 
         public OnSuccessEvent(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
 
@@ -907,6 +911,7 @@ namespace Project
 
         public UseWith(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private List<Criterion> criteria;
@@ -998,6 +1003,7 @@ namespace Project
 
         public ItemOverride(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
 
@@ -1110,6 +1116,7 @@ namespace Project
 
         public ItemGroupBehavior(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
 
@@ -1204,6 +1211,7 @@ namespace Project
 
         public Achievement(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
 
@@ -1298,6 +1306,7 @@ namespace Project
 
         public CriteriaList2(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private string boolValue;
@@ -1564,6 +1573,7 @@ namespace Project
 
         public CriteriaList1(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private List<CriteriaList2> criteriaList;
@@ -1602,6 +1612,7 @@ namespace Project
 
         public CriteriaGroup(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private string id;
@@ -1684,6 +1695,7 @@ namespace Project
 
         public ItemGroup(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private string id;
@@ -1758,6 +1770,7 @@ namespace Project
 
         public GameStartEvent(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private int sortOrder2;
@@ -2019,6 +2032,7 @@ namespace Project
 
         public Critera(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private string boolValue;
@@ -2285,6 +2299,7 @@ namespace Project
 
         public Event(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private int sortOrder2;
@@ -2556,6 +2571,7 @@ namespace Project
 
         public PlayerReaction(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private string id;
@@ -2768,6 +2784,7 @@ namespace Project
 
         public MainStory(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private string housePartyVersion;
@@ -2907,6 +2924,7 @@ namespace Project
 
         public AlternateText(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private List<Critera> critera;
@@ -2982,6 +3000,7 @@ namespace Project
 
         public CloseEvent(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private int sortOrder2;
@@ -3243,6 +3262,7 @@ namespace Project
 
         public ResponseCriteria(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private string boolValue;
@@ -3510,6 +3530,7 @@ namespace Project
 
         public ResponseEvent(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private int sortOrder2;
@@ -3783,6 +3804,7 @@ namespace Project
 
         public Response(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private bool selected;
@@ -3990,6 +4012,7 @@ namespace Project
 
         public StartEvent(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private int sortOrder2;
@@ -4275,6 +4298,7 @@ namespace Project
 
         public Dialogue(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private bool shown;
@@ -4547,6 +4571,7 @@ namespace Project
 
         public GlobalGoodbyeResponse(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private bool selected;
@@ -4724,6 +4749,7 @@ namespace Project
 
         public GlobalResponse(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private bool selected;
@@ -4907,6 +4933,7 @@ namespace Project
 
         public BackgroundChatter(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private int id;
@@ -5060,6 +5087,7 @@ namespace Project
 
         public Valuee(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private string type;
@@ -5111,6 +5139,7 @@ namespace Project
 
         public Personality(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private List<Valuee> values;
@@ -5144,6 +5173,7 @@ namespace Project
 
         public ExtendedDetail(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private int value;
@@ -5195,6 +5225,7 @@ namespace Project
 
         public Quest(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private string characterName;
@@ -5420,6 +5451,7 @@ namespace Project
 
         public Reaction(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private string id;
@@ -5603,6 +5635,7 @@ namespace Project
 
         public OnAcceptEvent(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private int sortOrder2;
@@ -5882,6 +5915,7 @@ namespace Project
 
         public StoryItem(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private List<Critera> critera;
@@ -6010,6 +6044,7 @@ namespace Project
 
         public CharacterStory(System.IntPtr value) : base(value)
         {
+            instance.Add(this);
         }
 
         private string characterName;

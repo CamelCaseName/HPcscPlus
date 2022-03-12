@@ -167,7 +167,7 @@ namespace Project
         {
             CurrentStoryFolder = StoryData.GetInternalStoryFolder(GameManager.GetActiveStoryName());
 
-            MelonLogger.Msg($"Current story found in {CurrentStoryFolder}");
+            MelonLogger.Msg(System.ConsoleColor.DarkMagenta, $"Current story found in {CurrentStoryFolder}");
 
             string[] paths = CurrentStoryFolder.Split('/');
 
@@ -176,7 +176,7 @@ namespace Project
 
             if (tempS.Length > 0)
             {
-                MelonLogger.Msg($"Current story file found at {tempF}, trying to parse...");
+                MelonLogger.Msg(System.ConsoleColor.DarkMagenta, $"Current story file found at {tempF}, trying to parse...");
                 MainStoryObject = ParseJsonToStory(tempS);
                 //MainStoryObject = JsonConvert.DeserializeObject<MainStory>(tempS);
                 if (MainStoryObject != null)
@@ -384,7 +384,7 @@ namespace Project
         {
             List<string> tokens = SplitJson(tempS);
 
-            MainStory mainStory = SetObjectValues<MainStory>(tokens, Il2CppType.Of<MainStory>(), new Boolean());
+            MainStory mainStory = SetObjectValues<MainStory>(tokens, Il2CppType.Of<MainStory>(), new Boolean() { m_value = false });
 
             MelonLogger.Msg("returning object");
 
@@ -1175,6 +1175,10 @@ namespace Project
             {
                 typeToSearch = "Criterion";
             }
+            else if (typeToSearch == "Critera")
+            {
+                //do nothing, is ok that way
+            }
             else if (typeToSearch == "CriteriaList")
             {
                 if (secondLayerCriteriaList)
@@ -1229,13 +1233,25 @@ namespace Project
             return output;
         }
 
-        private T SetObjectValues<T>(List<string> tokens, Type type, Boolean isSecondLayerCriteriaList) where T : Object, new()
+        private void LogWithLogicDepth(System.ConsoleColor color, string text, int logicDepth)
+        {
+            string builder = "";
+            for (int c = 0; c < logicDepth; c++)
+            {
+                //indent for each call
+                builder += "    ";
+            }
+            builder += text;
+            MelonLogger.Msg(color, builder);
+        }
+
+        private T SetObjectValues<T>(List<string> tokens, Type type, Boolean isSecondLayerCriteriaList, int logicDepth = 0) where T : Object, new()
         {
             //iterate through tokens until we reach a start of an object, in the first case the mainstory
             bool startNotFound = true;
             while (startNotFound)
             {
-                //MelonLogger.Msg(System.ConsoleColor.DarkGray, $"TOKEN0: {tokens[0]}");
+                //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN0: {tokens[0]}");
                 //go to first start or remove token
                 if (tokens[0] == JsonLabels.START_OBJECT.ToString())
                 {
@@ -1249,7 +1265,7 @@ namespace Project
             }
 
             Object retObject = Activator.CreateInstance(type);
-            MelonLogger.Msg(System.ConsoleColor.DarkGray, $"Created object of type {type.Name}");
+            LogWithLogicDepth(System.ConsoleColor.DarkGray, $"Created object of type {type.Name}", logicDepth);
 
             //if we can create a new T, get all methods, then calling all set methods using reflection, filling them up with the objects we need
             var methodInfos = type.GetMethods();
@@ -1259,11 +1275,12 @@ namespace Project
             while (true)
             {
                 string token = tokens[0];
-                //MelonLogger.Msg(System.ConsoleColor.DarkGray, $"TOKEN1: {token}");
+                //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN1: {token}");
 
                 //list starts
                 if (token == JsonLabels.START_LIST.ToString())
                 {
+                    LogWithLogicDepth(System.ConsoleColor.White, "created list", ++logicDepth);
                     //create list, then go back to creating objects, then at end we stop and move on in the og object the list is part of
                     //get type of the list elements, name of them in lastToken
 
@@ -1275,10 +1292,12 @@ namespace Project
                     {
                         if (methodInfo.Name == $"Get{lastToken}")
                         {
+                            //LogWithLogicDepth($"got Get{lastToken}");
                             getList = methodInfo;
                         }
                         else if (methodInfo.Name == $"Set{lastToken}")
                         {
+                            //LogWithLogicDepth($"got Set{lastToken}");
                             setList = methodInfo;
                         }
                     }
@@ -1294,26 +1313,51 @@ namespace Project
                     //as long as we did not reach the end of the list, end it
                     while (tokens[0] != JsonLabels.END_LIST.ToString())
                     {
-                        //MelonLogger.Msg(System.ConsoleColor.DarkGray, $"TOKEN2: {token}");
-                        Boolean secondLayerStarted = new Boolean();
-                        if (!isSecondLayerCriteriaList.m_value && lastToken == "CriteriaList")
+                        //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN2: {token}");
+                        Object objectToAdd;
+
+                        if (!isSecondLayerCriteriaList.m_value && type == Il2CppType.Of<CriteriaList1>())
                         {
-                            secondLayerStarted.m_value = true;
                             isSecondLayerCriteriaList.m_value = true;
+                            secondLayerCriteriaList = true;
+                            LogWithLogicDepth(System.ConsoleColor.White, $"is second list?: {isSecondLayerCriteriaList.m_value}", ++logicDepth);
                         }
-                        Object objectToAdd = SetObjectValues<Object>(tokens, FindTypeName(lastToken), secondLayerStarted);
+
+                        if (token == JsonLabels.START_OBJECT.ToString())
+                        {
+                            //add object
+                            objectToAdd = SetObjectValues<Object>(tokens, FindTypeName(lastToken), isSecondLayerCriteriaList, logicDepth);
+                        }
+                        else
+                        {
+                            //add string
+                            objectToAdd = token;
+                            tokens.RemoveAt(0);
+                            token = tokens[0];
+                        }
+
+                        if (isSecondLayerCriteriaList.m_value && type == Il2CppType.Of<CriteriaList1>())
+                        {
+                            secondLayerCriteriaList = false;
+                            LogWithLogicDepth(System.ConsoleColor.White, $"is second list?: {secondLayerCriteriaList}", logicDepth);
+                        }
+
+                        LogWithLogicDepth(System.ConsoleColor.DarkCyan, $"adding object to list", --logicDepth);
                         listAdd.Invoke(list, CreateReferenceArray(objectToAdd));
                         isSecondLayerCriteriaList.m_value = false;
                     }
+
                     //add list
-                    //MelonLogger.Msg("adding list");
+                    LogWithLogicDepth(System.ConsoleColor.White, "adding list", --logicDepth);
                     setList.Invoke(retObject, CreateReferenceArray(list));
                 }
                 else if (token == JsonLabels.END_OBJECT.ToString())
                 {
                     tokens.RemoveAt(0);
 
-                    return (T)retObject;
+                    LogWithLogicDepth(System.ConsoleColor.DarkGray, "End of object", logicDepth);
+
+                    return retObject.Cast<T>();
                 }
                 //else field starts
                 else
@@ -1327,7 +1371,7 @@ namespace Project
                                 lastToken = token;
                                 tokens.RemoveAt(0);
                                 token = tokens[0];
-                                //MelonLogger.Msg(System.ConsoleColor.DarkGray, $"TOKEN3: {token}");
+                                //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN3: {token}");
 
                                 //get method parameter type so we can cast the string to the correct object
                                 Type pType = methodInfo.GetParameterTypes()[0];
@@ -1335,8 +1379,8 @@ namespace Project
                                 //try parsing if necessary, defaults to new constructor like values
                                 Object tokenObject = TryParseAll(pType, token);
 
+                                //LogWithLogicDepth(System.ConsoleColor.Green, $"Invoke successful! ({methodInfo.Name} with {token} as the parameter)");
                                 methodInfo.Invoke(retObject, CreateReferenceArray(tokenObject));
-                                MelonLogger.Msg(System.ConsoleColor.Green, $"Invoke successful! ({methodInfo.Name} with {token} as the parameter)");
                                 break;
                             }
                         }

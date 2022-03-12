@@ -111,6 +111,8 @@ namespace Project
 
         private readonly bool RemoveVaHints = true;
 
+        private bool debug = false;
+
         private CharacterStoryData _selectedStory;
 
         private int AlternateTextScrollPosition;
@@ -135,6 +137,7 @@ namespace Project
         private bool StorySelected = false;
         private Type[] StoryTypes;
 
+        //todo speed increase: add array of string to remove the eneed for ToString()
         public enum JsonLabels
         {
             START_OBJECT,
@@ -183,6 +186,10 @@ namespace Project
                 {
                     MelonLogger.Msg(System.ConsoleColor.DarkGreen, "Story parsed successfully.");
                 }
+                else
+                {
+                    MelonLogger.Msg(System.ConsoleColor.Red, "Parsing failed!");
+                }
             }
             else
             {
@@ -199,12 +206,15 @@ namespace Project
                 if (Path.GetFileName(file).Split('.')[1] == "character")
                 {
                     //use custom json/story parser
-                    CharacterStory tempStory = ParseJsonToCharacterStory(tempS);
+                    CharacterStory tempStory = ParseJsonToCharacterStory(File.ReadAllText(file));
                     if (tempStory != null)
                     {
-                        CharacterStoryObjects[x] = tempStory;
-                        x++;
-                        MelonLogger.Msg(System.ConsoleColor.Gray, $"Parsed {Path.GetFileNameWithoutExtension(file)}'s Story.");
+                        CharacterStoryObjects[x++] = tempStory;
+                        MelonLogger.Msg(System.ConsoleColor.DarkGreen, $"{Path.GetFileNameWithoutExtension(file)}'s Story parsed successfully.");
+                    }
+                    else
+                    {
+                        MelonLogger.Msg(System.ConsoleColor.Red, "Parsing failed!");
                     }
                 }
             }
@@ -336,7 +346,7 @@ namespace Project
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
             InGameMain = sceneName == "GameMain";
-            MelonLogger.Msg($"scene {sceneName} loaded ({buildIndex}) igm: {InGameMain}");
+            MelonLogger.Msg($"scene {sceneName} loaded ({buildIndex})");
 
             //get references to the GameManager and so on
             if (InGameMain)
@@ -377,18 +387,44 @@ namespace Project
 
         public CharacterStory ParseJsonToCharacterStory(string tempS)
         {
-            throw new System.NotImplementedException();
+            MelonLogger.Msg("creating character story object");
+
+            List<string> tokens = SplitJson(tempS);
+            try
+            {
+
+                CharacterStory charStory = SetObjectValues<CharacterStory>(tokens, Il2CppType.Of<CharacterStory>(), new Boolean() { m_value = false });
+
+                MelonLogger.Msg("returning object");
+
+                return charStory;
+            }
+            catch (System.Exception e)
+            {
+                MelonLogger.Msg(System.ConsoleColor.Red, e.Message + e.StackTrace);
+                return null;
+            }
         }
 
         public MainStory ParseJsonToStory(string tempS)
         {
+
+            MelonLogger.Msg("creating story object");
+
             List<string> tokens = SplitJson(tempS);
+            try
+            {
+                MainStory mainStory = SetObjectValues<MainStory>(tokens, Il2CppType.Of<MainStory>(), new Boolean() { m_value = false });
 
-            MainStory mainStory = SetObjectValues<MainStory>(tokens, Il2CppType.Of<MainStory>(), new Boolean() { m_value = false });
+                MelonLogger.Msg("returning object");
+                return mainStory;
+            }
+            catch (System.Exception e)
+            {
+                MelonLogger.Msg(System.ConsoleColor.Red, e.Message + e.StackTrace);
+                return null;
+            }
 
-            MelonLogger.Msg("returning object");
-
-            return mainStory;
         }
 
         private string ConstrainLength(string input)
@@ -1170,14 +1206,23 @@ namespace Project
 
         private Type FindTypeName(string typeToSearch)
         {
+            //todo speed improvement, replace by dict/LUT
             //MelonLogger.Msg($"TYPE SEARCH: {typeToSearch}");
             if (typeToSearch == "Criteria")
             {
                 typeToSearch = "Criterion";
             }
-            else if (typeToSearch == "Critera")
+            else if (typeToSearch == "Critera" || typeToSearch == "ResponseCriteria" || typeToSearch == "BackgroundChatter")
             {
                 //do nothing, is ok that way
+            }
+            else if (typeToSearch == "Values")
+            {
+                typeToSearch = "Valuee";
+            }
+            else if (typeToSearch == "OnRefuseEvents")
+            {
+                typeToSearch = "OnAcceptEvent";
             }
             else if (typeToSearch == "CriteriaList")
             {
@@ -1189,6 +1234,10 @@ namespace Project
                 {
                     typeToSearch = "CriteriaList1";
                 }
+            }
+            else if (typeToSearch == "CharacterItemGroupInteractions")
+            {
+                return Il2CppType.Of<Object>();
             }
             else
             {
@@ -1235,16 +1284,25 @@ namespace Project
 
         private void LogWithLogicDepth(System.ConsoleColor color, string text, int logicDepth)
         {
-            string builder = "";
-            for (int c = 0; c < logicDepth; c++)
+            if (debug)
             {
-                //indent for each call
-                builder += "    ";
+                string builder = "#";
+                /*
+                for (int c = 0; c < logicDepth; c++)
+                {
+                    //indent for each call
+                    builder += "    ";
+                }*/
+                builder += $"{logicDepth} ";
+                builder += text;
+                MelonLogger.Msg(color, builder);
             }
-            builder += text;
-            MelonLogger.Msg(color, builder);
         }
 
+        //todo speed increase:
+        // - hash types in hashmap/dict
+        // - parse to json faster? native strtok?
+        // - streamline esle/if constructs, stack use in while/foreach
         private T SetObjectValues<T>(List<string> tokens, Type type, Boolean isSecondLayerCriteriaList, int logicDepth = 0) where T : Object, new()
         {
             //iterate through tokens until we reach a start of an object, in the first case the mainstory
@@ -1265,22 +1323,23 @@ namespace Project
             }
 
             Object retObject = Activator.CreateInstance(type);
-            LogWithLogicDepth(System.ConsoleColor.DarkGray, $"Created object of type {type.Name}", logicDepth);
+            //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"Created object of type {type.Name}", logicDepth);
 
             //if we can create a new T, get all methods, then calling all set methods using reflection, filling them up with the objects we need
             var methodInfos = type.GetMethods();
 
             //go through tokens to call the method we need, weith the token after as argument.
             string lastToken = "";
+            bool remove;
             while (true)
             {
+                remove = true;
                 string token = tokens[0];
-                //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN1: {token}");
+                //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN1: {token}", logicDepth);
 
                 //list starts
                 if (token == JsonLabels.START_LIST.ToString())
                 {
-                    LogWithLogicDepth(System.ConsoleColor.White, "created list", ++logicDepth);
                     //create list, then go back to creating objects, then at end we stop and move on in the og object the list is part of
                     //get type of the list elements, name of them in lastToken
 
@@ -1292,12 +1351,12 @@ namespace Project
                     {
                         if (methodInfo.Name == $"Get{lastToken}")
                         {
-                            //LogWithLogicDepth($"got Get{lastToken}");
+                            //LogWithLogicDepth(System.ConsoleColor.White, $"got Get{lastToken}", logicDepth);
                             getList = methodInfo;
                         }
                         else if (methodInfo.Name == $"Set{lastToken}")
                         {
-                            //LogWithLogicDepth($"got Set{lastToken}");
+                            //LogWithLogicDepth(System.ConsoleColor.White, $"got Set{lastToken}", logicDepth);
                             setList = methodInfo;
                         }
                     }
@@ -1309,24 +1368,25 @@ namespace Project
                     Type listType = getList.ReturnType;
                     Object list = Activator.CreateInstance(listType);
                     MethodInfo listAdd = listType.GetMethod("Add");
+                    //LogWithLogicDepth(System.ConsoleColor.White, "created list", ++logicDepth);
 
                     //as long as we did not reach the end of the list, end it
                     while (tokens[0] != JsonLabels.END_LIST.ToString())
                     {
-                        //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN2: {token}");
+                        //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN2: {token}", logicDepth);
                         Object objectToAdd;
 
                         if (!isSecondLayerCriteriaList.m_value && type == Il2CppType.Of<CriteriaList1>())
                         {
                             isSecondLayerCriteriaList.m_value = true;
                             secondLayerCriteriaList = true;
-                            LogWithLogicDepth(System.ConsoleColor.White, $"is second list?: {isSecondLayerCriteriaList.m_value}", ++logicDepth);
+                            //LogWithLogicDepth(System.ConsoleColor.White, $"is second list?: {isSecondLayerCriteriaList.m_value}", ++logicDepth);
                         }
 
                         if (token == JsonLabels.START_OBJECT.ToString())
                         {
                             //add object
-                            objectToAdd = SetObjectValues<Object>(tokens, FindTypeName(lastToken), isSecondLayerCriteriaList, logicDepth);
+                            objectToAdd = SetObjectValues<Object>(tokens, FindTypeName(lastToken), isSecondLayerCriteriaList, logicDepth + 1);
                         }
                         else
                         {
@@ -1339,23 +1399,23 @@ namespace Project
                         if (isSecondLayerCriteriaList.m_value && type == Il2CppType.Of<CriteriaList1>())
                         {
                             secondLayerCriteriaList = false;
-                            LogWithLogicDepth(System.ConsoleColor.White, $"is second list?: {secondLayerCriteriaList}", logicDepth);
+                            //LogWithLogicDepth(System.ConsoleColor.White, $"is second list?: {secondLayerCriteriaList}", logicDepth);
                         }
 
-                        LogWithLogicDepth(System.ConsoleColor.DarkCyan, $"adding object to list", --logicDepth);
+                        //LogWithLogicDepth(System.ConsoleColor.DarkCyan, $"adding object to list", logicDepth);
                         listAdd.Invoke(list, CreateReferenceArray(objectToAdd));
                         isSecondLayerCriteriaList.m_value = false;
                     }
 
                     //add list
-                    LogWithLogicDepth(System.ConsoleColor.White, "adding list", --logicDepth);
+                    //LogWithLogicDepth(System.ConsoleColor.White, "adding list", --logicDepth);
                     setList.Invoke(retObject, CreateReferenceArray(list));
                 }
                 else if (token == JsonLabels.END_OBJECT.ToString())
                 {
                     tokens.RemoveAt(0);
 
-                    LogWithLogicDepth(System.ConsoleColor.DarkGray, "End of object", logicDepth);
+                    //LogWithLogicDepth(System.ConsoleColor.DarkGray, "End of object", logicDepth);
 
                     return retObject.Cast<T>();
                 }
@@ -1371,7 +1431,7 @@ namespace Project
                                 lastToken = token;
                                 tokens.RemoveAt(0);
                                 token = tokens[0];
-                                //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN3: {token}");
+                                //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN3: {token}", logicDepth);
 
                                 //get method parameter type so we can cast the string to the correct object
                                 Type pType = methodInfo.GetParameterTypes()[0];
@@ -1379,15 +1439,42 @@ namespace Project
                                 //try parsing if necessary, defaults to new constructor like values
                                 Object tokenObject = TryParseAll(pType, token);
 
-                                //LogWithLogicDepth(System.ConsoleColor.Green, $"Invoke successful! ({methodInfo.Name} with {token} as the parameter)");
+                                //LogWithLogicDepth(System.ConsoleColor.Green, $"Invoke successful! ({methodInfo.Name} with {token} as the parameter)", logicDepth);
                                 methodInfo.Invoke(retObject, CreateReferenceArray(tokenObject));
                                 break;
                             }
                         }
                     }
+                    else if (tokens[1] == JsonLabels.START_OBJECT.ToString())
+                    {
+                        foreach (MethodInfo methodInfo in methodInfos)
+                        {
+                            if (methodInfo.Name == $"Set{token}")
+                            {
+                                lastToken = token;
+                                tokens.RemoveAt(0);
+                                token = tokens[0];
+                                //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN4: {token}", logicDepth);
+
+                                //get method parameter type so we can cast the string to the correct object
+                                Type pType = methodInfo.GetParameterTypes()[0];
+
+                                //try parsing if necessary, defaults to new constructor like values
+                                Object tokenObject = SetObjectValues<Object>(tokens, pType, isSecondLayerCriteriaList, logicDepth + 1);
+
+                                //LogWithLogicDepth(System.ConsoleColor.Green, $"Invoke successful! ({methodInfo.Name} with {lastToken} as the parameter)", logicDepth);
+                                methodInfo.Invoke(retObject, CreateReferenceArray(tokenObject));
+                                remove = false;
+                                break;
+                            }
+                        }
+                    }
                 }
-                lastToken = token;
-                tokens.RemoveAt(0);
+                if (remove)
+                {
+                    lastToken = token;
+                    tokens.RemoveAt(0);
+                }
             }
         }
 

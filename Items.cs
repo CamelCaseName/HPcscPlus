@@ -2,6 +2,7 @@
 using Il2CppSystem.Collections.Generic;
 using UnhollowerRuntimeLib;
 
+//todo simplify types/reduce amount
 namespace Project
 {
     public class Criterion : Object
@@ -266,11 +267,11 @@ namespace Project
         }
     }
 
-    public class OnTakeActionEvent : Object
+    public class Event : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public OnTakeActionEvent() : base(ClassInjector.DerivedConstructorPointer<OnTakeActionEvent>())
+        public Event() : base(ClassInjector.DerivedConstructorPointer<Event>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
@@ -287,7 +288,7 @@ namespace Project
             instance = null;
         }
 
-        public OnTakeActionEvent(System.IntPtr value) : base(value)
+        public Event(System.IntPtr value) : base(value)
         {
             instance.Add(this);
         }
@@ -602,284 +603,16 @@ namespace Project
             displayInEditor = value;
         }
 
-        private List<OnTakeActionEvent> onTakeActionEvents;
+        private List<Event> onTakeActionEvents;
 
-        public List<OnTakeActionEvent> GetOnTakeActionEvents()
+        public List<Event> GetOnTakeActionEvents()
         {
             return onTakeActionEvents;
         }
 
-        public void SetOnTakeActionEvents(List<OnTakeActionEvent> value)
+        public void SetOnTakeActionEvents(List<Event> value)
         {
             onTakeActionEvents = value;
-        }
-    }
-
-    public class OnSuccessEvent : Object
-    {
-        private List<Object> instance = new List<Object>();
-
-        public OnSuccessEvent() : base(ClassInjector.DerivedConstructorPointer<OnSuccessEvent>())
-        {
-            ClassInjector.DerivedConstructorBody(this);
-            instance.Add(this);
-        }
-
-        public void Unload()
-        {
-            foreach (var item in criteria)
-            {
-                item.Unload();
-            }
-            criteria = null;
-            instance.Clear();
-            instance = null;
-        }
-
-        public OnSuccessEvent(System.IntPtr value) : base(value)
-        {
-            instance.Add(this);
-        }
-
-
-        private int sortOrder2;
-
-        public int GetSortOrder2()
-        {
-            return sortOrder2;
-        }
-
-        public void SetSortOrder2(int value)
-        {
-            sortOrder2 = value;
-        }
-
-        private string version;
-
-        public string GetVersion()
-        {
-            return version;
-        }
-
-        public void SetVersion(string value)
-        {
-            version = value;
-        }
-
-        private string id;
-
-        public string GetId()
-        {
-            return id;
-        }
-
-        public void SetId(string value)
-        {
-            id = value;
-        }
-
-        private bool enabled;
-
-        public bool GetEnabled()
-        {
-            return enabled;
-        }
-
-        public void SetEnabled(bool value)
-        {
-            enabled = value;
-        }
-
-        private int eventType;
-
-        public int GetEventType()
-        {
-            return eventType;
-        }
-
-        public void SetEventType(int value)
-        {
-            eventType = value;
-        }
-
-        private string character;
-
-        public string GetCharacter()
-        {
-            return character;
-        }
-
-        public void SetCharacter(string value)
-        {
-            character = value;
-        }
-
-        private string character2;
-
-        public string GetCharacter2()
-        {
-            return character2;
-        }
-
-        public void SetCharacter2(string value)
-        {
-            character2 = value;
-        }
-
-        private string key;
-
-        public string GetKey()
-        {
-            return key;
-        }
-
-        public void SetKey(string value)
-        {
-            key = value;
-        }
-
-        private int option;
-
-        public int GetOption()
-        {
-            return option;
-        }
-
-        public void SetOption(int value)
-        {
-            option = value;
-        }
-
-        private int option2;
-
-        public int GetOption2()
-        {
-            return option2;
-        }
-
-        public void SetOption2(int value)
-        {
-            option2 = value;
-        }
-
-        private int option3;
-
-        public int GetOption3()
-        {
-            return option3;
-        }
-
-        public void SetOption3(int value)
-        {
-            option3 = value;
-        }
-
-        private string value;
-
-        public string GetValue()
-        {
-            return value;
-        }
-
-        public void SetValue(string value)
-        {
-            this.value = value;
-        }
-
-        private string value2;
-
-        public string GetValue2()
-        {
-            return value2;
-        }
-
-        public void SetValue2(string value)
-        {
-            value2 = value;
-        }
-
-        private int sortOrder;
-
-        public int GetSortOrder()
-        {
-            return sortOrder;
-        }
-
-        public void SetSortOrder(int value)
-        {
-            sortOrder = value;
-        }
-
-        private string delay;
-
-        public string GetDelay()
-        {
-            return delay;
-        }
-
-        public void SetDelay(string value)
-        {
-            delay = value;
-        }
-
-        private string originalDelay;
-
-        public string GetOriginalDelay()
-        {
-            return originalDelay;
-        }
-
-        public void SetOriginalDelay(string value)
-        {
-            originalDelay = value;
-        }
-
-        private string startDelayTime;
-
-        public string GetStartDelayTime()
-        {
-            return startDelayTime;
-        }
-
-        public void SetStartDelayTime(string value)
-        {
-            startDelayTime = value;
-        }
-
-        private bool useConditions;
-
-        public bool GetUseConditions()
-        {
-            return useConditions;
-        }
-
-        public void SetUseConditions(bool value)
-        {
-            useConditions = value;
-        }
-
-        private bool displayInEditor;
-
-        public bool GetDisplayInEditor()
-        {
-            return displayInEditor;
-        }
-
-        public void SetDisplayInEditor(bool value)
-        {
-            displayInEditor = value;
-        }
-
-        private List<Criterion> criteria;
-
-        public List<Criterion> GetCriteria()
-        {
-            return criteria;
-        }
-
-        public void SetCriteria(List<Criterion> value)
-        {
-            criteria = value;
         }
     }
 
@@ -962,14 +695,14 @@ namespace Project
             itemName = value;
         }
 
-        private List<OnSuccessEvent> onSuccessEvents;
+        private List<Event> onSuccessEvents;
 
-        public List<OnSuccessEvent> GetOnSuccessEvents()
+        public List<Event> GetOnSuccessEvents()
         {
             return onSuccessEvents;
         }
 
-        public void SetOnSuccessEvents(List<OnSuccessEvent> value)
+        public void SetOnSuccessEvents(List<Event> value)
         {
             onSuccessEvents = value;
         }
@@ -1288,273 +1021,11 @@ namespace Project
         }
     }
 
-    public class CriteriaList2 : Object
+    public class CriteriaList : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public CriteriaList2() : base(ClassInjector.DerivedConstructorPointer<CriteriaList2>())
-        {
-            ClassInjector.DerivedConstructorBody(this);
-            instance.Add(this);
-        }
-
-        public void Unload()
-        {
-            instance.Clear();
-            instance = null;
-        }
-
-        public CriteriaList2(System.IntPtr value) : base(value)
-        {
-            instance.Add(this);
-        }
-
-        private string boolValue;
-
-        public string GetBoolValue()
-        {
-            return boolValue;
-        }
-
-        public void SetBoolValue(string value)
-        {
-            boolValue = value;
-        }
-
-        private string character;
-
-        public string GetCharacter()
-        {
-            return character;
-        }
-
-        public void SetCharacter(string value)
-        {
-            character = value;
-        }
-
-        private string character2;
-
-        public string GetCharacter2()
-        {
-            return character2;
-        }
-
-        public void SetCharacter2(string value)
-        {
-            character2 = value;
-        }
-
-        private string compareType;
-
-        public string GetCompareType()
-        {
-            return compareType;
-        }
-
-        public void SetCompareType(string value)
-        {
-            compareType = value;
-        }
-
-        private string dialogueStatus;
-
-        public string GetDialogueStatus()
-        {
-            return dialogueStatus;
-        }
-
-        public void SetDialogueStatus(string value)
-        {
-            dialogueStatus = value;
-        }
-
-        private bool displayInEditor;
-
-        public bool GetDisplayInEditor()
-        {
-            return displayInEditor;
-        }
-
-        public void SetDisplayInEditor(bool value)
-        {
-            displayInEditor = value;
-        }
-
-        private string doorOptions;
-
-        public string GetDoorOptions()
-        {
-            return doorOptions;
-        }
-
-        public void SetDoorOptions(string value)
-        {
-            doorOptions = value;
-        }
-
-        private string equalsValue;
-
-        public string GetEqualsValue()
-        {
-            return equalsValue;
-        }
-
-        public void SetEqualsValue(string value)
-        {
-            equalsValue = value;
-        }
-
-        private string equationValue;
-
-        public string GetEquationValue()
-        {
-            return equationValue;
-        }
-
-        public void SetEquationValue(string value)
-        {
-            equationValue = value;
-        }
-
-        private string valueFormula;
-
-        public string GetValueFormula()
-        {
-            return valueFormula;
-        }
-
-        public void SetValueFormula(string value)
-        {
-            valueFormula = value;
-        }
-
-        private string itemComparison;
-
-        public string GetItemComparison()
-        {
-            return itemComparison;
-        }
-
-        public void SetItemComparison(string value)
-        {
-            itemComparison = value;
-        }
-
-        private string itemFromItemGroupComparison;
-
-        public string GetItemFromItemGroupComparison()
-        {
-            return itemFromItemGroupComparison;
-        }
-
-        public void SetItemFromItemGroupComparison(string value)
-        {
-            itemFromItemGroupComparison = value;
-        }
-
-        private string key;
-
-        public string GetKey()
-        {
-            return key;
-        }
-
-        public void SetKey(string value)
-        {
-            key = value;
-        }
-
-        private string key2;
-
-        public string GetKey2()
-        {
-            return key2;
-        }
-
-        public void SetKey2(string value)
-        {
-            key2 = value;
-        }
-
-        private int order;
-
-        public int GetOrder()
-        {
-            return order;
-        }
-
-        public void SetOrder(int value)
-        {
-            order = value;
-        }
-
-        private string playerInventoryOption;
-
-        public string GetPlayerInventoryOption()
-        {
-            return playerInventoryOption;
-        }
-
-        public void SetPlayerInventoryOption(string value)
-        {
-            playerInventoryOption = value;
-        }
-
-        private string poseOption;
-
-        public string GetPoseOption()
-        {
-            return poseOption;
-        }
-
-        public void SetPoseOption(string value)
-        {
-            poseOption = value;
-        }
-
-        private string socialStatus;
-
-        public string GetSocialStatus()
-        {
-            return socialStatus;
-        }
-
-        public void SetSocialStatus(string value)
-        {
-            socialStatus = value;
-        }
-
-        private string value;
-
-        public string GetValue()
-        {
-            return value;
-        }
-
-        public void SetValue(string value)
-        {
-            this.value = value;
-        }
-
-        private int option;
-
-        public int GetOption()
-        {
-            return option;
-        }
-
-        public void SetOption(int value)
-        {
-            option = value;
-        }
-    }
-
-    public class CriteriaList1 : Object
-    {
-        private List<Object> instance = new List<Object>();
-
-        public CriteriaList1() : base(ClassInjector.DerivedConstructorPointer<CriteriaList1>())
+        public CriteriaList() : base(ClassInjector.DerivedConstructorPointer<CriteriaList>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
@@ -1571,19 +1042,19 @@ namespace Project
             instance = null;
         }
 
-        public CriteriaList1(System.IntPtr value) : base(value)
+        public CriteriaList(System.IntPtr value) : base(value)
         {
             instance.Add(this);
         }
 
-        private List<CriteriaList2> criteriaList;
+        private List<Criterion> criteriaList;
 
-        public List<CriteriaList2> GetCriteriaList()
+        public List<Criterion> GetCriteriaList()
         {
             return criteriaList;
         }
 
-        public void SetCriteriaList(List<CriteriaList2> value)
+        public void SetCriteriaList(List<Criterion> value)
         {
             criteriaList = value;
         }
@@ -1663,14 +1134,14 @@ namespace Project
             passCondition = value;
         }
 
-        private List<CriteriaList1> criteriaList;
+        private List<CriteriaList> criteriaList;
 
-        public List<CriteriaList1> GetCriteriaList()
+        public List<CriteriaList> GetCriteriaList()
         {
             return criteriaList;
         }
 
-        public void SetCriteriaList(List<CriteriaList1> value)
+        public void SetCriteriaList(List<CriteriaList> value)
         {
             criteriaList = value;
         }
@@ -1747,802 +1218,6 @@ namespace Project
         }
     }
 
-    public class GameStartEvent : Object
-    {
-        private List<Object> instance = new List<Object>();
-
-        public GameStartEvent() : base(ClassInjector.DerivedConstructorPointer<GameStartEvent>())
-        {
-            ClassInjector.DerivedConstructorBody(this);
-            instance.Add(this);
-        }
-
-        public void Unload()
-        {
-            foreach (var item in criteria)
-            {
-                item.Unload();
-            }
-            criteria = null;
-            instance.Clear();
-            instance = null;
-        }
-
-        public GameStartEvent(System.IntPtr value) : base(value)
-        {
-            instance.Add(this);
-        }
-
-        private int sortOrder2;
-
-        public int GetSortOrder2()
-        {
-            return sortOrder2;
-        }
-
-        public void SetSortOrder2(int value)
-        {
-            sortOrder2 = value;
-        }
-
-        private string version;
-
-        public string GetVersion()
-        {
-            return version;
-        }
-
-        public void SetVersion(string value)
-        {
-            version = value;
-        }
-
-        private string id;
-
-        public string GetId()
-        {
-            return id;
-        }
-
-        public void SetId(string value)
-        {
-            id = value;
-        }
-
-        private bool enabled;
-
-        public bool GetEnabled()
-        {
-            return enabled;
-        }
-
-        public void SetEnabled(bool value)
-        {
-            enabled = value;
-        }
-
-        private int eventType;
-
-        public int GetEventType()
-        {
-            return eventType;
-        }
-
-        public void SetEventType(int value)
-        {
-            eventType = value;
-        }
-
-        private string character;
-
-        public string GetCharacter()
-        {
-            return character;
-        }
-
-        public void SetCharacter(string value)
-        {
-            character = value;
-        }
-
-        private string character2;
-
-        public string GetCharacter2()
-        {
-            return character2;
-        }
-
-        public void SetCharacter2(string value)
-        {
-            character2 = value;
-        }
-
-        private string key;
-
-        public string GetKey()
-        {
-            return key;
-        }
-
-        public void SetKey(string value)
-        {
-            key = value;
-        }
-
-        private int option;
-
-        public int GetOption()
-        {
-            return option;
-        }
-
-        public void SetOption(int value)
-        {
-            option = value;
-        }
-
-        private int option2;
-
-        public int GetOption2()
-        {
-            return option2;
-        }
-
-        public void SetOption2(int value)
-        {
-            option2 = value;
-        }
-
-        private int option3;
-
-        public int GetOption3()
-        {
-            return option3;
-        }
-
-        public void SetOption3(int value)
-        {
-            option3 = value;
-        }
-
-        private string value;
-
-        public string GetValue()
-        {
-            return value;
-        }
-
-        public void SetValue(string value)
-        {
-            this.value = value;
-        }
-
-        private string value2;
-
-        public string GetValue2()
-        {
-            return value2;
-        }
-
-        public void SetValue2(string value)
-        {
-            value2 = value;
-        }
-
-        private int sortOrder;
-
-        public int GetSortOrder()
-        {
-            return sortOrder;
-        }
-
-        public void SetSortOrder(int value)
-        {
-            sortOrder = value;
-        }
-
-        private string delay;
-
-        public string GetDelay()
-        {
-            return delay;
-        }
-
-        public void SetDelay(string value)
-        {
-            delay = value;
-        }
-
-        private string originalDelay;
-
-        public string GetOriginalDelay()
-        {
-            return originalDelay;
-        }
-
-        public void SetOriginalDelay(string value)
-        {
-            originalDelay = value;
-        }
-
-        private string startDelayTime;
-
-        public string GetStartDelayTime()
-        {
-            return startDelayTime;
-        }
-
-        public void SetStartDelayTime(string value)
-        {
-            startDelayTime = value;
-        }
-
-        private bool useConditions;
-
-        public bool GetUseConditions()
-        {
-            return useConditions;
-        }
-
-        public void SetUseConditions(bool value)
-        {
-            useConditions = value;
-        }
-
-        private bool displayInEditor;
-
-        public bool GetDisplayInEditor()
-        {
-            return displayInEditor;
-        }
-
-        public void SetDisplayInEditor(bool value)
-        {
-            displayInEditor = value;
-        }
-
-        private List<Criterion> criteria;
-
-        public List<Criterion> GetCriteria()
-        {
-            return criteria;
-        }
-
-        public void SetCriteria(List<Criterion> value)
-        {
-            criteria = value;
-        }
-    }
-
-    public class Critera : Object
-    {
-        private List<Object> instance = new List<Object>();
-
-        public Critera() : base(ClassInjector.DerivedConstructorPointer<Critera>())
-        {
-            ClassInjector.DerivedConstructorBody(this);
-            instance.Add(this);
-        }
-
-        public void Unload()
-        {
-            instance.Clear();
-            instance = null;
-        }
-
-        public Critera(System.IntPtr value) : base(value)
-        {
-            instance.Add(this);
-        }
-
-        private string boolValue;
-
-        public string GetBoolValue()
-        {
-            return boolValue;
-        }
-
-        public void SetBoolValue(string value)
-        {
-            boolValue = value;
-        }
-
-        private string character;
-
-        public string GetCharacter()
-        {
-            return character;
-        }
-
-        public void SetCharacter(string value)
-        {
-            character = value;
-        }
-
-        private string character2;
-
-        public string GetCharacter2()
-        {
-            return character2;
-        }
-
-        public void SetCharacter2(string value)
-        {
-            character2 = value;
-        }
-
-        private string compareType;
-
-        public string GetCompareType()
-        {
-            return compareType;
-        }
-
-        public void SetCompareType(string value)
-        {
-            compareType = value;
-        }
-
-        private string dialogueStatus;
-
-        public string GetDialogueStatus()
-        {
-            return dialogueStatus;
-        }
-
-        public void SetDialogueStatus(string value)
-        {
-            dialogueStatus = value;
-        }
-
-        private bool displayInEditor;
-
-        public bool GetDisplayInEditor()
-        {
-            return displayInEditor;
-        }
-
-        public void SetDisplayInEditor(bool value)
-        {
-            displayInEditor = value;
-        }
-
-        private string doorOptions;
-
-        public string GetDoorOptions()
-        {
-            return doorOptions;
-        }
-
-        public void SetDoorOptions(string value)
-        {
-            doorOptions = value;
-        }
-
-        private string equalsValue;
-
-        public string GetEqualsValue()
-        {
-            return equalsValue;
-        }
-
-        public void SetEqualsValue(string value)
-        {
-            equalsValue = value;
-        }
-
-        private string equationValue;
-
-        public string GetEquationValue()
-        {
-            return equationValue;
-        }
-
-        public void SetEquationValue(string value)
-        {
-            equationValue = value;
-        }
-
-        private string valueFormula;
-
-        public string GetValueFormula()
-        {
-            return valueFormula;
-        }
-
-        public void SetValueFormula(string value)
-        {
-            valueFormula = value;
-        }
-
-        private string itemComparison;
-
-        public string GetItemComparison()
-        {
-            return itemComparison;
-        }
-
-        public void SetItemComparison(string value)
-        {
-            itemComparison = value;
-        }
-
-        private string itemFromItemGroupComparison;
-
-        public string GetItemFromItemGroupComparison()
-        {
-            return itemFromItemGroupComparison;
-        }
-
-        public void SetItemFromItemGroupComparison(string value)
-        {
-            itemFromItemGroupComparison = value;
-        }
-
-        private string key;
-
-        public string GetKey()
-        {
-            return key;
-        }
-
-        public void SetKey(string value)
-        {
-            key = value;
-        }
-
-        private string key2;
-
-        public string GetKey2()
-        {
-            return key2;
-        }
-
-        public void SetKey2(string value)
-        {
-            key2 = value;
-        }
-
-        private int order;
-
-        public int GetOrder()
-        {
-            return order;
-        }
-
-        public void SetOrder(int value)
-        {
-            order = value;
-        }
-
-        private string playerInventoryOption;
-
-        public string GetPlayerInventoryOption()
-        {
-            return playerInventoryOption;
-        }
-
-        public void SetPlayerInventoryOption(string value)
-        {
-            playerInventoryOption = value;
-        }
-
-        private string poseOption;
-
-        public string GetPoseOption()
-        {
-            return poseOption;
-        }
-
-        public void SetPoseOption(string value)
-        {
-            poseOption = value;
-        }
-
-        private string socialStatus;
-
-        public string GetSocialStatus()
-        {
-            return socialStatus;
-        }
-
-        public void SetSocialStatus(string value)
-        {
-            socialStatus = value;
-        }
-
-        private string value;
-
-        public string GetValue()
-        {
-            return value;
-        }
-
-        public void SetValue(string value)
-        {
-            this.value = value;
-        }
-
-        private int option;
-
-        public int GetOption()
-        {
-            return option;
-        }
-
-        public void SetOption(int value)
-        {
-            option = value;
-        }
-    }
-
-    public class Event : Object
-    {
-        private List<Object> instance = new List<Object>();
-
-        public Event() : base(ClassInjector.DerivedConstructorPointer<Event>())
-        {
-            ClassInjector.DerivedConstructorBody(this);
-            instance.Add(this);
-        }
-
-        public void Unload()
-        {
-            foreach (var item in criteria)
-            {
-                item.Unload();
-            }
-            criteria = null;
-            instance.Clear();
-            instance = null;
-        }
-
-        public Event(System.IntPtr value) : base(value)
-        {
-            instance.Add(this);
-        }
-
-        private int sortOrder2;
-
-        public int GetSortOrder2()
-        {
-            return sortOrder2;
-        }
-
-        public void SetSortOrder2(int value)
-        {
-            sortOrder2 = value;
-        }
-
-        private string version;
-
-        public string GetVersion()
-        {
-            return version;
-        }
-
-        public void SetVersion(string value)
-        {
-            version = value;
-        }
-
-        private string id;
-
-        public string GetId()
-        {
-            return id;
-        }
-
-        public void SetId(string value)
-        {
-            id = value;
-        }
-
-        private bool enabled;
-
-        public bool GetEnabled()
-        {
-            return enabled;
-        }
-
-        public void SetEnabled(bool value)
-        {
-            enabled = value;
-        }
-
-        private int eventType;
-
-        public int GetEventType()
-        {
-            return eventType;
-        }
-
-        public void SetEventType(int value)
-        {
-            eventType = value;
-        }
-
-        private string character;
-
-        public string GetCharacter()
-        {
-            return character;
-        }
-
-        public void SetCharacter(string value)
-        {
-            character = value;
-        }
-
-        private string character2;
-
-        public string GetCharacter2()
-        {
-            return character2;
-        }
-
-        public void SetCharacter2(string value)
-        {
-            character2 = value;
-        }
-
-        private string key;
-
-        public string GetKey()
-        {
-            return key;
-        }
-
-        public void SetKey(string value)
-        {
-            key = value;
-        }
-
-        private int option;
-
-        public int GetOption()
-        {
-            return option;
-        }
-
-        public void SetOption(int value)
-        {
-            option = value;
-        }
-
-        private int option2;
-
-        public int GetOption2()
-        {
-            return option2;
-        }
-
-        public void SetOption2(int value)
-        {
-            option2 = value;
-        }
-
-        private int option3;
-
-        public int GetOption3()
-        {
-            return option3;
-        }
-
-        public void SetOption3(int value)
-        {
-            option3 = value;
-        }
-
-        private string value;
-
-        public string GetValue()
-        {
-            return value;
-        }
-
-        public void SetValue(string value)
-        {
-            this.value = value;
-        }
-
-        private string value2;
-
-        public string GetValue2()
-        {
-            return value2;
-        }
-
-        public void SetValue2(string value)
-        {
-            value2 = value;
-        }
-
-        private int sortOrder;
-
-        public int GetSortOrder()
-        {
-            return sortOrder;
-        }
-
-        public void SetSortOrder(int value)
-        {
-            sortOrder = value;
-        }
-
-        private string delay;
-
-        public string GetDelay()
-        {
-            return delay;
-        }
-
-        public void SetDelay(string value)
-        {
-            delay = value;
-        }
-
-        private string originalDelay;
-
-        public string GetOriginalDelay()
-        {
-            return originalDelay;
-        }
-
-        public void SetOriginalDelay(string value)
-        {
-            originalDelay = value;
-        }
-
-        private string startDelayTime;
-
-        public string GetStartDelayTime()
-        {
-            return startDelayTime;
-        }
-
-        public void SetStartDelayTime(string value)
-        {
-            startDelayTime = value;
-        }
-
-        private bool useConditions;
-
-        public bool GetUseConditions()
-        {
-            return useConditions;
-        }
-
-        public void SetUseConditions(bool value)
-        {
-            useConditions = value;
-        }
-
-        private bool displayInEditor;
-
-        public bool GetDisplayInEditor()
-        {
-            return displayInEditor;
-        }
-
-        public void SetDisplayInEditor(bool value)
-        {
-            displayInEditor = value;
-        }
-
-        private List<Criterion> criteria;
-
-        public List<Criterion> GetCriteria()
-        {
-            return criteria;
-        }
-
-        public void SetCriteria(List<Criterion> value)
-        {
-            criteria = value;
-        }
-    }
-
     public class PlayerReaction : Object
     {
         private List<Object> instance = new List<Object>();
@@ -2598,14 +1273,14 @@ namespace Project
             characterToReactTo = value;
         }
 
-        private List<Critera> critera;
+        private List<Criterion> critera;
 
-        public List<Critera> GetCritera()
+        public List<Criterion> GetCritera()
         {
             return critera;
         }
 
-        public void SetCritera(List<Critera> value)
+        public void SetCritera(List<Criterion> value)
         {
             critera = value;
         }
@@ -2871,14 +1546,14 @@ namespace Project
             itemGroups = value;
         }
 
-        private List<GameStartEvent> gameStartEvents;
+        private List<Event> gameStartEvents;
 
-        public List<GameStartEvent> GetGameStartEvents()
+        public List<Event> GetGameStartEvents()
         {
             return gameStartEvents;
         }
 
-        public void SetGameStartEvents(List<GameStartEvent> value)
+        public void SetGameStartEvents(List<Event> value)
         {
             gameStartEvents = value;
         }
@@ -2927,14 +1602,14 @@ namespace Project
             instance.Add(this);
         }
 
-        private List<Critera> critera;
+        private List<Criterion> critera;
 
-        public List<Critera> GetCritera()
+        public List<Criterion> GetCritera()
         {
             return critera;
         }
 
-        public void SetCritera(List<Critera> value)
+        public void SetCritera(List<Criterion> value)
         {
             critera = value;
         }
@@ -2973,804 +1648,6 @@ namespace Project
         public void SetText(string value)
         {
             text = value;
-        }
-    }
-
-    public class CloseEvent : Object
-    {
-        private List<Object> instance = new List<Object>();
-
-        public CloseEvent() : base(ClassInjector.DerivedConstructorPointer<CloseEvent>())
-        {
-            ClassInjector.DerivedConstructorBody(this);
-            instance.Add(this);
-        }
-
-        public void Unload()
-        {
-            foreach (var item in criteria)
-            {
-                item.Unload();
-            }
-            criteria.Clear();
-            criteria = null;
-            instance.Clear();
-            instance = null;
-        }
-
-        public CloseEvent(System.IntPtr value) : base(value)
-        {
-            instance.Add(this);
-        }
-
-        private int sortOrder2;
-
-        public int GetSortOrder2()
-        {
-            return sortOrder2;
-        }
-
-        public void SetSortOrder2(int value)
-        {
-            sortOrder2 = value;
-        }
-
-        private string version;
-
-        public string GetVersion()
-        {
-            return version;
-        }
-
-        public void SetVersion(string value)
-        {
-            version = value;
-        }
-
-        private string id;
-
-        public string GetId()
-        {
-            return id;
-        }
-
-        public void SetId(string value)
-        {
-            id = value;
-        }
-
-        private bool enabled;
-
-        public bool GetEnabled()
-        {
-            return enabled;
-        }
-
-        public void SetEnabled(bool value)
-        {
-            enabled = value;
-        }
-
-        private int eventType;
-
-        public int GetEventType()
-        {
-            return eventType;
-        }
-
-        public void SetEventType(int value)
-        {
-            eventType = value;
-        }
-
-        private string character;
-
-        public string GetCharacter()
-        {
-            return character;
-        }
-
-        public void SetCharacter(string value)
-        {
-            character = value;
-        }
-
-        private string character2;
-
-        public string GetCharacter2()
-        {
-            return character2;
-        }
-
-        public void SetCharacter2(string value)
-        {
-            character2 = value;
-        }
-
-        private string key;
-
-        public string GetKey()
-        {
-            return key;
-        }
-
-        public void SetKey(string value)
-        {
-            key = value;
-        }
-
-        private int option;
-
-        public int GetOption()
-        {
-            return option;
-        }
-
-        public void SetOption(int value)
-        {
-            option = value;
-        }
-
-        private int option2;
-
-        public int GetOption2()
-        {
-            return option2;
-        }
-
-        public void SetOption2(int value)
-        {
-            option2 = value;
-        }
-
-        private int option3;
-
-        public int GetOption3()
-        {
-            return option3;
-        }
-
-        public void SetOption3(int value)
-        {
-            option3 = value;
-        }
-
-        private string value;
-
-        public string GetValue()
-        {
-            return value;
-        }
-
-        public void SetValue(string value)
-        {
-            this.value = value;
-        }
-
-        private string value2;
-
-        public string GetValue2()
-        {
-            return value2;
-        }
-
-        public void SetValue2(string value)
-        {
-            value2 = value;
-        }
-
-        private int sortOrder;
-
-        public int GetSortOrder()
-        {
-            return sortOrder;
-        }
-
-        public void SetSortOrder(int value)
-        {
-            sortOrder = value;
-        }
-
-        private string delay;
-
-        public string GetDelay()
-        {
-            return delay;
-        }
-
-        public void SetDelay(string value)
-        {
-            delay = value;
-        }
-
-        private string originalDelay;
-
-        public string GetOriginalDelay()
-        {
-            return originalDelay;
-        }
-
-        public void SetOriginalDelay(string value)
-        {
-            originalDelay = value;
-        }
-
-        private string startDelayTime;
-
-        public string GetStartDelayTime()
-        {
-            return startDelayTime;
-        }
-
-        public void SetStartDelayTime(string value)
-        {
-            startDelayTime = value;
-        }
-
-        private bool useConditions;
-
-        public bool GetUseConditions()
-        {
-            return useConditions;
-        }
-
-        public void SetUseConditions(bool value)
-        {
-            useConditions = value;
-        }
-
-        private bool displayInEditor;
-
-        public bool GetDisplayInEditor()
-        {
-            return displayInEditor;
-        }
-
-        public void SetDisplayInEditor(bool value)
-        {
-            displayInEditor = value;
-        }
-
-        private List<Criterion> criteria;
-
-        public List<Criterion> GetCriteria()
-        {
-            return criteria;
-        }
-
-        public void SetCriteria(List<Criterion> value)
-        {
-            criteria = value;
-        }
-    }
-
-    public class ResponseCriteria : Object
-    {
-        private List<Object> instance = new List<Object>();
-
-        public ResponseCriteria() : base(ClassInjector.DerivedConstructorPointer<ResponseCriteria>())
-        {
-            ClassInjector.DerivedConstructorBody(this);
-            instance.Add(this);
-        }
-
-        public void Unload()
-        {
-            instance.Clear();
-            instance = null;
-        }
-
-        public ResponseCriteria(System.IntPtr value) : base(value)
-        {
-            instance.Add(this);
-        }
-
-        private string boolValue;
-
-        public string GetBoolValue()
-        {
-            return boolValue;
-        }
-
-        public void SetBoolValue(string value)
-        {
-            boolValue = value;
-        }
-
-        private string character;
-
-        public string GetCharacter()
-        {
-            return character;
-        }
-
-        public void SetCharacter(string value)
-        {
-            character = value;
-        }
-
-        private string character2;
-
-        public string GetCharacter2()
-        {
-            return character2;
-        }
-
-        public void SetCharacter2(string value)
-        {
-            character2 = value;
-        }
-
-        private string compareType;
-
-        public string GetCompareType()
-        {
-            return compareType;
-        }
-
-        public void SetCompareType(string value)
-        {
-            compareType = value;
-        }
-
-        private string dialogueStatus;
-
-        public string GetDialogueStatus()
-        {
-            return dialogueStatus;
-        }
-
-        public void SetDialogueStatus(string value)
-        {
-            dialogueStatus = value;
-        }
-
-        private bool displayInEditor;
-
-        public bool GetDisplayInEditor()
-        {
-            return displayInEditor;
-        }
-
-        public void SetDisplayInEditor(bool value)
-        {
-            displayInEditor = value;
-        }
-
-        private string doorOptions;
-
-        public string GetDoorOptions()
-        {
-            return doorOptions;
-        }
-
-        public void SetDoorOptions(string value)
-        {
-            doorOptions = value;
-        }
-
-        private string equalsValue;
-
-        public string GetEqualsValue()
-        {
-            return equalsValue;
-        }
-
-        public void SetEqualsValue(string value)
-        {
-            equalsValue = value;
-        }
-
-        private string equationValue;
-
-        public string GetEquationValue()
-        {
-            return equationValue;
-        }
-
-        public void SetEquationValue(string value)
-        {
-            equationValue = value;
-        }
-
-        private string valueFormula;
-
-        public string GetValueFormula()
-        {
-            return valueFormula;
-        }
-
-        public void SetValueFormula(string value)
-        {
-            valueFormula = value;
-        }
-
-        private string itemComparison;
-
-        public string GetItemComparison()
-        {
-            return itemComparison;
-        }
-
-        public void SetItemComparison(string value)
-        {
-            itemComparison = value;
-        }
-
-        private string itemFromItemGroupComparison;
-
-        public string GetItemFromItemGroupComparison()
-        {
-            return itemFromItemGroupComparison;
-        }
-
-        public void SetItemFromItemGroupComparison(string value)
-        {
-            itemFromItemGroupComparison = value;
-        }
-
-        private string key;
-
-        public string GetKey()
-        {
-            return key;
-        }
-
-        public void SetKey(string value)
-        {
-            key = value;
-        }
-
-        private string key2;
-
-        public string GetKey2()
-        {
-            return key2;
-        }
-
-        public void SetKey2(string value)
-        {
-            key2 = value;
-        }
-
-        private int order;
-
-        public int GetOrder()
-        {
-            return order;
-        }
-
-        public void SetOrder(int value)
-        {
-            order = value;
-        }
-
-        private string playerInventoryOption;
-
-        public string GetPlayerInventoryOption()
-        {
-            return playerInventoryOption;
-        }
-
-        public void SetPlayerInventoryOption(string value)
-        {
-            playerInventoryOption = value;
-        }
-
-        private string poseOption;
-
-        public string GetPoseOption()
-        {
-            return poseOption;
-        }
-
-        public void SetPoseOption(string value)
-        {
-            poseOption = value;
-        }
-
-        private string socialStatus;
-
-        public string GetSocialStatus()
-        {
-            return socialStatus;
-        }
-
-        public void SetSocialStatus(string value)
-        {
-            socialStatus = value;
-        }
-
-        private string value;
-
-        public string GetValue()
-        {
-            return value;
-        }
-
-        public void SetValue(string value)
-        {
-            this.value = value;
-        }
-
-        private int option;
-
-        public int GetOption()
-        {
-            return option;
-        }
-
-        public void SetOption(int value)
-        {
-            option = value;
-        }
-    }
-
-    public class ResponseEvent : Object
-    {
-        private List<Object> instance = new List<Object>();
-
-        public ResponseEvent() : base(ClassInjector.DerivedConstructorPointer<ResponseEvent>())
-        {
-            ClassInjector.DerivedConstructorBody(this);
-            instance.Add(this);
-        }
-
-        public void Unload()
-        {
-            foreach (var item in criteria)
-            {
-                item.Unload();
-            }
-            criteria.Clear();
-            criteria = null;
-            instance.Clear();
-            instance = null;
-        }
-
-        public ResponseEvent(System.IntPtr value) : base(value)
-        {
-            instance.Add(this);
-        }
-
-        private int sortOrder2;
-
-        public int GetSortOrder2()
-        {
-            return sortOrder2;
-        }
-
-        public void SetSortOrder2(int value)
-        {
-            sortOrder2 = value;
-        }
-
-        private string version;
-
-        public string GetVersion()
-        {
-            return version;
-        }
-
-        public void SetVersion(string value)
-        {
-            version = value;
-        }
-
-        private string id;
-
-        public string GetId()
-        {
-            return id;
-        }
-
-        public void SetId(string value)
-        {
-            id = value;
-        }
-
-        private bool enabled;
-
-        public bool GetEnabled()
-        {
-            return enabled;
-        }
-
-        public void SetEnabled(bool value)
-        {
-            enabled = value;
-        }
-
-        private int eventType;
-
-        public int GetEventType()
-        {
-            return eventType;
-        }
-
-        public void SetEventType(int value)
-        {
-            eventType = value;
-        }
-
-        private string character;
-
-        public string GetCharacter()
-        {
-            return character;
-        }
-
-        public void SetCharacter(string value)
-        {
-            character = value;
-        }
-
-        private string character2;
-
-        public string GetCharacter2()
-        {
-            return character2;
-        }
-
-        public void SetCharacter2(string value)
-        {
-            character2 = value;
-        }
-
-        private string key;
-
-        public string GetKey()
-        {
-            return key;
-        }
-
-        public void SetKey(string value)
-        {
-            key = value;
-        }
-
-        private int option;
-
-        public int GetOption()
-        {
-            return option;
-        }
-
-        public void SetOption(int value)
-        {
-            option = value;
-        }
-
-        private int option2;
-
-        public int GetOption2()
-        {
-            return option2;
-        }
-
-        public void SetOption2(int value)
-        {
-            option2 = value;
-        }
-
-        private int option3;
-
-        public int GetOption3()
-        {
-            return option3;
-        }
-
-        public void SetOption3(int value)
-        {
-            option3 = value;
-        }
-
-        private string value;
-
-        public string GetValue()
-        {
-            return value;
-        }
-
-        public void SetValue(string value)
-        {
-            this.value = value;
-        }
-
-        private string value2;
-
-        public string GetValue2()
-        {
-            return value2;
-        }
-
-        public void SetValue2(string value)
-        {
-            value2 = value;
-        }
-
-        private int sortOrder;
-
-        public int GetSortOrder()
-        {
-            return sortOrder;
-        }
-
-        public void SetSortOrder(int value)
-        {
-            sortOrder = value;
-        }
-
-        private string delay;
-
-        public string GetDelay()
-        {
-            return delay;
-        }
-
-        public void SetDelay(string value)
-        {
-            delay = value;
-        }
-
-        private string originalDelay;
-
-        public string GetOriginalDelay()
-        {
-            return originalDelay;
-        }
-
-        public void SetOriginalDelay(string value)
-        {
-            originalDelay = value;
-        }
-
-        private string startDelayTime;
-
-        public string GetStartDelayTime()
-        {
-            return startDelayTime;
-        }
-
-        public void SetStartDelayTime(string value)
-        {
-            startDelayTime = value;
-        }
-
-        private bool useConditions;
-
-        public bool GetUseConditions()
-        {
-            return useConditions;
-        }
-
-        public void SetUseConditions(bool value)
-        {
-            useConditions = value;
-        }
-
-        private bool displayInEditor;
-
-        public bool GetDisplayInEditor()
-        {
-            return displayInEditor;
-        }
-
-        public void SetDisplayInEditor(bool value)
-        {
-            displayInEditor = value;
-        }
-
-        private List<Criterion> criteria;
-
-        public List<Criterion> GetCriteria()
-        {
-            return criteria;
-        }
-
-        public void SetCriteria(List<Criterion> value)
-        {
-            criteria = value;
         }
     }
 
@@ -3867,26 +1744,26 @@ namespace Project
             order = value;
         }
 
-        private List<ResponseCriteria> responseCriteria;
+        private List<Criterion> responseCriteria;
 
-        public List<ResponseCriteria> GetResponseCriteria()
+        public List<Criterion> GetResponseCriteria()
         {
             return responseCriteria;
         }
 
-        public void SetResponseCriteria(List<ResponseCriteria> value)
+        public void SetResponseCriteria(List<Criterion> value)
         {
             responseCriteria = value;
         }
 
-        private List<ResponseEvent> responseEvents;
+        private List<Event> responseEvents;
 
-        public List<ResponseEvent> GetResponseEvents()
+        public List<Event> GetResponseEvents()
         {
             return responseEvents;
         }
 
-        public void SetResponseEvents(List<ResponseEvent> value)
+        public void SetResponseEvents(List<Event> value)
         {
             responseEvents = value;
         }
@@ -3988,274 +1865,6 @@ namespace Project
         }
     }
 
-    public class StartEvent : Object
-    {
-        private List<Object> instance = new List<Object>();
-
-        public StartEvent() : base(ClassInjector.DerivedConstructorPointer<StartEvent>())
-        {
-            ClassInjector.DerivedConstructorBody(this);
-            instance.Add(this);
-        }
-
-        public void Unload()
-        {
-            foreach (var item in criteria)
-            {
-                item.Unload();
-            }
-            criteria.Clear();
-            criteria = null;
-            instance.Clear();
-            instance = null;
-        }
-
-        public StartEvent(System.IntPtr value) : base(value)
-        {
-            instance.Add(this);
-        }
-
-        private int sortOrder2;
-
-        public int GetSortOrder2()
-        {
-            return sortOrder2;
-        }
-
-        public void SetSortOrder2(int value)
-        {
-            sortOrder2 = value;
-        }
-
-        private string version;
-
-        public string GetVersion()
-        {
-            return version;
-        }
-
-        public void SetVersion(string value)
-        {
-            version = value;
-        }
-
-        private string id;
-
-        public string GetId()
-        {
-            return id;
-        }
-
-        public void SetId(string value)
-        {
-            id = value;
-        }
-
-        private bool enabled;
-
-        public bool GetEnabled()
-        {
-            return enabled;
-        }
-
-        public void SetEnabled(bool value)
-        {
-            enabled = value;
-        }
-
-        private int eventType;
-
-        public int GetEventType()
-        {
-            return eventType;
-        }
-
-        public void SetEventType(int value)
-        {
-            eventType = value;
-        }
-
-        private string character;
-
-        public string GetCharacter()
-        {
-            return character;
-        }
-
-        public void SetCharacter(string value)
-        {
-            character = value;
-        }
-
-        private string character2;
-
-        public string GetCharacter2()
-        {
-            return character2;
-        }
-
-        public void SetCharacter2(string value)
-        {
-            character2 = value;
-        }
-
-        private string key;
-
-        public string GetKey()
-        {
-            return key;
-        }
-
-        public void SetKey(string value)
-        {
-            key = value;
-        }
-
-        private int option;
-
-        public int GetOption()
-        {
-            return option;
-        }
-
-        public void SetOption(int value)
-        {
-            option = value;
-        }
-
-        private int option2;
-
-        public int GetOption2()
-        {
-            return option2;
-        }
-
-        public void SetOption2(int value)
-        {
-            option2 = value;
-        }
-
-        private int option3;
-
-        public int GetOption3()
-        {
-            return option3;
-        }
-
-        public void SetOption3(int value)
-        {
-            option3 = value;
-        }
-
-        private string value;
-
-        public string GetValue()
-        {
-            return value;
-        }
-
-        public void SetValue(string value)
-        {
-            this.value = value;
-        }
-
-        private string value2;
-
-        public string GetValue2()
-        {
-            return value2;
-        }
-
-        public void SetValue2(string value)
-        {
-            value2 = value;
-        }
-
-        private int sortOrder;
-
-        public int GetSortOrder()
-        {
-            return sortOrder;
-        }
-
-        public void SetSortOrder(int value)
-        {
-            sortOrder = value;
-        }
-
-        private string delay;
-
-        public string GetDelay()
-        {
-            return delay;
-        }
-
-        public void SetDelay(string value)
-        {
-            delay = value;
-        }
-
-        private string originalDelay;
-
-        public string GetOriginalDelay()
-        {
-            return originalDelay;
-        }
-
-        public void SetOriginalDelay(string value)
-        {
-            originalDelay = value;
-        }
-
-        private string startDelayTime;
-
-        public string GetStartDelayTime()
-        {
-            return startDelayTime;
-        }
-
-        public void SetStartDelayTime(string value)
-        {
-            startDelayTime = value;
-        }
-
-        private bool useConditions;
-
-        public bool GetUseConditions()
-        {
-            return useConditions;
-        }
-
-        public void SetUseConditions(bool value)
-        {
-            useConditions = value;
-        }
-
-        private bool displayInEditor;
-
-        public bool GetDisplayInEditor()
-        {
-            return displayInEditor;
-        }
-
-        public void SetDisplayInEditor(bool value)
-        {
-            displayInEditor = value;
-        }
-
-        private List<Criterion> criteria;
-
-        public List<Criterion> GetCriteria()
-        {
-            return criteria;
-        }
-
-        public void SetCriteria(List<Criterion> value)
-        {
-            criteria = value;
-        }
-    }
-
     public class Dialogue : Object
     {
         private List<Object> instance = new List<Object>();
@@ -4325,14 +1934,14 @@ namespace Project
             alternateTexts = value;
         }
 
-        private List<CloseEvent> closeEvents;
+        private List<Event> closeEvents;
 
-        public List<CloseEvent> GetCloseEvents()
+        public List<Event> GetCloseEvents()
         {
             return closeEvents;
         }
 
-        public void SetCloseEvents(List<CloseEvent> value)
+        public void SetCloseEvents(List<Event> value)
         {
             closeEvents = value;
         }
@@ -4517,14 +2126,14 @@ namespace Project
             speakingToCharacterName = value;
         }
 
-        private List<StartEvent> startEvents;
+        private List<Event> startEvents;
 
-        public List<StartEvent> GetStartEvents()
+        public List<Event> GetStartEvents()
         {
             return startEvents;
         }
 
-        public void SetStartEvents(List<StartEvent> value)
+        public void SetStartEvents(List<Event> value)
         {
             startEvents = value;
         }
@@ -4634,26 +2243,26 @@ namespace Project
             order = value;
         }
 
-        private List<ResponseCriteria> responseCriteria;
+        private List<Criterion> responseCriteria;
 
-        public List<ResponseCriteria> GetResponseCriteria()
+        public List<Criterion> GetResponseCriteria()
         {
             return responseCriteria;
         }
 
-        public void SetResponseCriteria(List<ResponseCriteria> value)
+        public void SetResponseCriteria(List<Criterion> value)
         {
             responseCriteria = value;
         }
 
-        private List<ResponseEvent> responseEvents;
+        private List<Event> responseEvents;
 
-        public List<ResponseEvent> GetResponseEvents()
+        public List<Event> GetResponseEvents()
         {
             return responseEvents;
         }
 
-        public void SetResponseEvents(List<ResponseEvent> value)
+        public void SetResponseEvents(List<Event> value)
         {
             responseEvents = value;
         }
@@ -4812,26 +2421,26 @@ namespace Project
             order = value;
         }
 
-        private List<ResponseCriteria> responseCriteria;
+        private List<Criterion> responseCriteria;
 
-        public List<ResponseCriteria> GetResponseCriteria()
+        public List<Criterion> GetResponseCriteria()
         {
             return responseCriteria;
         }
 
-        public void SetResponseCriteria(List<ResponseCriteria> value)
+        public void SetResponseCriteria(List<Criterion> value)
         {
             responseCriteria = value;
         }
 
-        private List<ResponseEvent> responseEvents;
+        private List<Event> responseEvents;
 
-        public List<ResponseEvent> GetResponseEvents()
+        public List<Event> GetResponseEvents()
         {
             return responseEvents;
         }
 
-        public void SetResponseEvents(List<ResponseEvent> value)
+        public void SetResponseEvents(List<Event> value)
         {
             responseEvents = value;
         }
@@ -4960,14 +2569,14 @@ namespace Project
             text = value;
         }
 
-        private List<Critera> critera;
+        private List<Criterion> critera;
 
-        public List<Critera> GetCritera()
+        public List<Criterion> GetCritera()
         {
             return critera;
         }
 
-        public void SetCritera(List<Critera> value)
+        public void SetCritera(List<Criterion> value)
         {
             critera = value;
         }
@@ -5020,14 +2629,14 @@ namespace Project
             overrideCombatRestriction = value;
         }
 
-        private List<StartEvent> startEvents;
+        private List<Event> startEvents;
 
-        public List<StartEvent> GetStartEvents()
+        public List<Event> GetStartEvents()
         {
             return startEvents;
         }
 
-        public void SetStartEvents(List<StartEvent> value)
+        public void SetStartEvents(List<Event> value)
         {
             startEvents = value;
         }
@@ -5478,14 +3087,14 @@ namespace Project
             characterToReactTo = value;
         }
 
-        private List<Critera> critera;
+        private List<Criterion> critera;
 
-        public List<Critera> GetCritera()
+        public List<Criterion> GetCritera()
         {
             return critera;
         }
 
-        public void SetCritera(List<Critera> value)
+        public void SetCritera(List<Criterion> value)
         {
             critera = value;
         }
@@ -5611,274 +3220,6 @@ namespace Project
         }
     }
 
-    public class OnAcceptEvent : Object
-    {
-        private List<Object> instance = new List<Object>();
-
-        public OnAcceptEvent() : base(ClassInjector.DerivedConstructorPointer<OnAcceptEvent>())
-        {
-            ClassInjector.DerivedConstructorBody(this);
-            instance.Add(this);
-        }
-
-        public void Unload()
-        {
-            foreach (var item in criteria)
-            {
-                item.Unload();
-            }
-            criteria.Clear();
-            criteria = null;
-            instance.Clear();
-            instance = null;
-        }
-
-        public OnAcceptEvent(System.IntPtr value) : base(value)
-        {
-            instance.Add(this);
-        }
-
-        private int sortOrder2;
-
-        public int GetSortOrder2()
-        {
-            return sortOrder2;
-        }
-
-        public void SetSortOrder2(int value)
-        {
-            sortOrder2 = value;
-        }
-
-        private string version;
-
-        public string GetVersion()
-        {
-            return version;
-        }
-
-        public void SetVersion(string value)
-        {
-            version = value;
-        }
-
-        private string id;
-
-        public string GetId()
-        {
-            return id;
-        }
-
-        public void SetId(string value)
-        {
-            id = value;
-        }
-
-        private bool enabled;
-
-        public bool GetEnabled()
-        {
-            return enabled;
-        }
-
-        public void SetEnabled(bool value)
-        {
-            enabled = value;
-        }
-
-        private int eventType;
-
-        public int GetEventType()
-        {
-            return eventType;
-        }
-
-        public void SetEventType(int value)
-        {
-            eventType = value;
-        }
-
-        private string character;
-
-        public string GetCharacter()
-        {
-            return character;
-        }
-
-        public void SetCharacter(string value)
-        {
-            character = value;
-        }
-
-        private string character2;
-
-        public string GetCharacter2()
-        {
-            return character2;
-        }
-
-        public void SetCharacter2(string value)
-        {
-            character2 = value;
-        }
-
-        private string key;
-
-        public string GetKey()
-        {
-            return key;
-        }
-
-        public void SetKey(string value)
-        {
-            key = value;
-        }
-
-        private int option;
-
-        public int GetOption()
-        {
-            return option;
-        }
-
-        public void SetOption(int value)
-        {
-            option = value;
-        }
-
-        private int option2;
-
-        public int GetOption2()
-        {
-            return option2;
-        }
-
-        public void SetOption2(int value)
-        {
-            option2 = value;
-        }
-
-        private int option3;
-
-        public int GetOption3()
-        {
-            return option3;
-        }
-
-        public void SetOption3(int value)
-        {
-            option3 = value;
-        }
-
-        private string value;
-
-        public string GetValue()
-        {
-            return value;
-        }
-
-        public void SetValue(string value)
-        {
-            this.value = value;
-        }
-
-        private string value2;
-
-        public string GetValue2()
-        {
-            return value2;
-        }
-
-        public void SetValue2(string value)
-        {
-            value2 = value;
-        }
-
-        private int sortOrder;
-
-        public int GetSortOrder()
-        {
-            return sortOrder;
-        }
-
-        public void SetSortOrder(int value)
-        {
-            sortOrder = value;
-        }
-
-        private string delay;
-
-        public string GetDelay()
-        {
-            return delay;
-        }
-
-        public void SetDelay(string value)
-        {
-            delay = value;
-        }
-
-        private string originalDelay;
-
-        public string GetOriginalDelay()
-        {
-            return originalDelay;
-        }
-
-        public void SetOriginalDelay(string value)
-        {
-            originalDelay = value;
-        }
-
-        private string startDelayTime;
-
-        public string GetStartDelayTime()
-        {
-            return startDelayTime;
-        }
-
-        public void SetStartDelayTime(string value)
-        {
-            startDelayTime = value;
-        }
-
-        private bool useConditions;
-
-        public bool GetUseConditions()
-        {
-            return useConditions;
-        }
-
-        public void SetUseConditions(bool value)
-        {
-            useConditions = value;
-        }
-
-        private bool displayInEditor;
-
-        public bool GetDisplayInEditor()
-        {
-            return displayInEditor;
-        }
-
-        public void SetDisplayInEditor(bool value)
-        {
-            displayInEditor = value;
-        }
-
-        private List<Criterion> criteria;
-
-        public List<Criterion> GetCriteria()
-        {
-            return criteria;
-        }
-
-        public void SetCriteria(List<Criterion> value)
-        {
-            criteria = value;
-        }
-    }
-
     public class StoryItem : Object
     {
         private List<Object> instance = new List<Object>();
@@ -5918,14 +3259,14 @@ namespace Project
             instance.Add(this);
         }
 
-        private List<Critera> critera;
+        private List<Criterion> critera;
 
-        public List<Critera> GetCritera()
+        public List<Criterion> GetCritera()
         {
             return critera;
         }
 
-        public void SetCritera(List<Critera> value)
+        public void SetCritera(List<Criterion> value)
         {
             critera = value;
         }
@@ -5942,26 +3283,26 @@ namespace Project
             itemName = value;
         }
 
-        private List<OnAcceptEvent> onAcceptEvents;
+        private List<Event> onAcceptEvents;
 
-        public List<OnAcceptEvent> GetOnAcceptEvents()
+        public List<Event> GetOnAcceptEvents()
         {
             return onAcceptEvents;
         }
 
-        public void SetOnAcceptEvents(List<OnAcceptEvent> value)
+        public void SetOnAcceptEvents(List<Event> value)
         {
             onAcceptEvents = value;
         }
 
-        private List<OnAcceptEvent> onRefuseEvents;
+        private List<Event> onRefuseEvents;
 
-        public List<OnAcceptEvent> GetOnRefuseEvents()
+        public List<Event> GetOnRefuseEvents()
         {
             return onRefuseEvents;
         }
 
-        public void SetOnRefuseEvents(List<OnAcceptEvent> value)
+        public void SetOnRefuseEvents(List<Event> value)
         {
             onRefuseEvents = value;
         }
@@ -5976,6 +3317,130 @@ namespace Project
         public void SetDisplayInEditor(bool value)
         {
             displayInEditor = value;
+        }
+    }
+
+    public class CharacterItemGroupInteraction : Object
+    {
+        private List<Object> instance = new List<Object>();
+
+        public CharacterItemGroupInteraction() : base(ClassInjector.DerivedConstructorPointer<StoryItem>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance.Add(this);
+        }
+
+        public void Unload()
+        {
+            foreach (var item in criteria)
+            {
+                item.Unload();
+            }
+            criteria.Clear();
+            criteria = null;
+            foreach (var item in onAcceptEvents)
+            {
+                item.Unload();
+            }
+            onAcceptEvents.Clear();
+            onAcceptEvents = null;
+            foreach (var item in onRefuseEvents)
+            {
+                item.Unload();
+            }
+            onRefuseEvents.Clear();
+            onRefuseEvents = null;
+            instance.Clear();
+            instance = null;
+        }
+
+        public CharacterItemGroupInteraction(System.IntPtr value) : base(value)
+        {
+            instance.Add(this);
+        }
+
+        private string id;
+
+        public string GetId()
+        {
+            return id;
+        }
+
+        public void SetId(string value)
+        {
+            id = value;
+        }
+
+        private string name;
+
+        public string GetName()
+        {
+            return name;
+        }
+
+        public void SetName(string value)
+        {
+            name = value;
+        }
+
+        private string groupName;
+
+        public string GetGroupName()
+        {
+            return groupName;
+        }
+
+        public void SetGroupName(string value)
+        {
+            groupName = value;
+        }
+
+        private bool displayInEditor;
+
+        public bool GetDisplayInEditor()
+        {
+            return displayInEditor;
+        }
+
+        public void SetDisplayInEditor(bool value)
+        {
+            displayInEditor = value;
+        }
+
+        private List<Criterion> criteria;
+
+        public List<Criterion> GetCriteria()
+        {
+            return criteria;
+        }
+
+        public void SetCriteria(List<Criterion> value)
+        {
+            criteria = value;
+        }
+
+        private List<Event> onAcceptEvents;
+
+        public List<Event> GetOnAcceptEvents()
+        {
+            return onAcceptEvents;
+        }
+
+        public void SetOnAcceptEvents(List<Event> value)
+        {
+            onAcceptEvents = value;
+        }
+
+        private List<Event> onRefuseEvents;
+
+        public List<Event> GetOnRefuseEvents()
+        {
+            return onRefuseEvents;
+        }
+
+        public void SetOnRefuseEvents(List<Event> value)
+        {
+            onRefuseEvents = value;
         }
     }
 
@@ -6203,14 +3668,14 @@ namespace Project
             storyItems = value;
         }
 
-        private List<Object> characterItemGroupInteractions;
+        private List<CharacterItemGroupInteraction> characterItemGroupInteractions;
 
-        public List<Object> GetCharacterItemGroupInteractions()
+        public List<CharacterItemGroupInteraction> GetCharacterItemGroupInteractions()
         {
             return characterItemGroupInteractions;
         }
 
-        public void SetCharacterItemGroupInteractions(List<Object> value)
+        public void SetCharacterItemGroupInteractions(List<CharacterItemGroupInteraction> value)
         {
             characterItemGroupInteractions = value;
         }
@@ -6227,4 +3692,5 @@ namespace Project
             storyValues = value;
         }
     }
+
 }

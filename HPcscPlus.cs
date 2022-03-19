@@ -3,6 +3,7 @@ using EekEvents;
 using EekEvents.Stories;
 using Il2CppSystem;
 using Il2CppSystem.Collections.Generic;
+using Il2CppSystem.Collections;
 using Il2CppSystem.IO;
 using Il2CppSystem.Reflection;
 using MelonLoader;
@@ -111,7 +112,7 @@ namespace Project
 
         private readonly bool RemoveVaHints = true;
 
-        private bool debug = false;
+        private readonly bool debug = true;
 
         private CharacterStoryData _selectedStory;
 
@@ -130,22 +131,62 @@ namespace Project
         private int SelectionIndex = 0;
 
         //attributes
-        private bool ShowEditor = false;
+        private bool ShowEditor = true;
 
         private List<CharacterStoryData> Stories;
         private bool StoriesSet = false;
         private bool StorySelected = false;
         private Type[] StoryTypes;
+        private readonly Type[] TypeList = new Type[37];
+        private readonly string[] TypeNameList = new string[] {
+            "Achievements",
+            "AlternateTexts",
+            "BackgroundChatter",
+            "CloseEvents",
+            "Critera",
+            "Criteras",
+            "Criteria",
+            "CriteriaGroups",
+            "CriteriaList",
+            "CriteriaList2",
+            "Criterion",
+            "Dialogues",
+            "Events",
+            "ExtendedDetails",
+            "GameStartEvents",
+            "GlobalGoodbyeResponses",
+            "GlobalResponses",
+            "ItemActions",
+            "ItemGroupBehaviors",
+            "ItemGroups",
+            "ItemOverrides",
+            "OnAcceptEvents",
+            "OnRefuseEvents",
+            "OnSuccessEvents",
+            "OnTakeActionEvents",
+            "PlayerReactions",
+            "Quests",
+            "Reactions",
+            "ResponseCriteria",
+            "ResponseEvents",
+            "Responses",
+            "StartEvents",
+            "StoryItems",
+            "UseWiths",
+            "Values",
+            "CharacterItemGroupInteractions",
+            "ItemGroupBehaviors"
+        };
 
-        //todo speed increase: add array of string to remove the eneed for ToString()
-        public enum JsonLabels
-        {
-            START_OBJECT,
-            END_OBJECT,
-            START_LIST,
-            END_LIST,
-            NULL
-        }
+        //todo exctract all ui functions to other class
+        //TODO speed increase: reduce "new" keywords while parsing (also dynamic stuff, like get method and so on can be done once, then saved)
+        //TODO speed increase: replace activator by direct constructor invoke
+
+        public static readonly string START_OBJECT = "START_OBJECT";
+        public static readonly string START_LIST = "START_LIST";
+        public static readonly string END_OBJECT = "END_OBJECT";
+        public static readonly string END_LIST = "END_LIST";
+        public static readonly string NULL = "NULL";
 
         private CharacterStoryData SelectedStory
         {
@@ -235,30 +276,21 @@ namespace Project
         //on start
         public override void OnApplicationStart()
         {
-
             ClassInjector.RegisterTypeInIl2Cpp<Criterion>();
-            ClassInjector.RegisterTypeInIl2Cpp<OnTakeActionEvent>();
+            ClassInjector.RegisterTypeInIl2Cpp<Event>();
             ClassInjector.RegisterTypeInIl2Cpp<ItemAction>();
-            ClassInjector.RegisterTypeInIl2Cpp<OnSuccessEvent>();
             ClassInjector.RegisterTypeInIl2Cpp<UseWith>();
             ClassInjector.RegisterTypeInIl2Cpp<ItemOverride>();
             ClassInjector.RegisterTypeInIl2Cpp<ItemGroupBehavior>();
             ClassInjector.RegisterTypeInIl2Cpp<Achievement>();
-            ClassInjector.RegisterTypeInIl2Cpp<CriteriaList2>();
-            ClassInjector.RegisterTypeInIl2Cpp<CriteriaList1>();
+            ClassInjector.RegisterTypeInIl2Cpp<CriteriaList>();
             ClassInjector.RegisterTypeInIl2Cpp<CriteriaGroup>();
             ClassInjector.RegisterTypeInIl2Cpp<ItemGroup>();
-            ClassInjector.RegisterTypeInIl2Cpp<GameStartEvent>();
-            ClassInjector.RegisterTypeInIl2Cpp<Critera>();
-            ClassInjector.RegisterTypeInIl2Cpp<Event>();
             ClassInjector.RegisterTypeInIl2Cpp<PlayerReaction>();
             ClassInjector.RegisterTypeInIl2Cpp<MainStory>();
             ClassInjector.RegisterTypeInIl2Cpp<AlternateText>();
-            ClassInjector.RegisterTypeInIl2Cpp<CloseEvent>();
-            ClassInjector.RegisterTypeInIl2Cpp<ResponseCriteria>();
-            ClassInjector.RegisterTypeInIl2Cpp<ResponseEvent>();
             ClassInjector.RegisterTypeInIl2Cpp<Response>();
-            ClassInjector.RegisterTypeInIl2Cpp<StartEvent>();
+            ClassInjector.RegisterTypeInIl2Cpp<Event>();
             ClassInjector.RegisterTypeInIl2Cpp<Dialogue>();
             ClassInjector.RegisterTypeInIl2Cpp<GlobalGoodbyeResponse>();
             ClassInjector.RegisterTypeInIl2Cpp<GlobalResponse>();
@@ -268,34 +300,25 @@ namespace Project
             ClassInjector.RegisterTypeInIl2Cpp<ExtendedDetail>();
             ClassInjector.RegisterTypeInIl2Cpp<Quest>();
             ClassInjector.RegisterTypeInIl2Cpp<Reaction>();
-            ClassInjector.RegisterTypeInIl2Cpp<OnAcceptEvent>();
             ClassInjector.RegisterTypeInIl2Cpp<StoryItem>();
+            ClassInjector.RegisterTypeInIl2Cpp<CharacterItemGroupInteraction>();
             ClassInjector.RegisterTypeInIl2Cpp<CharacterStory>();
 
             StoryTypes = new Type[] {
                 Il2CppType.Of<Criterion>(),
-                Il2CppType.Of<OnTakeActionEvent>(),
+                Il2CppType.Of<Event>(),
                 Il2CppType.Of<ItemAction>(),
-                Il2CppType.Of<OnSuccessEvent>(),
                 Il2CppType.Of<UseWith>(),
                 Il2CppType.Of<ItemOverride>(),
                 Il2CppType.Of<ItemGroupBehavior>(),
                 Il2CppType.Of<Achievement>(),
-                Il2CppType.Of<CriteriaList2>(),
-                Il2CppType.Of<CriteriaList1>(),
+                Il2CppType.Of<CriteriaList>(),
                 Il2CppType.Of<CriteriaGroup>(),
                 Il2CppType.Of<ItemGroup>(),
-                Il2CppType.Of<GameStartEvent>(),
-                Il2CppType.Of<Critera>(),
-                Il2CppType.Of<Event>(),
                 Il2CppType.Of<PlayerReaction>(),
                 Il2CppType.Of<MainStory>(),
                 Il2CppType.Of<AlternateText>(),
-                Il2CppType.Of<CloseEvent>(),
-                Il2CppType.Of<ResponseCriteria>(),
-                Il2CppType.Of<ResponseEvent>(),
                 Il2CppType.Of<Response>(),
-                Il2CppType.Of<StartEvent>(),
                 Il2CppType.Of<Dialogue>(),
                 Il2CppType.Of<GlobalGoodbyeResponse>(),
                 Il2CppType.Of<GlobalResponse>(),
@@ -305,10 +328,49 @@ namespace Project
                 Il2CppType.Of<ExtendedDetail>(),
                 Il2CppType.Of<Quest>(),
                 Il2CppType.Of<Reaction>(),
-                Il2CppType.Of<OnAcceptEvent>(),
                 Il2CppType.Of<StoryItem>(),
+                Il2CppType.Of<CharacterItemGroupInteraction>(),
                 Il2CppType.Of<CharacterStory>()
             };
+
+            TypeList[0] = Il2CppType.Of<Achievement>();
+            TypeList[1] = Il2CppType.Of<AlternateText>();
+            TypeList[2] = Il2CppType.Of<BackgroundChatter>();
+            TypeList[3] = Il2CppType.Of<Event>();
+            TypeList[4] = Il2CppType.Of<Criterion>();
+            TypeList[5] = Il2CppType.Of<Criterion>();
+            TypeList[6] = Il2CppType.Of<Criterion>();
+            TypeList[7] = Il2CppType.Of<CriteriaGroup>();
+            TypeList[8] = Il2CppType.Of<CriteriaList>();
+            TypeList[9] = Il2CppType.Of<Criterion>();
+            TypeList[10] = Il2CppType.Of<Criterion>();
+            TypeList[11] = Il2CppType.Of<Dialogue>();
+            TypeList[12] = Il2CppType.Of<Event>();
+            TypeList[13] = Il2CppType.Of<ExtendedDetail>();
+            TypeList[14] = Il2CppType.Of<Event>();
+            TypeList[15] = Il2CppType.Of<GlobalGoodbyeResponse>();
+            TypeList[16] = Il2CppType.Of<GlobalResponse>();
+            TypeList[17] = Il2CppType.Of<ItemAction>();
+            TypeList[18] = Il2CppType.Of<ItemGroupBehavior>();
+            TypeList[19] = Il2CppType.Of<ItemGroup>();
+            TypeList[20] = Il2CppType.Of<ItemOverride>();
+            TypeList[21] = Il2CppType.Of<Event>();
+            TypeList[22] = Il2CppType.Of<Event>();
+            TypeList[23] = Il2CppType.Of<Event>();
+            TypeList[24] = Il2CppType.Of<Event>();
+            TypeList[25] = Il2CppType.Of<PlayerReaction>();
+            TypeList[26] = Il2CppType.Of<Quest>();
+            TypeList[27] = Il2CppType.Of<Reaction>();
+            TypeList[28] = Il2CppType.Of<Criterion>();
+            TypeList[29] = Il2CppType.Of<Event>();
+            TypeList[30] = Il2CppType.Of<Response>();
+            TypeList[31] = Il2CppType.Of<Event>();
+            TypeList[32] = Il2CppType.Of<StoryItem>();
+            TypeList[33] = Il2CppType.Of<UseWith>();
+            TypeList[34] = Il2CppType.Of<Valuee>();
+            TypeList[35] = Il2CppType.Of<CharacterItemGroupInteraction>();
+            TypeList[36] = Il2CppType.Of<ItemGroupBehavior>();
+
 
             EditorWindow = new Rect(EditorX, EditorY, EditorWidth, EditorHeight);
         }
@@ -1206,57 +1268,22 @@ namespace Project
 
         private Type FindTypeName(string typeToSearch)
         {
-            //todo speed improvement, replace by dict/LUT
-            //MelonLogger.Msg($"TYPE SEARCH: {typeToSearch}");
-            if (typeToSearch == "Criteria")
+            LogWithLogicDepth(System.ConsoleColor.Gray, typeToSearch, -1);
+            if (secondLayerCriteriaList)
             {
-                typeToSearch = "Criterion";
+                typeToSearch += "2";
             }
-            else if (typeToSearch == "Critera" || typeToSearch == "ResponseCriteria" || typeToSearch == "BackgroundChatter")
-            {
-                //do nothing, is ok that way
-            }
-            else if (typeToSearch == "Values")
-            {
-                typeToSearch = "Valuee";
-            }
-            else if (typeToSearch == "OnRefuseEvents")
-            {
-                typeToSearch = "OnAcceptEvent";
-            }
-            else if (typeToSearch == "CriteriaList")
-            {
-                if (secondLayerCriteriaList)
-                {
-                    typeToSearch = "CriteriaList2";
-                }
-                else
-                {
-                    typeToSearch = "CriteriaList1";
-                }
-            }
-            else if (typeToSearch == "CharacterItemGroupInteractions")
-            {
-                return Il2CppType.Of<Object>();
-            }
-            else
-            {
-                typeToSearch = typeToSearch.Remove(typeToSearch.Length - 1, 1);
-            }
-            //MelonLogger.Msg($"TYPE SEARCH: adjusted name: {typeToSearch}");
-            Type ret = new Type();
 
-            foreach (Type t in StoryTypes)
+            for (int i = 0; i < TypeNameList.Length; i++)
             {
-                if (t.Name == typeToSearch)
+                if (TypeNameList[i] == typeToSearch)
                 {
-                    ret = t;
-                    break;
+                    LogWithLogicDepth(System.ConsoleColor.Gray, TypeList[i].Name, -1);
+                    return TypeList[i];
                 }
             }
-            //MelonLogger.Msg($"TYPE SEARCH: Type found: {ret.Name}");
 
-            return ret;
+            return Il2CppType.Of<Object>();
         }
 
         private string RemoveVAHints(string input)
@@ -1311,7 +1338,7 @@ namespace Project
             {
                 //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN0: {tokens[0]}");
                 //go to first start or remove token
-                if (tokens[0] == JsonLabels.START_OBJECT.ToString())
+                if (tokens[0] == START_OBJECT)
                 {
                     startNotFound = false;
                     tokens.RemoveAt(0);
@@ -1323,7 +1350,7 @@ namespace Project
             }
 
             Object retObject = Activator.CreateInstance(type);
-            //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"Created object of type {type.Name}", logicDepth);
+            LogWithLogicDepth(System.ConsoleColor.DarkGray, $"Created object of type {type.Name}", logicDepth);
 
             //if we can create a new T, get all methods, then calling all set methods using reflection, filling them up with the objects we need
             var methodInfos = type.GetMethods();
@@ -1338,7 +1365,7 @@ namespace Project
                 //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN1: {token}", logicDepth);
 
                 //list starts
-                if (token == JsonLabels.START_LIST.ToString())
+                if (token == START_LIST)
                 {
                     //create list, then go back to creating objects, then at end we stop and move on in the og object the list is part of
                     //get type of the list elements, name of them in lastToken
@@ -1368,22 +1395,22 @@ namespace Project
                     Type listType = getList.ReturnType;
                     Object list = Activator.CreateInstance(listType);
                     MethodInfo listAdd = listType.GetMethod("Add");
-                    //LogWithLogicDepth(System.ConsoleColor.White, "created list", ++logicDepth);
+                    LogWithLogicDepth(System.ConsoleColor.White, "created list", ++logicDepth);
 
                     //as long as we did not reach the end of the list, end it
-                    while (tokens[0] != JsonLabels.END_LIST.ToString())
+                    while (tokens[0] != END_LIST)
                     {
                         //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN2: {token}", logicDepth);
                         Object objectToAdd;
 
-                        if (!isSecondLayerCriteriaList.m_value && type == Il2CppType.Of<CriteriaList1>())
+                        if (!isSecondLayerCriteriaList.m_value && type == Il2CppType.Of<CriteriaList>())
                         {
                             isSecondLayerCriteriaList.m_value = true;
                             secondLayerCriteriaList = true;
                             //LogWithLogicDepth(System.ConsoleColor.White, $"is second list?: {isSecondLayerCriteriaList.m_value}", ++logicDepth);
                         }
 
-                        if (token == JsonLabels.START_OBJECT.ToString())
+                        if (token == START_OBJECT)
                         {
                             //add object
                             objectToAdd = SetObjectValues<Object>(tokens, FindTypeName(lastToken), isSecondLayerCriteriaList, logicDepth + 1);
@@ -1396,33 +1423,33 @@ namespace Project
                             token = tokens[0];
                         }
 
-                        if (isSecondLayerCriteriaList.m_value && type == Il2CppType.Of<CriteriaList1>())
+                        if (isSecondLayerCriteriaList.m_value && type == Il2CppType.Of<CriteriaList>())
                         {
                             secondLayerCriteriaList = false;
                             //LogWithLogicDepth(System.ConsoleColor.White, $"is second list?: {secondLayerCriteriaList}", logicDepth);
                         }
 
-                        //LogWithLogicDepth(System.ConsoleColor.DarkCyan, $"adding object to list", logicDepth);
+                        LogWithLogicDepth(System.ConsoleColor.DarkCyan, $"adding object to list", logicDepth);
                         listAdd.Invoke(list, CreateReferenceArray(objectToAdd));
                         isSecondLayerCriteriaList.m_value = false;
                     }
 
                     //add list
-                    //LogWithLogicDepth(System.ConsoleColor.White, "adding list", --logicDepth);
+                    LogWithLogicDepth(System.ConsoleColor.White, "adding list", --logicDepth);
                     setList.Invoke(retObject, CreateReferenceArray(list));
                 }
-                else if (token == JsonLabels.END_OBJECT.ToString())
+                else if (token == END_OBJECT)
                 {
                     tokens.RemoveAt(0);
 
-                    //LogWithLogicDepth(System.ConsoleColor.DarkGray, "End of object", logicDepth);
+                    LogWithLogicDepth(System.ConsoleColor.DarkGray, "End of object", logicDepth);
 
                     return retObject.Cast<T>();
                 }
                 //else field starts
                 else
                 {
-                    if (tokens[1] != JsonLabels.START_LIST.ToString() && tokens[1] != JsonLabels.START_OBJECT.ToString())
+                    if (tokens[1] != START_LIST && tokens[1] != START_OBJECT)
                     {
                         foreach (MethodInfo methodInfo in methodInfos)
                         {
@@ -1439,13 +1466,13 @@ namespace Project
                                 //try parsing if necessary, defaults to new constructor like values
                                 Object tokenObject = TryParseAll(pType, token);
 
-                                //LogWithLogicDepth(System.ConsoleColor.Green, $"Invoke successful! ({methodInfo.Name} with {token} as the parameter)", logicDepth);
+                                LogWithLogicDepth(System.ConsoleColor.Green, $"Invoke successful! ({methodInfo.Name} with {token} as the parameter)", logicDepth);
                                 methodInfo.Invoke(retObject, CreateReferenceArray(tokenObject));
                                 break;
                             }
                         }
                     }
-                    else if (tokens[1] == JsonLabels.START_OBJECT.ToString())
+                    else if (tokens[1] == START_OBJECT)
                     {
                         foreach (MethodInfo methodInfo in methodInfos)
                         {
@@ -1502,6 +1529,7 @@ namespace Project
 
             foreach (char c in tempS)
             {
+                //todo respect escaped chars lol
                 //entering string
                 if (!inValueString && c == '"')
                 {
@@ -1520,10 +1548,10 @@ namespace Project
                 {
                     //if we hit a seperator, add nonempty strings and clear string builder
                     if (builderString.Length > 0) tokens.Add(builderString);
-                    if (c == '[') tokens.Add(JsonLabels.START_LIST.ToString());
-                    if (c == ']') tokens.Add(JsonLabels.END_LIST.ToString());
-                    if (c == '{') tokens.Add(JsonLabels.START_OBJECT.ToString());
-                    if (c == '}') tokens.Add(JsonLabels.END_OBJECT.ToString());
+                    if (c == '[') tokens.Add(START_LIST);
+                    else if (c == ']') tokens.Add(END_LIST);
+                    else if (c == '{') tokens.Add(START_OBJECT);
+                    else if (c == '}') tokens.Add(END_OBJECT);
                     builderString = "";
                 }
                 else

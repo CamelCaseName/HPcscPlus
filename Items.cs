@@ -2,8 +2,7 @@
 using Il2CppSystem.Collections.Generic;
 using UnhollowerRuntimeLib;
 
-//todo simplify types/reduce amount
-namespace Project
+namespace HPCSC
 {
     public class Criterion : Object
     {

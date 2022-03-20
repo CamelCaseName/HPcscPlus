@@ -12,8 +12,9 @@ using UnhollowerRuntimeLib;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Object = Il2CppSystem.Object;
+using Il2CppSystem.Text;
 
-namespace Project
+namespace HPCSC
 {
     public class HPcscPlus : MelonMod
     {
@@ -109,10 +110,15 @@ namespace Project
         private readonly int EditorY = 0;
 
         private readonly GUILayoutOption[] Opt = new GUILayoutOption[0];
+        private static readonly Il2CppReferenceArray<Object> objectReferenceArray = new Il2CppReferenceArray<Object>(1);
+        private MethodInfo getList = new MethodInfo();
+        private MethodInfo setList = new MethodInfo();
+        private Boolean system_Boolean = new Boolean();
+        private Int32 system_Int32 = new Int32();
 
         private readonly bool RemoveVaHints = true;
 
-        private readonly bool debug = true;
+        private readonly bool debug = false;
 
         private CharacterStoryData _selectedStory;
 
@@ -125,7 +131,7 @@ namespace Project
 
         private GameManager GameManagerInstance;
 
-        private StoryData MainStoryData;
+        public StoryData MainStoryData;
         private MainStory MainStoryObject;
         private bool secondLayerCriteriaList = false;
         private int SelectionIndex = 0;
@@ -136,9 +142,7 @@ namespace Project
         private List<CharacterStoryData> Stories;
         private bool StoriesSet = false;
         private bool StorySelected = false;
-        private Type[] StoryTypes;
-        private readonly Type[] TypeList = new Type[37];
-        private readonly string[] TypeNameList = new string[] {
+        private static readonly string[] TypeNameList = {
             "Achievements",
             "AlternateTexts",
             "BackgroundChatter",
@@ -177,16 +181,16 @@ namespace Project
             "CharacterItemGroupInteractions",
             "ItemGroupBehaviors"
         };
-
-        //todo exctract all ui functions to other class
-        //TODO speed increase: reduce "new" keywords while parsing (also dynamic stuff, like get method and so on can be done once, then saved)
-        //TODO speed increase: replace activator by direct constructor invoke
+        private readonly Type[] TypeList = new Type[TypeNameList.Length];
+        private readonly List<char> seperators = new List<char>();
+        private readonly List<char> numbers = new List<char>();
 
         public static readonly string START_OBJECT = "START_OBJECT";
         public static readonly string START_LIST = "START_LIST";
         public static readonly string END_OBJECT = "END_OBJECT";
         public static readonly string END_LIST = "END_LIST";
         public static readonly string NULL = "NULL";
+
 
         private CharacterStoryData SelectedStory
         {
@@ -304,35 +308,6 @@ namespace Project
             ClassInjector.RegisterTypeInIl2Cpp<CharacterItemGroupInteraction>();
             ClassInjector.RegisterTypeInIl2Cpp<CharacterStory>();
 
-            StoryTypes = new Type[] {
-                Il2CppType.Of<Criterion>(),
-                Il2CppType.Of<Event>(),
-                Il2CppType.Of<ItemAction>(),
-                Il2CppType.Of<UseWith>(),
-                Il2CppType.Of<ItemOverride>(),
-                Il2CppType.Of<ItemGroupBehavior>(),
-                Il2CppType.Of<Achievement>(),
-                Il2CppType.Of<CriteriaList>(),
-                Il2CppType.Of<CriteriaGroup>(),
-                Il2CppType.Of<ItemGroup>(),
-                Il2CppType.Of<PlayerReaction>(),
-                Il2CppType.Of<MainStory>(),
-                Il2CppType.Of<AlternateText>(),
-                Il2CppType.Of<Response>(),
-                Il2CppType.Of<Dialogue>(),
-                Il2CppType.Of<GlobalGoodbyeResponse>(),
-                Il2CppType.Of<GlobalResponse>(),
-                Il2CppType.Of<BackgroundChatter>(),
-                Il2CppType.Of<Valuee>(),
-                Il2CppType.Of<Personality>(),
-                Il2CppType.Of<ExtendedDetail>(),
-                Il2CppType.Of<Quest>(),
-                Il2CppType.Of<Reaction>(),
-                Il2CppType.Of<StoryItem>(),
-                Il2CppType.Of<CharacterItemGroupInteraction>(),
-                Il2CppType.Of<CharacterStory>()
-            };
-
             TypeList[0] = Il2CppType.Of<Achievement>();
             TypeList[1] = Il2CppType.Of<AlternateText>();
             TypeList[2] = Il2CppType.Of<BackgroundChatter>();
@@ -371,6 +346,15 @@ namespace Project
             TypeList[35] = Il2CppType.Of<CharacterItemGroupInteraction>();
             TypeList[36] = Il2CppType.Of<ItemGroupBehavior>();
 
+            //fill up seperator lists
+            foreach (char numbah in "0123456789.nullfasetr")
+            {
+                numbers.Add(numbah);
+            }
+            foreach (char charry in "{}[],:")
+            {
+                seperators.Add(charry);
+            }
 
             EditorWindow = new Rect(EditorX, EditorY, EditorWidth, EditorHeight);
         }
@@ -432,7 +416,6 @@ namespace Project
                 }
             }
         }
-
         //every frame
         public override void OnUpdate()
         {
@@ -1161,7 +1144,7 @@ namespace Project
             GUILayout.EndHorizontal();
         }
 
-        private int DisplayNumberBlock(int number, int min = 0, int max = int.MaxValue, string text = "", string plusButton = "+", string minusButton = "-", bool showNumber = true)
+        public int DisplayNumberBlock(int number, int min = 0, int max = int.MaxValue, string text = "", string plusButton = "+", string minusButton = "-", bool showNumber = true)
         {
             GUILayout.BeginVertical("Box", Opt);
 
@@ -1187,7 +1170,7 @@ namespace Project
             return number;
         }
 
-        private int DisplayNumberHorizontal(int number, int min = 0, int max = int.MaxValue, string text = "", string plusButton = "+", string minusButton = "-", bool showNumber = true)
+        public int DisplayNumberHorizontal(int number, int min = 0, int max = int.MaxValue, string text = "", string plusButton = "+", string minusButton = "-", bool showNumber = true)
         {
             GUILayout.BeginHorizontal("Box", Opt);
 
@@ -1209,7 +1192,7 @@ namespace Project
             return number;
         }
 
-        private int DisplayNumberVertical(int number, int min = 0, int max = int.MaxValue, string text = "", string plusButton = "+", string minusButton = "-", bool showNumber = true)
+        public int DisplayNumberVertical(int number, int min = 0, int max = int.MaxValue, string text = "", string plusButton = "+", string minusButton = "-", bool showNumber = true)
         {
             GUILayout.BeginVertical("Box", Opt);
 
@@ -1327,9 +1310,11 @@ namespace Project
         }
 
         //todo speed increase:
-        // - hash types in hashmap/dict
-        // - parse to json faster? native strtok?
-        // - streamline esle/if constructs, stack use in while/foreach
+        // - reduce "new" keywords while parsing (also dynamic stuff, like get method and so on can be done once, then saved)
+        // - replace activator by direct constructor invoke 
+        // - prefetch all methodinfos and constructorinfo on app start
+        // - replace foreach by for(doesnt create an object for each iteration
+        // - replace list by queue , figure out how to cast objects to stirng in that case first
         private T SetObjectValues<T>(List<string> tokens, Type type, Boolean isSecondLayerCriteriaList, int logicDepth = 0) where T : Object, new()
         {
             //iterate through tokens until we reach a start of an object, in the first case the mainstory
@@ -1370,9 +1355,6 @@ namespace Project
                     //create list, then go back to creating objects, then at end we stop and move on in the og object the list is part of
                     //get type of the list elements, name of them in lastToken
 
-                    //get type from method signature !!
-                    MethodInfo getList = new MethodInfo();
-                    MethodInfo setList = new MethodInfo();
 
                     foreach (MethodInfo methodInfo in methodInfos)
                     {
@@ -1392,6 +1374,7 @@ namespace Project
                     tokens.RemoveAt(0);
                     token = tokens[0];
 
+                    //get type from method signature
                     Type listType = getList.ReturnType;
                     Object list = Activator.CreateInstance(listType);
                     MethodInfo listAdd = listType.GetMethod("Add");
@@ -1426,7 +1409,6 @@ namespace Project
                         if (isSecondLayerCriteriaList.m_value && type == Il2CppType.Of<CriteriaList>())
                         {
                             secondLayerCriteriaList = false;
-                            //LogWithLogicDepth(System.ConsoleColor.White, $"is second list?: {secondLayerCriteriaList}", logicDepth);
                         }
 
                         LogWithLogicDepth(System.ConsoleColor.DarkCyan, $"adding object to list", logicDepth);
@@ -1505,9 +1487,10 @@ namespace Project
             }
         }
 
-        private static Il2CppReferenceArray<Object> CreateReferenceArray(Object tokenObject)
+        private static Il2CppReferenceArray<Object> CreateReferenceArray(Object @object)
         {
-            return new Il2CppReferenceArray<Object>(new Object[] { tokenObject });
+            objectReferenceArray[0] = @object;
+            return objectReferenceArray;
         }
 
         private List<string> SplitJson(string tempS)
@@ -1515,52 +1498,63 @@ namespace Project
             List<string> tokens = new List<string>();
 
             bool inValueString = false;
-            string builderString = "";
-            List<char> seperators = new List<char>();
-            foreach (char charry in "{}[],:")
-            {
-                seperators.Add(charry);
-            }
-            List<char> numbers = new List<char>();
-            foreach (char numbah in "0123456789.nullfasetr")
-            {
-                numbers.Add(numbah);
-            }
+            bool isEscaped = false;
+            char c;
+            //init stringbuilder with approximate buffer size for speed reasons (reduces resizing operations)
+            StringBuilder stringBuilder = new StringBuilder(tempS.Length);
 
-            foreach (char c in tempS)
+
+            for (int i = 0; i < tempS.Length; i++)
             {
-                //todo respect escaped chars lol
-                //entering string
-                if (!inValueString && c == '"')
+                c = tempS[i];
+                if (!isEscaped)
                 {
-                    inValueString = true;
-                }
-                else if (inValueString && c == '"')
-                {
-                    inValueString = false;
-                }
-                else if (inValueString)
-                {
-                    //add char to builder regardless of what it is
-                    builderString += c;
-                }
-                else if (seperators.Contains(c) && !inValueString)
-                {
-                    //if we hit a seperator, add nonempty strings and clear string builder
-                    if (builderString.Length > 0) tokens.Add(builderString);
-                    if (c == '[') tokens.Add(START_LIST);
-                    else if (c == ']') tokens.Add(END_LIST);
-                    else if (c == '{') tokens.Add(START_OBJECT);
-                    else if (c == '}') tokens.Add(END_OBJECT);
-                    builderString = "";
+                    //entering string
+                    if (!inValueString && c == '"')
+                    {
+                        inValueString = true;
+                    }
+                    else if (inValueString && c == '"')
+                    {
+                        inValueString = false;
+                    }
+                    else if (inValueString)
+                    {
+                        //add char to builder if it is not escaped
+                        if (c == '\\')
+                        {
+                            isEscaped = true;
+                            //dont copy escape character lol
+                        }
+                        else
+                        {
+                            stringBuilder.Append(c);
+                        }
+                    }
+                    else if (seperators.Contains(c) && !inValueString)
+                    {
+                        //if we hit a seperator, add nonempty strings and clear string builder
+                        if (stringBuilder.Length > 0) tokens.Add(stringBuilder.ToString());
+                        if (c == '[') tokens.Add(START_LIST);
+                        else if (c == ']') tokens.Add(END_LIST);
+                        else if (c == '{') tokens.Add(START_OBJECT);
+                        else if (c == '}') tokens.Add(END_OBJECT);
+                        stringBuilder.Clear();
+                    }
+                    else
+                    {
+                        if (numbers.Contains(c))
+                        {
+                            //add char, in names and stuff
+                            stringBuilder.Append(c);
+                        }
+                    }
                 }
                 else
                 {
-                    if (numbers.Contains(c))
-                    {
-                        //add char, in names and stuff
-                        builderString += c;
-                    }
+                    isEscaped = false;
+                    //is escaped
+                    stringBuilder.Append(c);
                 }
             }
 
@@ -1576,11 +1570,11 @@ namespace Project
                 switch (type.FullName)
                 {
                     case "System.Boolean":
-                        return new Boolean { m_value = bool.Parse(token) }.BoxIl2CppObject();
-                    //case "System.Double":
-                    //return new String { m_value = double.Parse(token, System.Globalization.NumberStyles.Float) }.BoxIl2CppObject();
+                        system_Boolean.m_value = bool.Parse(token);
+                        return system_Boolean.BoxIl2CppObject();
                     case "System.Int32":
-                        return new Int32 { m_value = int.Parse(token, System.Globalization.NumberStyles.Integer) }.BoxIl2CppObject();
+                        system_Int32.m_value = int.Parse(token, System.Globalization.NumberStyles.Integer);
+                        return system_Int32.BoxIl2CppObject();
                     case "System.String":
                         return token;
 

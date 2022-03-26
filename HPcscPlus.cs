@@ -233,7 +233,12 @@ namespace HPCSC
 
             MelonLogger.Msg(System.ConsoleColor.DarkMagenta, $"Current story file found at {tempF}, trying to parse...");
 
-            MainStoryObject = ParseJsonToStory(File.ReadAllText(tempF));
+            FileStream fileStream = File.Open(tempF, FileMode.Open);
+            StreamReader streamReader = new StreamReader(fileStream);
+            MainStoryObject = ParseJsonToStory(streamReader.ReadToEnd());
+
+            fileStream.Close();
+            streamReader.Close();
 
             if (MainStoryObject != null)
             {
@@ -365,7 +370,7 @@ namespace HPCSC
 
             List<string> tokens = Json.SplitJson(tempS);
 
-            MelonLogger.Msg(System.ConsoleColor.DarkMagenta, "file tokenized");
+            JsonsSupreme.LogWithLogicDepth(System.ConsoleColor.DarkMagenta, "file tokenized", -2);
             try
             {
 

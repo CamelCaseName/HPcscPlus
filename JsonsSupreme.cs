@@ -1,5 +1,6 @@
 ﻿using Il2CppSystem;
 using Il2CppSystem.Collections.Generic;
+using Il2CppSystem.Diagnostics;
 using Il2CppSystem.Reflection;
 using Il2CppSystem.Text;
 using MelonLoader;
@@ -11,11 +12,11 @@ namespace HPCSC
 {
     sealed class JsonsSupreme
     {
-        public static readonly string END_LIST = "END_LIST";
-        public static readonly string END_OBJECT = "END_OBJECT";
-        public static readonly string NULL = "NULL";
-        public static readonly string START_LIST = "START_LIST";
-        public static readonly string START_OBJECT = "START_OBJECT";
+        //public static readonly string END_LIST = "END_LIST";
+        //public static readonly string END_OBJECT = "END_OBJECT";
+        //public static readonly string NULL = "NULL";
+        //public static readonly string START_LIST = "START_LIST";
+        //public static readonly string START_OBJECT = "START_OBJECT";
         private static readonly Il2CppReferenceArray<Object> objectReferenceArray = new Il2CppReferenceArray<Object>(1);
         private static readonly string[] TypeNameList = {
             "Achievements",
@@ -63,7 +64,7 @@ namespace HPCSC
         private readonly List<ConstructorInfo> AfterStartConstructorList = new List<ConstructorInfo>();
         private readonly List<Type> AfterStartTypeList = new List<Type>();
         private readonly ConstructorInfo[] ConstructorList = new ConstructorInfo[TypeNameList.Length];
-        private readonly bool debug = true;
+        private static readonly bool debug = true;
         private readonly Il2CppReferenceArray<MethodInfo>[] MethodInfoList = new Il2CppReferenceArray<MethodInfo>[TypeNameList.Length];
         private readonly char[] numbers = new char[] { '0', '1', '2', '3', '4', '4', '5', '6', '7', '8', '9', '.', 'n', 'u', 'l', 'f', 'a', 's', 'r', 't', 'e' };
         private readonly char[] seperators = new char[] { '{', '}', '[', ']', ',', ':' };
@@ -75,6 +76,10 @@ namespace HPCSC
         private Int32 system_Int32 = new Int32();
         private Object tokenObject = new Object();
         private Type[] TypeList;
+
+        Stopwatch stopwatch = new Stopwatch();
+
+
         private static Il2CppReferenceArray<Object> CreateReferenceArray(Object @object)
         {
             objectReferenceArray[0] = @object;
@@ -161,29 +166,45 @@ namespace HPCSC
             }
         }
 
-        private Object CreateObject(Type type)
+        private Object CreateObjects(Type type)
         {
-            for (int i = 0; i < TypeList.Length; i++)
+            if (!type.IsConstructedGenericType)
             {
-                if (TypeList[i] == type)
+                for (int i = 0; i < TypeList.Length; i++)
                 {
-                    MelonLogger.Msg("type seen at compile time");
-                    return ConstructorList[i].Invoke(new Il2CppReferenceArray<Object>(ConstructorList[i].GetParametersCount()));
+                    if (TypeList[i] == type)
+                    {
+                        LogWithLogicDepth(System.ConsoleColor.DarkYellow, "type seen at compile time", -3);
+                        return ConstructorList[i].Invoke(new Il2CppReferenceArray<Object>(ConstructorList[i].GetParametersCount()));
+                    }
                 }
             }
             //not in save types, need to get it dynamic (check if we have it first)
             for (int i = 0; i < AfterStartTypeList.Count; i++)
             {
-                if (AfterStartTypeList[i] == type)
+                if (AfterStartTypeList[i].IsConstructedGenericType)
                 {
-                    MelonLogger.Msg("type seen before at runtime");
-                    return AfterStartConstructorList[i].Invoke(new Il2CppReferenceArray<Object>(ConstructorList[i].GetParametersCount()));
+                    LogWithLogicDepth(System.ConsoleColor.DarkYellow, "is generic constructed type", -3);
+                    if (AfterStartTypeList[i].GenericTypeArguments[0] == type.GenericTypeArguments[0])
+                    {
+                        LogWithLogicDepth(System.ConsoleColor.DarkYellow, "type seen before at runtime", -3);
+                        return AfterStartConstructorList[i].Invoke(new Il2CppReferenceArray<Object>(ConstructorList[i].GetParametersCount()));
+                    }
+                }
+                else
+                {
+                    LogWithLogicDepth(System.ConsoleColor.DarkYellow, "is not generic constructed type", -3);
+                    if (AfterStartTypeList[i].FullName == type.FullName)
+                    {
+                        LogWithLogicDepth(System.ConsoleColor.DarkYellow, "type seen before at runtime", -3);
+                        return AfterStartConstructorList[i].Invoke(new Il2CppReferenceArray<Object>(ConstructorList[i].GetParametersCount()));
+                    }
                 }
             }
             AfterStartTypeList.Add(type);
             AfterStartConstructorList.Add(type.GetConstructor(Type.EmptyTypes));
 
-            MelonLogger.Msg("type not seen before at runtime");
+            LogWithLogicDepth(System.ConsoleColor.DarkYellow, "type NOT seen before at runtime", -3);
             return AfterStartConstructorList[AfterStartConstructorList.Count - 1].Invoke(new Il2CppReferenceArray<Object>(AfterStartConstructorList[AfterStartConstructorList.Count - 1].GetParametersCount()));
         }
 
@@ -219,7 +240,7 @@ namespace HPCSC
             return false;
         }
 
-        public void LogWithLogicDepth(System.ConsoleColor color, string text, int logicDepth)
+        public static void LogWithLogicDepth(System.ConsoleColor color, string text, int logicDepth)
         {
             if (debug)
             {
@@ -236,26 +257,28 @@ namespace HPCSC
             }
         }
 
-        /*
-        private delegate Object ConstructorDelegate();
-
-        private ConstructorDelegate ObjectCreator(Type type, ConstructorInfo Ctor)
+        private Object CreateObject(Type type)
         {
-            string methodName = $"{type.Name}Ctor";
-            System.Reflection.Emit.DynamicMethod dynamicMethod = new System.Reflection.Emit.DynamicMethod(methodName, type.GetType(), new System.Type[0], typeof(System.Activator));
+            return Activator.CreateInstance(type);
+            
+            System.Func<Object> func;
+
+            System.Reflection.Emit.DynamicMethod dynamicMethod = new System.Reflection.Emit.DynamicMethod($"{type.Name}Ctor", type.GetType(), null, typeof(JsonsSupreme).Module);
             System.Reflection.Emit.ILGenerator ilgen = dynamicMethod.GetILGenerator();
-            System.Reflection.ConstructorInfo ctor = (System.Reflection.ConstructorInfo)Ctor;
+            System.Reflection.ConstructorInfo ctor = type.GetType().GetConstructor(System.Type.EmptyTypes);
             ilgen.Emit(System.Reflection.Emit.OpCodes.Newobj, ctor);
             ilgen.Emit(System.Reflection.Emit.OpCodes.Ret);
+            func = (System.Func<Object>)dynamicMethod.CreateDelegate(typeof(System.Func<Object>));
 
-            ConstructorDelegate creator = (ConstructorDelegate)dynamicMethod.CreateDelegate(DelegateSupport.)
+            return func.Invoke();
         }
-        */
+
+
 
         //todo speed increase:
         // - replace list by queue, figure out how to cast objects to string in that case first
         // - change order of building, create all params first, then create object with all parameters to not call all set mothods one by one
-        // - replace invoe by cached delegates
+        // - replace invoke by cached delegates
         public T SetObjectValues<T>(List<string> tokens, Type type, Boolean isSecondLayerCriteriaList, int logicDepth = 0) where T : Object, new()
         {
             //iterate through tokens until we reach a start of an object, in the first case the mainstory
@@ -264,7 +287,7 @@ namespace HPCSC
             {
                 //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN0: {tokens[0]}");
                 //go to first start or remove token
-                if (tokens[0] == START_OBJECT)
+                if (tokens[0] == "START_OBJECT")
                 {
                     startNotFound = false;
                     tokens.RemoveAt(0);
@@ -291,7 +314,7 @@ namespace HPCSC
                 LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN1: {token}", logicDepth);
 
                 //list starts
-                if (token == START_LIST)
+                if (token == "START_LIST")
                 {
                     //create list, then go back to creating objects, then at end we stop and move on in the og object the list is part of
                     //get type of the list elements, name of them in lastToken
@@ -321,7 +344,7 @@ namespace HPCSC
                     LogWithLogicDepth(System.ConsoleColor.White, "created list", ++logicDepth);
 
                     //as long as we did not reach the end of the list, end it
-                    while (tokens[0] != END_LIST)
+                    while (tokens[0] != "END_LIST")
                     {
                         LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN2: {token}", logicDepth);
                         Object objectToAdd;
@@ -333,7 +356,7 @@ namespace HPCSC
                             //LogWithLogicDepth(System.ConsoleColor.White, $"is second list?: {isSecondLayerCriteriaList.m_value}", ++logicDepth);
                         }
 
-                        if (token == START_OBJECT)
+                        if (token == "START_OBJECT")
                         {
                             //add object
                             objectToAdd = SetObjectValues<Object>(tokens, FindTypeName(lastToken), isSecondLayerCriteriaList, logicDepth + 1);
@@ -360,7 +383,7 @@ namespace HPCSC
                     LogWithLogicDepth(System.ConsoleColor.White, "adding list", --logicDepth);
                     setList.Invoke(retObject, CreateReferenceArray(list));
                 }
-                else if (token == END_OBJECT)
+                else if (token == "END_OBJECT")
                 {
                     tokens.RemoveAt(0);
 
@@ -384,21 +407,29 @@ namespace HPCSC
                             //get method parameter type so we can cast the string to the correct object
                             pType = methodInfo.GetParameterTypes()[0];
 
-                            if (tokens[1] != START_LIST && tokens[1] != START_OBJECT)
+                            if (token != "START_LIST")
                             {
+                                if (tokens[1] != "START_LIST" && tokens[1] != "START_OBJECT")
+                                {
 
-                                //try parsing if necessary, defaults to new constructor like values
-                                tokenObject = TryParseAll(pType, token);
+                                    //try parsing if necessary, defaults to new constructor like values
+                                    tokenObject = TryParseAll(pType, token);
 
-                                methodInfo.Invoke(retObject, CreateReferenceArray(tokenObject));
+                                    methodInfo.Invoke(retObject, CreateReferenceArray(tokenObject));
+                                }
+                                else if (tokens[1] == "START_OBJECT")
+                                {
+
+                                    //try parsing if necessary, defaults to new constructor like values
+                                    tokenObject = SetObjectValues<Object>(tokens, pType, isSecondLayerCriteriaList, logicDepth + 1);
+
+                                    remove = false;
+                                }
                             }
-                            else if (tokens[1] == START_OBJECT)
+                            else
                             {
-
-                                //try parsing if necessary, defaults to new constructor like values
-                                tokenObject = SetObjectValues<Object>(tokens, pType, isSecondLayerCriteriaList, logicDepth + 1);
-
                                 remove = false;
+                                break;
                             }
 
                             LogWithLogicDepth(System.ConsoleColor.Green, $"Invoke successful! ({methodInfo.Name} with {token} as the parameter)", logicDepth);
@@ -408,6 +439,7 @@ namespace HPCSC
                         }
                     }
                 }
+
                 if (remove)
                 {
                     lastToken = token;
@@ -426,47 +458,51 @@ namespace HPCSC
             //init stringbuilder with approximate buffer size for speed reasons (reduces resizing operations)
             StringBuilder stringBuilder = new StringBuilder(tempS.Length);
 
-
             for (int i = 0; i < tempS.Length; i++)
             {
-                c = tempS[i];
                 if (!isEscaped)
                 {
+                    c = tempS[i];
+
                     //entering string
-                    if (!inValueString && c == '"')
-                    {
-                        inValueString = true;
-                    }
-                    else if (inValueString && c == '"')
-                    {
-                        inValueString = false;
-                    }
-                    else if (inValueString)
+                    if (inValueString)
                     {
                         //add char to builder if it is not escaped
-                        if (c == '\\')
-                        {
-                            isEscaped = true;
-                            //dont copy escape character lol
-                        }
-                        else
+                        if (c != '\\' && c != '"')
                         {
                             stringBuilder.Append(c);
                         }
-                    }
-                    else if (IsInArray(seperators, c) && !inValueString)
-                    {
-                        //if we hit a seperator, add nonempty strings and clear string builder
-                        if (stringBuilder.Length > 0) tokens.Add(stringBuilder.ToString());
-                        if (c == '[') tokens.Add(START_LIST);
-                        else if (c == ']') tokens.Add(END_LIST);
-                        else if (c == '{') tokens.Add(START_OBJECT);
-                        else if (c == '}') tokens.Add(END_OBJECT);
-                        stringBuilder.Clear();
+                        else
+                        {
+                            if (c == '\\')
+                            {
+                                isEscaped = true;
+                                stringBuilder.Append('\\');
+                            }
+                            else
+                            {
+                                inValueString = false;
+                            }
+                        }
                     }
                     else
                     {
-                        if (IsInArray(numbers, c))
+                        if (c == '"')
+                        {
+                            inValueString = true;
+                        }
+                        else if (IsInArray(seperators, c))
+                        {
+                            //if we hit a seperator, add nonempty strings and clear string builder
+                            if (stringBuilder.Length > 0) tokens.Add(stringBuilder.ToString());
+                            stringBuilder.Clear();
+
+                            if (c == '[') tokens.Add("START_LIST");
+                            else if (c == ']') tokens.Add("END_LIST");
+                            else if (c == '{') tokens.Add("START_OBJECT");
+                            else if (c == '}') tokens.Add("END_OBJECT");
+                        }
+                        else if (IsInArray(numbers, c))
                         {
                             //add char, in names and stuff
                             stringBuilder.Append(c);
@@ -476,8 +512,8 @@ namespace HPCSC
                 else
                 {
                     isEscaped = false;
-                    //is escaped
-                    stringBuilder.Append(c);
+                    //is escaped so add regardless
+                    stringBuilder.Append(tempS[i]);
                 }
             }
 

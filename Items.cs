@@ -1572,8 +1572,6 @@ namespace HPCSC
         //protected new string ToString => "this worked! :)";
     }
 
-    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
-
     public class AlternateText : Object
     {
         private List<Object> instance = new List<Object>();

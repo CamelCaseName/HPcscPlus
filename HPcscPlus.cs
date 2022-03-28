@@ -368,13 +368,11 @@ namespace HPCSC
         {
             MelonLogger.Msg("creating character story object");
 
-            List<string> tokens = Json.SplitJson(tempS);
-
             JsonsSupreme.LogWithLogicDepth(System.ConsoleColor.DarkMagenta, "file tokenized", -2);
             try
             {
 
-                CharacterStory charStory = Json.SetObjectValues<CharacterStory>(tokens, Il2CppType.Of<CharacterStory>(), new Boolean() { m_value = false });
+                CharacterStory charStory = Json.SetObjectValues<CharacterStory>(Json.SplitJson(tempS), Il2CppType.Of<CharacterStory>(), new Boolean() { m_value = false });
 
                 MelonLogger.Msg("returning object");
 
@@ -392,10 +390,9 @@ namespace HPCSC
 
             MelonLogger.Msg("creating story object");
 
-            List<string> tokens = Json.SplitJson(tempS);
             try
             {
-                MainStory mainStory = Json.SetObjectValues<MainStory>(tokens, Il2CppType.Of<MainStory>(), new Boolean() { m_value = false });
+                MainStory mainStory = Json.SetObjectValues<MainStory>(Json.SplitJson(tempS), Il2CppType.Of<MainStory>(), new Boolean() { m_value = false });
 
                 MelonLogger.Msg("returning object");
                 return mainStory;

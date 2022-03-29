@@ -1,17 +1,18 @@
-﻿using Il2CppSystem;
+﻿//#define verbose
+
+using Il2CppSystem;
 using Il2CppSystem.Collections.Generic;
-using Il2CppSystem.Diagnostics;
 using Il2CppSystem.Reflection;
-using Il2CppSystem.Runtime.InteropServices;
 using Il2CppSystem.Text;
 using MelonLoader;
+using System.Runtime.CompilerServices;
 using UnhollowerBaseLib;
 using UnhollowerRuntimeLib;
 using Object = Il2CppSystem.Object;
-using IntPtr = System.IntPtr;
 
 namespace HPCSC
 {
+
     sealed class JsonsSupreme
     {
         private static readonly Il2CppReferenceArray<Object> objectReferenceArray = new Il2CppReferenceArray<Object>(1);
@@ -58,19 +59,16 @@ namespace HPCSC
             "CharacterStory",
             "Object"
         };
+        private Type stringListType;
 
+        private static bool secondLayerCriteriaList = false;
         private readonly ConstructorInfo[] ConstructorList = new ConstructorInfo[TypeNameList.Length];
-        private static readonly bool debug = true;
         private readonly Il2CppReferenceArray<MethodInfo>[] MethodInfoList = new Il2CppReferenceArray<MethodInfo>[TypeNameList.Length];
-        private readonly char[] numbers = new char[] { '0', '1', '2', '3', '4', '4', '5', '6', '7', '8', '9', '.', 'n', 'u', 'l', 'f', 'a', 's', 'r', 't', 'e' };
-        private readonly char[] seperators = new char[] { '{', '}', '[', ']', ',', ':' };
-        private MethodInfo getList = new MethodInfo();
+        private readonly static char[] numbers = new char[] { '0', '1', '2', '3', '4', '4', '5', '6', '7', '8', '9', '.', 'n', 'u', 'l', 'f', 'a', 's', 'r', 't', 'e' };
+        private readonly static char[] seperators = new char[] { '{', '}', '[', ']', ',', ':' };
+        private static Boolean system_Boolean = new Boolean();
+        private static Int32 system_Int32 = new Int32();
         private Type pType;
-        private bool secondLayerCriteriaList = false;
-        private MethodInfo setList = new MethodInfo();
-        private Boolean system_Boolean = new Boolean();
-        private Int32 system_Int32 = new Int32();
-        private Object tokenObject = new Object();
         private Type[] TypeList;
 
         private static Il2CppReferenceArray<Object> CreateReferenceArray(Object @object)
@@ -158,21 +156,27 @@ namespace HPCSC
                 ConstructorList[i] = TypeList[i].GetConstructor(Type.EmptyTypes);
                 MethodInfoList[i] = TypeList[i].GetMethods();
             }
+
+            stringListType = Il2CppType.Of<List<string>>();
         }
 
         private Type FindTypeName(string typeToSearch)
         {
-            LogWithLogicDepth(System.ConsoleColor.Gray, typeToSearch, -1);
+            //LogWithLogicDepth(System.ConsoleColor.Gray, typeToSearch, -1);
             if (secondLayerCriteriaList)
             {
                 typeToSearch += "2";
+            }
+            else if (typeToSearch == "CriteriaList" && !secondLayerCriteriaList)
+            {
+                secondLayerCriteriaList = true;
             }
 
             for (int i = 0; i < TypeNameList.Length; i++)
             {
                 if (TypeNameList[i] == typeToSearch)
                 {
-                    LogWithLogicDepth(System.ConsoleColor.Gray, TypeList[i].Name, -1);
+                    //LogWithLogicDepth(System.ConsoleColor.Gray, TypeList[i].Name, -1);
                     return TypeList[i];
                 }
             }
@@ -180,7 +184,7 @@ namespace HPCSC
             return Il2CppType.Of<Object>();
         }
 
-        private bool IsInArray(char[] arr, char c)
+        private static bool IsInArray(char[] arr, char c)
         {
             for (int i = 0; i < arr.Length; i++)
             {
@@ -192,21 +196,59 @@ namespace HPCSC
             return false;
         }
 
-        public static void LogWithLogicDepth(System.ConsoleColor color, string text, int logicDepth)
+        public static void LogWithLogicDepth(System.ConsoleColor color, string text, int logicDepth,
+    [CallerLineNumber] int lineNumber = 0,
+    [CallerMemberName] string caller = null)
         {
-            if (debug)
+            MelonLogger.Msg(color, $"|>{logicDepth} - {caller}@{lineNumber}| {text}");
+        }
+
+        private Il2CppReferenceArray<MethodInfo> GetMethodInfos(Type type)
+        {
+            for (int i = 0; i < MethodInfoList.Length; i++)
             {
-                string builder = "#";
-                /*
-                for (int c = 0; c < logicDepth; c++)
+                if (TypeList[i] == type)
                 {
-                    //indent for each call
-                    builder += "    ";
-                }*/
-                builder += $"{logicDepth} ";
-                builder += text;
-                MelonLogger.Msg(color, builder);
+                    return MethodInfoList[i];
+                }
             }
+            return type.GetMethods();
+        }
+
+        private MethodInfo GetSetMethodInfo(Type type, string token)
+        {
+            return GetSetMethodInfo(GetMethodInfos(type), token);
+        }
+
+        private MethodInfo GetSetMethodInfo(Il2CppReferenceArray<MethodInfo> methodInfos, string token)
+        {
+            for (int i = 0; i < methodInfos.Count; i++)
+            {
+                MethodInfo methodInfo = methodInfos[i];
+                if (methodInfo.Name.ToLower() == $"Set{token}".ToLower())
+                {
+                    return methodInfo;
+                }
+            }
+            throw new System.NotSupportedException($"Set{token} can not be found, check token order");
+        }
+
+        private MethodInfo GetGetMethodInfo(Type type, string token)
+        {
+            return GetGetMethodInfo(GetMethodInfos(type), token);
+        }
+
+        private MethodInfo GetGetMethodInfo(Il2CppReferenceArray<MethodInfo> methodInfos, string token)
+        {
+            for (int i = 0; i < methodInfos.Count; i++)
+            {
+                MethodInfo methodInfo = methodInfos[i];
+                if (methodInfo.Name.ToLower() == $"Get{token}".ToLower())
+                {
+                    return methodInfo;
+                }
+            }
+            throw new System.NotSupportedException($"Get{token} can not be found, check token order");
         }
 
         private Object CreateObject(Type type)
@@ -261,176 +303,142 @@ namespace HPCSC
             else if (type == Il2CppType.Of<List<StoryItem>>()) { return new List<StoryItem>(); }
             else if (type == Il2CppType.Of<List<CharacterItemGroupInteraction>>()) { return new List<CharacterItemGroupInteraction>(); }
             else if (type == TypeList[39]) { return new CharacterStory(); }
+            else if (type == Il2CppType.Of<string>()) { return ""; }
             else { MelonLogger.Msg($"Type '{type.Name}' not yet added to elseif"); return new Object(); }
         }
 
         //todo speed increase:
-        // - replace list by queue, figure out how to cast objects to string in that case first
         // - change order of building, create all params first, then create object with all parameters to not call all set mothods one by one
-        public T SetObjectValues<T>(Queue<string> tokens, Type type, Boolean isSecondLayerCriteriaList, int logicDepth = 0) where T : Object, new()
+        // - worst case: hard type all
+        public T SetObjectValues<T>(Queue<string> tokens, Type type, int logicDepth = 0) where T : Object, new()
         {
-            string lastToken = "";
-            bool remove;
-            string token = "";
-
-            //iterate through tokens until we reach a start of an object, in the first case the mainstory
-            while (token != "START_OBJECT")
-            {
-                //go to first start or remove token
-                token = tokens.Dequeue();
-                LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN0: {token}", logicDepth);
-            }
-
-            Object retObject = CreateObject(type);
+            MethodInfo setList, currentMethod, listAdd;
+            string lastToken = "", token;
+            //create return object
+            Object returnObject = CreateObject(type);
+#if verbose
             LogWithLogicDepth(System.ConsoleColor.DarkGray, $"Created object of type {type.Name}", logicDepth);
-
-            //if we can create a new T, get all methods, then calling all set methods using reflection, filling them up with the objects we need
-            Il2CppReferenceArray<MethodInfo> methodInfos = type.GetMethods();
-
-            //go through tokens to call the method we need, weith the token after as argument.
+#endif
+            //get first token
+            token = tokens.Dequeue();
+#if verbose
+            LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN0: {token}", logicDepth);
+#endif
+            //go through tokens to call the method we need, with the token after as argument.
             while (true)
             {
-                remove = true;
-                token = tokens.Dequeue();
-                LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN1: {token}", logicDepth);
-
-                //list starts
-                if (token == "START_LIST")
-                {
-                    //create list, then go back to creating objects, then at end we stop and move on in the og object the list is part of
-                    //get type of the list elements, name of them in lastToken
-
-                    for (int i = 0; i < methodInfos.Count; i++)
-                    {
-                        if (methodInfos[i].Name == $"Get{lastToken}")
-                        {
-                            LogWithLogicDepth(System.ConsoleColor.White, $"got Get{lastToken}", logicDepth);
-                            getList = methodInfos[i];
-                        }
-                        else if (methodInfos[i].Name == $"Set{lastToken}")
-                        {
-                            LogWithLogicDepth(System.ConsoleColor.White, $"got Set{lastToken}", logicDepth);
-                            setList = methodInfos[i];
-                        }
-                    }
-
-                    //get new tokens
+                //new object begins, we can call on methods on this
+                if (token == "START_OBJECT")
+                {//we need to get rid of the first beginning token
                     token = tokens.Dequeue();
-
-                    //get type from method signature
-                    Type listType = getList.ReturnType;
-                    Object list = CreateObject(listType);
-                    MethodInfo listAdd = listType.GetMethod("Add");
-                    LogWithLogicDepth(System.ConsoleColor.White, "created list", ++logicDepth);
-
-                    //as long as we did not reach the end of the list, end it
-                    while (token != "END_LIST")
+#if verbose
+                    LogWithLogicDepth(System.ConsoleColor.DarkGray, $"NAME1: {token}", logicDepth);
+#endif
+                }
+                else if (token == "START_LIST")
+                {//list as a value
+                    //get rid of the next start obejcts token
+                    if (tokens.Dequeue() == "END_LIST")
                     {
+                        //break out, list is empty anyways
+                        token = tokens.Dequeue();
+                        goto endMyself;
+                    }
+#if verbose
+                    LogWithLogicDepth(System.ConsoleColor.DarkGray, "List started", logicDepth);
+#endif
+                    setList = GetSetMethodInfo(type, lastToken);
+                    pType = setList.GetParameterTypes()[0];
 
-                        LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN2: {token}", logicDepth);
-                        Object objectToAdd;
+                    Object list = CreateObject(pType);
+                    listAdd = pType.GetMethod("Add");
 
-                        if (!isSecondLayerCriteriaList.m_value && type == Il2CppType.Of<CriteriaList>())
-                        {
-                            isSecondLayerCriteriaList.m_value = true;
-                            secondLayerCriteriaList = true;
-                        }
 
-                        if (token == "START_OBJECT")
+                    if (pType == stringListType)
+                    {//list of strings
+                        while (token != "END_LIST")
                         {
-                            //add object
-                            objectToAdd = SetObjectValues<Object>(tokens, FindTypeName(lastToken), isSecondLayerCriteriaList, logicDepth + 1);
-                        }
-                        else
-                        {
-                            //add string
-                            objectToAdd = token;
+                            listAdd.Invoke(list, CreateReferenceArray(token));
                             token = tokens.Dequeue();
                         }
-
-                        if (isSecondLayerCriteriaList.m_value && type == Il2CppType.Of<CriteriaList>())
-                        {
-                            secondLayerCriteriaList = false;
+                    }
+                    else
+                    {
+                        while (token != "END_LIST")
+                        {//list of objects
+                            listAdd.Invoke(list, CreateReferenceArray(SetObjectValues<Object>(tokens, FindTypeName(lastToken), logicDepth + 1)));
+                            //either start_object or end_list
+                            token = tokens.Dequeue();
+#if verbose
+                            LogWithLogicDepth(System.ConsoleColor.DarkGray, $"NAME2: {token}", logicDepth);
+#endif
                         }
-
-                        LogWithLogicDepth(System.ConsoleColor.DarkCyan, $"adding object to list", logicDepth);
-                        listAdd.Invoke(list, CreateReferenceArray(objectToAdd));
-                        isSecondLayerCriteriaList.m_value = false;
                     }
 
-                    //add list
-                    LogWithLogicDepth(System.ConsoleColor.White, "adding list", --logicDepth);
-                    setList.Invoke(retObject, CreateReferenceArray(list));
+#if verbose
+                    LogWithLogicDepth(System.ConsoleColor.DarkGray, "adding list", logicDepth);
+#endif
+                    setList.Invoke(returnObject, CreateReferenceArray(list));
+
+                    token = tokens.Dequeue();
+#if verbose
+                    LogWithLogicDepth(System.ConsoleColor.DarkGray, $"NAME3: {token}", logicDepth);
+#endif
                 }
                 else if (token == "END_OBJECT")
-                {
-                    tokens.Dequeue();
-
-                    LogWithLogicDepth(System.ConsoleColor.DarkGray, "End of object", logicDepth);
-
-                    return retObject.Cast<T>();
-                }
-                //else field starts
-                else
-                {
-                    for (int i = 0; i < methodInfos.Count; i++)
+                {//return
+                    if (type == TypeList[8] && secondLayerCriteriaList)
                     {
-                        MethodInfo methodInfo = methodInfos[i];
-                        if (methodInfo.Name == $"Set{token}")
-                        {
-                            lastToken = token;
-                            token = tokens.Dequeue();
-                            LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN3: {token}", logicDepth);
-
-                            //get method parameter type so we can cast the string to the correct object
-                            pType = methodInfo.GetParameterTypes()[0];
-
-                            if (token != "START_LIST")
-                            {
-                                string lastTempToken = tokens.ToArray()[0];
-                                if (lastTempToken != "START_LIST" && lastTempToken != "START_OBJECT")
-                                {
-                                    //try parsing if necessary, defaults to new constructor like values
-                                    LogWithLogicDepth(System.ConsoleColor.DarkGray, $"Token is of a simple type: {token}", logicDepth);
-                                    tokenObject = TryParseAll(pType, token);
-                                }
-                                else if (lastTempToken == "START_OBJECT")
-                                {
-                                    //try parsing if necessary, defaults to new constructor like values
-                                    LogWithLogicDepth(System.ConsoleColor.DarkGray, $"token is of an object type: {token}", logicDepth);
-                                    tokenObject = SetObjectValues<Object>(tokens, pType, isSecondLayerCriteriaList, logicDepth + 1);
-
-                                    remove = false;
-                                }
-                            }
-                            else
-                            {
-                                MelonLogger.Msg("..list starting..");
-                                remove = false;
-                                break;
-                            }
-
-                            LogWithLogicDepth(System.ConsoleColor.Green, $"Invoke successful! ({methodInfo.Name} with {token} as the parameter)", logicDepth);
-                            methodInfo.Invoke(retObject, CreateReferenceArray(tokenObject));
-
-                            break;
-                        }
+                        secondLayerCriteriaList = false;
                     }
+                    return returnObject.Cast<T>();
                 }
-
-                if (remove)
-                {
+                else
+                {//either key or value, should only be a key
+                    currentMethod = GetSetMethodInfo(type, token);
+                    //get value
                     lastToken = token;
+                    token = tokens.Dequeue();
+#if verbose
+                    LogWithLogicDepth(System.ConsoleColor.DarkGray, $"VALUE1: {token}", logicDepth);
+#endif
+                    //get type
+                    pType = currentMethod.GetParameterTypes()[0];
+
+                    if (token == "START_LIST")
+                    {
+                        //do nothing
+                        goto endMyself;
+                    }
+                    else if (token == "START_OBJECT")
+                    {
+                        //complex type, go in recusrive and set all values, then add here
+                        //invoke method and add object
+                        currentMethod.Invoke(returnObject, CreateReferenceArray(SetObjectValues<Object>(tokens, pType, logicDepth + 1)));
+                    }
+                    else
+                    {
+                        //simple type, can "parse"
+                        //invoke method and add object
+                        currentMethod.Invoke(returnObject, CreateReferenceArray(TryParseAll(pType, token)));
+                    }
+
+                    //set new token for new loop iteration
+                    token = tokens.Dequeue();
+#if verbose
+                    LogWithLogicDepth(System.ConsoleColor.DarkGray, $"NAME4: {token}", logicDepth);
+#endif
                 }
+            endMyself:;
             }
         }
 
-        public Queue<string> SplitJson(string tempS)
+        public static Queue<string> SplitJson(string tempS)
         {
             Queue<string> tokens = new Queue<string>(300000);
-
             bool inValueString = false;
             bool isEscaped = false;
+            bool emptyValue = false;
             char c;
             //init stringbuilder with approximate buffer size for speed reasons (reduces resizing operations)
             StringBuilder stringBuilder = new StringBuilder(tempS.Length);
@@ -458,6 +466,10 @@ namespace HPCSC
                             }
                             else
                             {
+                                if (stringBuilder.Length == 0)
+                                {
+                                    emptyValue = true;
+                                }
                                 inValueString = false;
                             }
                         }
@@ -471,8 +483,12 @@ namespace HPCSC
                         else if (IsInArray(seperators, c))
                         {
                             //if we hit a seperator, add nonempty strings and clear string builder
-                            if (stringBuilder.Length > 0) tokens.Enqueue(stringBuilder.ToString());
-                            stringBuilder.Clear();
+                            if (stringBuilder.Length > 0 || emptyValue)
+                            {
+                                emptyValue = false;
+                                tokens.Enqueue(stringBuilder.ToString());
+                                stringBuilder.Clear();
+                            }
 
                             if (c == '[') tokens.Enqueue("START_LIST");
                             else if (c == ']') tokens.Enqueue("END_LIST");
@@ -497,7 +513,7 @@ namespace HPCSC
             return tokens;
         }
 
-        private Object TryParseAll(Type type, string token)
+        private static Object TryParseAll(Type type, string token)
         {
             try
             {

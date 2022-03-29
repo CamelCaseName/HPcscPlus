@@ -149,7 +149,6 @@ namespace HPCSC
                 }
             }
         }
-        //methods
 
         public int DisplayNumberBlock(int number, int min = 0, int max = int.MaxValue, string text = "", string plusButton = "+", string minusButton = "-", bool showNumber = true)
         {
@@ -235,6 +234,7 @@ namespace HPCSC
 
             FileStream fileStream = File.Open(tempF, FileMode.Open);
             StreamReader streamReader = new StreamReader(fileStream);
+            MelonLogger.Msg("Creating Main Story object now...");
             MainStoryObject = ParseJsonToStory(streamReader.ReadToEnd());
 
             fileStream.Close();
@@ -255,9 +255,9 @@ namespace HPCSC
 
             foreach (var file in Directory.GetFiles(CurrentStoryFolder))
             {
-                MelonLogger.Msg(System.ConsoleColor.DarkGray, $"Found {Path.GetFileName(file).Split('.')[0]}");
                 if (Path.GetFileName(file).Split('.')[1] == "character")
                 {
+                    MelonLogger.Msg(System.ConsoleColor.DarkGray, $"Found {Path.GetFileName(file).Split('.')[0]}");
                     //use custom json/story parser
                     CharacterStory tempStory = ParseJsonToCharacterStory(File.ReadAllText(file));
                     if (tempStory != null)
@@ -366,15 +366,9 @@ namespace HPCSC
 
         public CharacterStory ParseJsonToCharacterStory(string tempS)
         {
-            MelonLogger.Msg("creating character story object");
-
-            JsonsSupreme.LogWithLogicDepth(System.ConsoleColor.DarkMagenta, "file tokenized", -2);
             try
             {
-
-                CharacterStory charStory = Json.SetObjectValues<CharacterStory>(Json.SplitJson(tempS), Il2CppType.Of<CharacterStory>(), new Boolean() { m_value = false });
-
-                MelonLogger.Msg("returning object");
+                CharacterStory charStory = Json.SetObjectValues<CharacterStory>(JsonsSupreme.SplitJson(tempS), Il2CppType.Of<CharacterStory>());
 
                 return charStory;
             }
@@ -387,14 +381,9 @@ namespace HPCSC
 
         public MainStory ParseJsonToStory(string tempS)
         {
-
-            MelonLogger.Msg("creating story object");
-
             try
             {
-                MainStory mainStory = Json.SetObjectValues<MainStory>(Json.SplitJson(tempS), Il2CppType.Of<MainStory>(), new Boolean() { m_value = false });
-
-                MelonLogger.Msg("returning object");
+                MainStory mainStory = Json.SetObjectValues<MainStory>(JsonsSupreme.SplitJson(tempS), Il2CppType.Of<MainStory>());
                 return mainStory;
             }
             catch (System.Exception e)

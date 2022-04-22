@@ -15,63 +15,18 @@ namespace HPCSC
 
     sealed class JsonsSupreme
     {
-        private static readonly Il2CppReferenceArray<Object> objectReferenceArray = new Il2CppReferenceArray<Object>(1);
-        private static readonly string[] TypeNameList = {
-            "Achievements",
-            "AlternateTexts",
-            "BackgroundChatter",
-            "CloseEvents",
-            "Critera",
-            "Criteras",
-            "Criteria",
-            "CriteriaGroups",
-            "CriteriaList",
-            "CriteriaList2",
-            "Criterion",
-            "Dialogues",
-            "Events",
-            "ExtendedDetails",
-            "GameStartEvents",
-            "GlobalGoodbyeResponses",
-            "GlobalResponses",
-            "ItemActions",
-            "ItemGroupBehaviors",
-            "ItemGroups",
-            "ItemOverrides",
-            "OnAcceptEvents",
-            "OnRefuseEvents",
-            "OnSuccessEvents",
-            "OnTakeActionEvents",
-            "Personality",
-            "PlayerReactions",
-            "Quests",
-            "Reactions",
-            "ResponseCriteria",
-            "ResponseEvents",
-            "Responses",
-            "StartEvents",
-            "StoryItems",
-            "UseWiths",
-            "Values",
-            "CharacterItemGroupInteractions",
-            "ItemGroupBehaviors",
-            "MainStory",
-            "CharacterStory",
-            "Object"
-        };
+        private readonly Il2CppReferenceArray<Object> objectReferenceArray = new Il2CppReferenceArray<Object>(1);
         private Type stringListType;
 
-        private static bool secondLayerCriteriaList = false;
-        private readonly ConstructorInfo[] ConstructorList = new ConstructorInfo[TypeNameList.Length];
-        private readonly Il2CppReferenceArray<MethodInfo>[] MethodInfoList = new Il2CppReferenceArray<MethodInfo>[TypeNameList.Length];
+        private bool secondLayerCriteriaList = false;
+        private readonly Il2CppReferenceArray<MethodInfo>[] MethodInfoList = new Il2CppReferenceArray<MethodInfo>[45];
         private readonly static char[] numbers = new char[] { '0', '1', '2', '3', '4', '4', '5', '6', '7', '8', '9', '.', 'n', 'u', 'l', 'f', 'a', 's', 'r', 't', 'e' };
         private readonly static char[] seperators = new char[] { '{', '}', '[', ']', ',', ':' };
         private static Boolean system_Boolean = new Boolean();
         private static Int32 system_Int32 = new Int32();
-        private Type pType;
         private Type[] TypeList;
 
-        private static Il2CppReferenceArray<Object> CreateReferenceArray(Object @object)
+        private Il2CppReferenceArray<Object> MakeReferenceArray(Object @object)
         {
             objectReferenceArray[0] = @object;
             return objectReferenceArray;
@@ -97,6 +52,7 @@ namespace HPCSC
             ClassInjector.RegisterTypeInIl2Cpp<Dialogue>();
             ClassInjector.RegisterTypeInIl2Cpp<GlobalGoodbyeResponse>();
             ClassInjector.RegisterTypeInIl2Cpp<GlobalResponse>();
+            ClassInjector.RegisterTypeInIl2Cpp<CharacterItemGroupInteraction>();
             ClassInjector.RegisterTypeInIl2Cpp<BackgroundChatter>();
             ClassInjector.RegisterTypeInIl2Cpp<Valuee>();
             ClassInjector.RegisterTypeInIl2Cpp<Personality>();
@@ -104,7 +60,6 @@ namespace HPCSC
             ClassInjector.RegisterTypeInIl2Cpp<Quest>();
             ClassInjector.RegisterTypeInIl2Cpp<Reaction>();
             ClassInjector.RegisterTypeInIl2Cpp<StoryItem>();
-            ClassInjector.RegisterTypeInIl2Cpp<CharacterItemGroupInteraction>();
             ClassInjector.RegisterTypeInIl2Cpp<CharacterStory>();
 
             TypeList = new Type[] {
@@ -151,37 +106,12 @@ namespace HPCSC
                 Il2CppType.Of<Object>()//40
             };
 
-            for (int i = 0; i < ConstructorList.Length; i++)
+            for (int i = 0; i < TypeList.Length; i++)
             {
-                ConstructorList[i] = TypeList[i].GetConstructor(Type.EmptyTypes);
                 MethodInfoList[i] = TypeList[i].GetMethods();
             }
 
             stringListType = Il2CppType.Of<List<string>>();
-        }
-
-        private Type FindTypeName(string typeToSearch)
-        {
-            //LogWithLogicDepth(System.ConsoleColor.Gray, typeToSearch, -1);
-            if (secondLayerCriteriaList)
-            {
-                typeToSearch += "2";
-            }
-            else if (typeToSearch == "CriteriaList" && !secondLayerCriteriaList)
-            {
-                secondLayerCriteriaList = true;
-            }
-
-            for (int i = 0; i < TypeNameList.Length; i++)
-            {
-                if (TypeNameList[i] == typeToSearch)
-                {
-                    //LogWithLogicDepth(System.ConsoleColor.Gray, TypeList[i].Name, -1);
-                    return TypeList[i];
-                }
-            }
-
-            return Il2CppType.Of<Object>();
         }
 
         private static bool IsInArray(char[] arr, char c)
@@ -253,6 +183,7 @@ namespace HPCSC
 
         private Object CreateObject(Type type)
         {
+            //MelonLogger.Msg(type.Name); seems right for 
             if (type == TypeList[3]) { return new Event(); }
             else if (type == Il2CppType.Of<List<Event>>()) { return new List<Event>(); }
             else if (type == TypeList[4]) { return new Criterion(); }
@@ -310,20 +241,17 @@ namespace HPCSC
         //todo speed increase:
         // - change order of building, create all params first, then create object with all parameters to not call all set mothods one by one
         // - worst case: hard type all
+        // - per wurzel: remove the need for the queue by using a streamreader directly in the same place as creating the objects (would get rid of the part where i have to parse the tokens)
+
         public T SetObjectValues<T>(Queue<string> tokens, Type type, int logicDepth = 0) where T : Object, new()
         {
             MethodInfo setList, currentMethod, listAdd;
             string lastToken = "", token;
+            Type pType;
             //create return object
             Object returnObject = CreateObject(type);
-#if verbose
-            LogWithLogicDepth(System.ConsoleColor.DarkGray, $"Created object of type {type.Name}", logicDepth);
-#endif
             //get first token
             token = tokens.Dequeue();
-#if verbose
-            LogWithLogicDepth(System.ConsoleColor.DarkGray, $"TOKEN0: {token}", logicDepth);
-#endif
             //go through tokens to call the method we need, with the token after as argument.
             while (true)
             {
@@ -331,9 +259,6 @@ namespace HPCSC
                 if (token == "START_OBJECT")
                 {//we need to get rid of the first beginning token
                     token = tokens.Dequeue();
-#if verbose
-                    LogWithLogicDepth(System.ConsoleColor.DarkGray, $"NAME1: {token}", logicDepth);
-#endif
                 }
                 else if (token == "START_LIST")
                 {//list as a value
@@ -342,48 +267,39 @@ namespace HPCSC
                     {
                         //break out, list is empty anyways
                         token = tokens.Dequeue();
-                        goto endMyself;
+                        continue;
                     }
-#if verbose
-                    LogWithLogicDepth(System.ConsoleColor.DarkGray, "List started", logicDepth);
-#endif
                     setList = GetSetMethodInfo(type, lastToken);
                     pType = setList.GetParameterTypes()[0];
 
                     Object list = CreateObject(pType);
                     listAdd = pType.GetMethod("Add");
 
-
                     if (pType == stringListType)
                     {//list of strings
                         while (token != "END_LIST")
                         {
-                            listAdd.Invoke(list, CreateReferenceArray(token));
+                            //list.Cast<List<Object>>().Add(token);
+                            listAdd.Invoke(list, MakeReferenceArray(token));
+
                             token = tokens.Dequeue();
                         }
                     }
                     else
                     {
                         while (token != "END_LIST")
-                        {//list of objects
-                            listAdd.Invoke(list, CreateReferenceArray(SetObjectValues<Object>(tokens, FindTypeName(lastToken), logicDepth + 1)));
+                        {//list of objects  
+                            //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"{returnObject.GetIl2CppType().Name} |adding object of type: {lastToken} to list of type {pType.Name}-{pType.GenericTypeArguments[0].Name}", logicDepth);
+                            listAdd.Invoke(list, MakeReferenceArray(SetObjectValues<Object>(tokens, pType.GenericTypeArguments[0], logicDepth + 1)));
+                            //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"{returnObject.GetIl2CppType().Name} |added object of type: {lastToken} to list of type {pType.Name}-{pType.GenericTypeArguments[0].Name}", logicDepth);
+
                             //either start_object or end_list
                             token = tokens.Dequeue();
-#if verbose
-                            LogWithLogicDepth(System.ConsoleColor.DarkGray, $"NAME2: {token}", logicDepth);
-#endif
                         }
                     }
-
-#if verbose
-                    LogWithLogicDepth(System.ConsoleColor.DarkGray, "adding list", logicDepth);
-#endif
-                    setList.Invoke(returnObject, CreateReferenceArray(list));
+                    setList.Invoke(returnObject, MakeReferenceArray(list));
 
                     token = tokens.Dequeue();
-#if verbose
-                    LogWithLogicDepth(System.ConsoleColor.DarkGray, $"NAME3: {token}", logicDepth);
-#endif
                 }
                 else if (token == "END_OBJECT")
                 {//return
@@ -391,6 +307,7 @@ namespace HPCSC
                     {
                         secondLayerCriteriaList = false;
                     }
+                    //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"{type.Name} |return object of type {returnObject.GetIl2CppType().Name}", logicDepth);
                     return returnObject.Cast<T>();
                 }
                 else
@@ -399,37 +316,30 @@ namespace HPCSC
                     //get value
                     lastToken = token;
                     token = tokens.Dequeue();
-#if verbose
-                    LogWithLogicDepth(System.ConsoleColor.DarkGray, $"VALUE1: {token}", logicDepth);
-#endif
                     //get type
                     pType = currentMethod.GetParameterTypes()[0];
 
                     if (token == "START_LIST")
                     {
                         //do nothing
-                        goto endMyself;
+                        continue;
                     }
                     else if (token == "START_OBJECT")
                     {
                         //complex type, go in recusrive and set all values, then add here
                         //invoke method and add object
-                        currentMethod.Invoke(returnObject, CreateReferenceArray(SetObjectValues<Object>(tokens, pType, logicDepth + 1)));
+                        currentMethod.Invoke(returnObject, MakeReferenceArray(SetObjectValues<Object>(tokens, pType, logicDepth + 1)));
                     }
                     else
                     {
                         //simple type, can "parse"
                         //invoke method and add object
-                        currentMethod.Invoke(returnObject, CreateReferenceArray(TryParseAll(pType, token)));
+                        currentMethod.Invoke(returnObject, MakeReferenceArray(TryParseAll(pType, token)));
                     }
 
                     //set new token for new loop iteration
                     token = tokens.Dequeue();
-#if verbose
-                    LogWithLogicDepth(System.ConsoleColor.DarkGray, $"NAME4: {token}", logicDepth);
-#endif
                 }
-            endMyself:;
             }
         }
 
@@ -510,6 +420,8 @@ namespace HPCSC
                 }
             }
 
+            MelonLogger.Msg("Finished tokenization");
+
             return tokens;
         }
 
@@ -519,15 +431,15 @@ namespace HPCSC
             {
                 //MelonLogger.Msg($"Type to convert to: {type.FullName}, token: {token}");
                 //try casting the types, revert to default if failed
-                switch (type.FullName)
+                switch (type.Name)
                 {
-                    case "System.Boolean":
+                    case "Boolean":
                         system_Boolean.m_value = bool.Parse(token);
                         return system_Boolean.BoxIl2CppObject();
-                    case "System.Int32":
+                    case "Int32":
                         system_Int32.m_value = int.Parse(token, System.Globalization.NumberStyles.Integer);
                         return system_Int32.BoxIl2CppObject();
-                    case "System.String":
+                    case "String":
                         return token;
 
                     //default null for all other kind of objects

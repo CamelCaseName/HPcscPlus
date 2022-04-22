@@ -3321,7 +3321,7 @@ namespace HPCSC
     {
         private List<Object> instance = new List<Object>();
 
-        public CharacterItemGroupInteraction() : base(ClassInjector.DerivedConstructorPointer<StoryItem>())
+        public CharacterItemGroupInteraction() : base(ClassInjector.DerivedConstructorPointer<CharacterItemGroupInteraction>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);

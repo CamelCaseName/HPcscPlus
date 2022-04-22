@@ -25,6 +25,7 @@ namespace HPCSC
             "Arin",
             "Ashley",
             "Brittney",
+            "Compubrah",
             "Dan",
             "Derek",
             "Frank",
@@ -38,7 +39,7 @@ namespace HPCSC
             "Stephanie",
             "Vickie"
         };
-        private readonly CharacterStory[] CharacterStoryObjects = new CharacterStory[Characters.Length];
+        private readonly CharacterStory[] CharacterStoryObjects = new CharacterStory[30];
         private readonly string[] ClothingPieces = new string[] {
             "Top",
             "Bottom",
@@ -53,6 +54,8 @@ namespace HPCSC
             "Set 0",
             "Set 1"
             };
+        private string[][] StoryValues = new string[30][] { new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200] };
+        
 
         private readonly CompareTypes[] CompareTypesArray = new CompareTypes[] {
                 CompareTypes.Never,
@@ -249,27 +252,35 @@ namespace HPCSC
                 MelonLogger.Msg(System.ConsoleColor.Red, "Parsing failed!");
             }
 
-            MelonLogger.Msg("Parsing character stories now.");
-
             int x = 0;
 
+            MelonLogger.Msg("Parsing character stories now.");
+            
             foreach (var file in Directory.GetFiles(CurrentStoryFolder))
             {
-                if (Path.GetFileName(file).Split('.')[1] == "character")
+                if (Path.GetFileName(file).Split('.').Length == 2)
                 {
-                    MelonLogger.Msg(System.ConsoleColor.DarkGray, $"Found {Path.GetFileName(file).Split('.')[0]}");
-                    //use custom json/story parser
-                    CharacterStory tempStory = ParseJsonToCharacterStory(File.ReadAllText(file));
-                    if (tempStory != null)
+                    if (Path.GetFileName(file).Split('.')[1] == "character")
                     {
-                        CharacterStoryObjects[x++] = tempStory;
-                        MelonLogger.Msg(System.ConsoleColor.DarkGreen, $"{Path.GetFileNameWithoutExtension(file)}'s Story parsed successfully.");
-                    }
-                    else
-                    {
-                        MelonLogger.Msg(System.ConsoleColor.Red, "Parsing failed!");
+                        MelonLogger.Msg(System.ConsoleColor.DarkGray, $"Found {Path.GetFileName(file).Split('.')[0]}");
+                        //use custom json/story parser
+                        CharacterStory tempStory = ParseJsonToCharacterStory(File.ReadAllText(file));
+                        if (tempStory != null)
+                        {
+                            CharacterStoryObjects[x++] = tempStory;
+                            MelonLogger.Msg(System.ConsoleColor.DarkGreen, $"{Path.GetFileNameWithoutExtension(file)}'s Story parsed successfully.");
+                        }
+                        else
+                        {
+                            MelonLogger.Msg(System.ConsoleColor.Red, "Parsing failed!");
+                        }
                     }
                 }
+            }
+
+            for (int i = 0; i < CharacterStoryObjects.Length; i++)
+            {
+                StoryValues[i] = (CharacterStoryObjects[i].GetStoryValues().ToArray());
             }
 
             MelonLogger.Msg(System.ConsoleColor.Green, "Done parsing :)");
@@ -384,6 +395,7 @@ namespace HPCSC
             try
             {
                 MainStory mainStory = Json.SetObjectValues<MainStory>(JsonsSupreme.SplitJson(tempS), Il2CppType.Of<MainStory>());
+                //mainStory.GetAchievements()[0].SetName("asdufgsd");
                 return mainStory;
             }
             catch (System.Exception e)
@@ -561,98 +573,31 @@ namespace HPCSC
 
         private string DisplayCharacterValueSelector(string key, string characterName)
         {
-            //EekEvents.Values.ValueStore.InitializeValues(characterName);
-
-            var temp = EekEvents.Values.ValueStore.GetValues(characterName).GetCurrentValuesAsStringList();
-
-            //has fewer values than the method above???
-            //var temp = EekEvents.Values.ValueStore.GetValues(characterName)._dirtyValues;
-            //var temp = EekEvents.Values.ValueStore.GetValues(characterName)._items;
-            //SaveLoadManager.PerformAutoSave();
-            //var temp = SaveLoadManager.autoSave.NPCs[0].Values.ToArray();
-
-            if (temp.Count <= 0)
+            for (int i = 0; i < CharacterStoryObjects.Length; i++)
             {
-                MelonLogger.Msg("no values found");
-            }
-            else
-            {
-                List<string> StoryValues = new List<string>();
-
-                foreach (var kvp in temp)
+                if (CharacterStoryObjects[i].GetCharacterName() == characterName)
                 {
-                    string cleaner = kvp.Key;
-                    if (!cleaner.Contains(":")) StoryValues.Add(cleaner);
-                }
-
-                //about half of the values are in this list, the others can't be added via console, they only show up in the csc
-                for (int i = 0; i < CharacterStoryObjects.Length; i++)
-                {
-                    if (CharacterStoryObjects[i] != null)
+                    int t = 0;
+                    for (int k = 0; k < StoryValues[i].Length; k++)
                     {
-                        /*
-                        Object story = CharacterStoryObjects[i];
-
-                        MelonLogger.Msg("trying to access the Object methods to return the field with methodinfo via reflection");
-
-                        MelonLogger.Msg("getting type");
-                        Type type = Il2CppType.Of<CharacterStory>();
-
-                        MelonLogger.Msg("getting methodinfo");
-                        foreach (MethodInfo method in type.GetMethods())
+                        if (StoryValues[i][k] == key)
                         {
-                            MelonLogger.Msg(method.Name);
-                        }
-                        MethodInfo GetCharacterNameMethod = type.GetMethod("GetCharacterName");
-
-                        MelonLogger.Msg("invoking Method");
-                        Object ret = GetCharacterNameMethod.Invoke(story, null);
-
-                        MelonLogger.Msg("accessing returned object");
-                        MelonLogger.Msg($"size of ret: {Marshal.SizeOf(ret)}");
-                        MelonLogger.Msg($"hascode of ret: {ret.GetHashCode()} of name: {characterName.GetHashCode()}");
-                        if (ret.GetHashCode() == characterName.GetHashCode())
-                        {
-                            MelonLogger.Msg($"{characterName} story found form parsed");
-                            foreach(string value in story.GetStoryValues())
-                            {
-                                if (!StoryValues.Contains(value))
-                                {
-                                    StoryValues.Add(value);
-                                }
-                            }
-                        }
-                        */
-                        MelonLogger.Msg($"trying to access the Object methods{CharacterStoryObjects[i].GetCharacterName()}");
-                        MelonLogger.Msg($"trying to access the Object methods{CharacterStoryObjects[i].GetDialogueID()}");
-                        MelonLogger.Msg($"trying to access the Object methods{CharacterStoryObjects[i].GetHousePartyVersion()}");
-                        MelonLogger.Msg($"trying to access the Object methods{CharacterStoryObjects[i].GetCurrentAspect()}");
-                        MelonLogger.Msg($"trying to access the Object methods{CharacterStoryObjects[i].GetDialogues()[0].GetText()}");
-                        if (CharacterStoryObjects[i].GetCharacterName() == characterName)
-                        {
-                            MelonLogger.Msg("Could access method, name is correct");
+                            t = k;
+                            break;
                         }
                     }
+
+                    if (t < 0 || t > StoryValues[i].Length - 1)
+                    {
+                        t = 0;
+                    }
+
+                    key = StoryValues[i][DisplayNumberBlock(t, 0, StoryValues.Length - 1, key, ">", "<", false)];
+
+                    return key;
                 }
-
-                StoryValues.Sort();
-                MelonLogger.Msg("Values here:");
-
-                foreach (var item in StoryValues)
-                {
-                    MelonLogger.Msg(item);
-                }
-
-                int t = StoryValues.IndexOf(key);
-
-                if (t < 0 || t > temp.Count - 1)
-                {
-                    t = 0;
-                }
-
-                key = StoryValues[DisplayNumberBlock(t, 0, StoryValues.Count - 1, key, ">", "<", false)];
             }
-            return key;
+            return "NONE";
         }
 
         private string DisplayClothingSelector(string clothing)

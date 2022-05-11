@@ -194,61 +194,57 @@ namespace HPCSC
                 MelonLogger.Msg($"string: {t.GetType()} int: {t.GetValue()}");
             }
         */
-        //constructors like this
-        //order needs to be 100% correct, else every speed increase diminishes because it doesn't work lol
-        /*
-            public Testt(void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<Testt>())
-            {
-                ClassInjector.DerivedConstructorBody(this);
-                instance.Add(this);
-                type = new string((char*)parameters[0]);
-                value = *(int*)parameters[1];
-            }
-        */
         private Object CreateObject(Type type)
         {
             //MelonLogger.Msg(type.Name); seems right for 
             if (type == TypeList[3]) { return new Event(); }
-            else if (type == Il2CppType.Of<List<Event>>()) { return new List<Event>(); }
             else if (type == TypeList[4]) { return new Criterion(); }
-            else if (type == Il2CppType.Of<List<Criterion>>()) { return new List<Criterion>(); }
             else if (type == TypeList[17]) { return new ItemAction(); }
-            else if (type == Il2CppType.Of<List<ItemAction>>()) { return new List<ItemAction>(); }
             else if (type == TypeList[34]) { return new UseWith(); }
-            else if (type == Il2CppType.Of<List<UseWith>>()) { return new List<UseWith>(); }
             else if (type == TypeList[20]) { return new ItemOverride(); }
-            else if (type == Il2CppType.Of<List<string>>()) { return new List<string>(); }
             else if (type == TypeList[18]) { return new ItemGroupBehavior(); }
             else if (type == TypeList[0]) { return new Achievement(); }
             else if (type == TypeList[8]) { return new CriteriaList(); }
-            else if (type == Il2CppType.Of<List<CriteriaList>>()) { return new List<CriteriaList>(); }
             else if (type == TypeList[7]) { return new CriteriaGroup(); }
             else if (type == TypeList[19]) { return new ItemGroup(); }
             else if (type == TypeList[26]) { return new PlayerReaction(); }
             else if (type == TypeList[1]) { return new AlternateText(); }
             else if (type == TypeList[31]) { return new Response(); }
             else if (type == TypeList[11]) { return new Dialogue(); }
-            else if (type == Il2CppType.Of<List<Response>>()) { return new List<Response>(); }
-            else if (type == Il2CppType.Of<List<AlternateText>>()) { return new List<AlternateText>(); }
             else if (type == TypeList[15]) { return new GlobalGoodbyeResponse(); }
             else if (type == TypeList[16]) { return new GlobalResponse(); }
             else if (type == TypeList[2]) { return new BackgroundChatter(); }
             else if (type == TypeList[35]) { return new Valuee(); }
-            else if (type == Il2CppType.Of<List<Valuee>>()) { return new List<Valuee>(); }
             else if (type == TypeList[25]) { return new Personality(); }
             else if (type == TypeList[13]) { return new ExtendedDetail(); }
-            else if (type == Il2CppType.Of<List<ExtendedDetail>>()) { return new List<ExtendedDetail>(); }
             else if (type == TypeList[27]) { return new Quest(); }
             else if (type == TypeList[28]) { return new Reaction(); }
             else if (type == TypeList[33]) { return new StoryItem(); }
             else if (type == TypeList[36]) { return new CharacterItemGroupInteraction(); }
+            else if (type == TypeList[38]) { return new MainStory(); }
+            else if (type == TypeList[39]) { return new CharacterStory(); }
+            else if (type == Il2CppType.Of<string>()) { return ""; }
+            else { MelonLogger.Msg($"Type '{type.Name}' not yet added to elseif"); return new Object(); }
+        }
+
+        private Object CreateList(Type type)
+        {
+            if (type == Il2CppType.Of<List<Event>>()) { return new List<Event>(); }
+            else if (type == Il2CppType.Of<List<Criterion>>()) { return new List<Criterion>(); }
+            else if (type == Il2CppType.Of<List<ItemAction>>()) { return new List<ItemAction>(); }
+            else if (type == Il2CppType.Of<List<UseWith>>()) { return new List<UseWith>(); }
+            else if (type == Il2CppType.Of<List<string>>()) { return new List<string>(); }
+            else if (type == Il2CppType.Of<List<CriteriaList>>()) { return new List<CriteriaList>(); }
+            else if (type == Il2CppType.Of<List<Response>>()) { return new List<Response>(); }
+            else if (type == Il2CppType.Of<List<AlternateText>>()) { return new List<AlternateText>(); }
+            else if (type == Il2CppType.Of<List<Valuee>>()) { return new List<Valuee>(); }
+            else if (type == Il2CppType.Of<List<ExtendedDetail>>()) { return new List<ExtendedDetail>(); }
             else if (type == Il2CppType.Of<List<ItemOverride>>()) { return new List<ItemOverride>(); }
             else if (type == Il2CppType.Of<List<ItemGroupBehavior>>()) { return new List<ItemGroupBehavior>(); }
             else if (type == Il2CppType.Of<List<Achievement>>()) { return new List<Achievement>(); }
             else if (type == Il2CppType.Of<List<CriteriaGroup>>()) { return new List<CriteriaGroup>(); }
             else if (type == Il2CppType.Of<List<ItemGroup>>()) { return new List<ItemGroup>(); }
             else if (type == Il2CppType.Of<List<PlayerReaction>>()) { return new List<PlayerReaction>(); }
-            else if (type == TypeList[38]) { return new MainStory(); }
             else if (type == Il2CppType.Of<List<Dialogue>>()) { return new List<Dialogue>(); }
             else if (type == Il2CppType.Of<List<GlobalGoodbyeResponse>>()) { return new List<GlobalGoodbyeResponse>(); }
             else if (type == Il2CppType.Of<List<GlobalResponse>>()) { return new List<GlobalResponse>(); }
@@ -257,63 +253,37 @@ namespace HPCSC
             else if (type == Il2CppType.Of<List<Reaction>>()) { return new List<Reaction>(); }
             else if (type == Il2CppType.Of<List<StoryItem>>()) { return new List<StoryItem>(); }
             else if (type == Il2CppType.Of<List<CharacterItemGroupInteraction>>()) { return new List<CharacterItemGroupInteraction>(); }
-            else if (type == TypeList[39]) { return new CharacterStory(); }
-            else if (type == Il2CppType.Of<string>()) { return ""; }
             else { MelonLogger.Msg($"Type '{type.Name}' not yet added to elseif"); return new Object(); }
         }
 
         private Object CreateObject(Type type, void*[] parameters)
         {
             //MelonLogger.Msg(type.Name); seems right for 
-            if (type == TypeList[3]) { return new Event(); }
-            else if (type == Il2CppType.Of<List<Event>>()) { return new List<Event>(); }
-            else if (type == TypeList[4]) { return new Criterion(); }
-            else if (type == Il2CppType.Of<List<Criterion>>()) { return new List<Criterion>(); }
-            else if (type == TypeList[17]) { return new ItemAction(); }
-            else if (type == Il2CppType.Of<List<ItemAction>>()) { return new List<ItemAction>(); }
-            else if (type == TypeList[34]) { return new UseWith(); }
-            else if (type == Il2CppType.Of<List<UseWith>>()) { return new List<UseWith>(); }
-            else if (type == TypeList[20]) { return new ItemOverride(); }
-            else if (type == Il2CppType.Of<List<string>>()) { return new List<string>(); }
-            else if (type == TypeList[18]) { return new ItemGroupBehavior(); }
-            else if (type == TypeList[0]) { return new Achievement(); }
-            else if (type == TypeList[8]) { return new CriteriaList(); }
-            else if (type == Il2CppType.Of<List<CriteriaList>>()) { return new List<CriteriaList>(); }
-            else if (type == TypeList[7]) { return new CriteriaGroup(); }
-            else if (type == TypeList[19]) { return new ItemGroup(); }
-            else if (type == TypeList[26]) { return new PlayerReaction(); }
+            if (type == TypeList[3]) { return new Event(parameters); }
+            else if (type == TypeList[4]) { return new Criterion(parameters); }
+            else if (type == TypeList[17]) { return new ItemAction(parameters); }
+            else if (type == TypeList[34]) { return new UseWith(parameters); }
+            else if (type == TypeList[20]) { return new ItemOverride(parameters); }
+            else if (type == TypeList[18]) { return new ItemGroupBehavior(parameters); }
+            else if (type == TypeList[0]) { return new Achievement(parameters); }
+            else if (type == TypeList[8]) { return new CriteriaList(parameters); }
+            else if (type == TypeList[7]) { return new CriteriaGroup(parameters); }
+            else if (type == TypeList[19]) { return new ItemGroup(parameters); }
+            else if (type == TypeList[26]) { return new PlayerReaction(parameters); }
             else if (type == TypeList[1]) { return new AlternateText(); }
             else if (type == TypeList[31]) { return new Response(); }
             else if (type == TypeList[11]) { return new Dialogue(); }
-            else if (type == Il2CppType.Of<List<Response>>()) { return new List<Response>(); }
-            else if (type == Il2CppType.Of<List<AlternateText>>()) { return new List<AlternateText>(); }
             else if (type == TypeList[15]) { return new GlobalGoodbyeResponse(); }
             else if (type == TypeList[16]) { return new GlobalResponse(); }
             else if (type == TypeList[2]) { return new BackgroundChatter(); }
             else if (type == TypeList[35]) { return new Valuee(); }
-            else if (type == Il2CppType.Of<List<Valuee>>()) { return new List<Valuee>(); }
             else if (type == TypeList[25]) { return new Personality(); }
             else if (type == TypeList[13]) { return new ExtendedDetail(); }
-            else if (type == Il2CppType.Of<List<ExtendedDetail>>()) { return new List<ExtendedDetail>(); }
             else if (type == TypeList[27]) { return new Quest(); }
             else if (type == TypeList[28]) { return new Reaction(); }
             else if (type == TypeList[33]) { return new StoryItem(); }
             else if (type == TypeList[36]) { return new CharacterItemGroupInteraction(); }
-            else if (type == Il2CppType.Of<List<ItemOverride>>()) { return new List<ItemOverride>(); }
-            else if (type == Il2CppType.Of<List<ItemGroupBehavior>>()) { return new List<ItemGroupBehavior>(); }
-            else if (type == Il2CppType.Of<List<Achievement>>()) { return new List<Achievement>(); }
-            else if (type == Il2CppType.Of<List<CriteriaGroup>>()) { return new List<CriteriaGroup>(); }
-            else if (type == Il2CppType.Of<List<ItemGroup>>()) { return new List<ItemGroup>(); }
-            else if (type == Il2CppType.Of<List<PlayerReaction>>()) { return new List<PlayerReaction>(); }
-            else if (type == TypeList[38]) { return new MainStory(); }
-            else if (type == Il2CppType.Of<List<Dialogue>>()) { return new List<Dialogue>(); }
-            else if (type == Il2CppType.Of<List<GlobalGoodbyeResponse>>()) { return new List<GlobalGoodbyeResponse>(); }
-            else if (type == Il2CppType.Of<List<GlobalResponse>>()) { return new List<GlobalResponse>(); }
-            else if (type == Il2CppType.Of<List<BackgroundChatter>>()) { return new List<BackgroundChatter>(); }
-            else if (type == Il2CppType.Of<List<Quest>>()) { return new List<Quest>(); }
-            else if (type == Il2CppType.Of<List<Reaction>>()) { return new List<Reaction>(); }
-            else if (type == Il2CppType.Of<List<StoryItem>>()) { return new List<StoryItem>(); }
-            else if (type == Il2CppType.Of<List<CharacterItemGroupInteraction>>()) { return new List<CharacterItemGroupInteraction>(); }
+            else if (type == TypeList[38]) { return new MainStory(parameters); }
             else if (type == TypeList[39]) { return new CharacterStory(); }
             else if (type == Il2CppType.Of<string>()) { return ""; }
             else { MelonLogger.Msg($"Type '{type.Name}' not yet added to elseif"); return new Object(); }
@@ -324,7 +294,7 @@ namespace HPCSC
         // - worst case: hard type all
         // - per wurzel: remove the need for the queue by using a streamreader directly in the same place as creating the objects (would get rid of the part where i have to parse the tokens)
 
-        public Object SetObjectValues(Queue<string> tokens, Type type, int logicDepth = 0)
+        public Object SetObjectValuesSlow(Queue<string> tokens, Type type, int logicDepth = 0)
         {
             MethodInfo setList, currentMethod, listAdd;
             string lastToken = "", token;
@@ -353,7 +323,7 @@ namespace HPCSC
                     setList = GetSetMethodInfo(type, lastToken);
                     pType = setList.GetParameterTypes()[0];
 
-                    Object list = CreateObject(pType);
+                    Object list = CreateList(pType);
                     listAdd = pType.GetMethod("Add");
 
                     if (pType == stringListType)
@@ -371,7 +341,7 @@ namespace HPCSC
                         while (token != "END_LIST")
                         {//list of objects  
                             //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"{returnObject.GetIl2CppType().Name} |adding object of type: {lastToken} to list of type {pType.Name}-{pType.GenericTypeArguments[0].Name}", logicDepth);
-                            listAdd.Invoke(list, MakeReferenceArray(SetObjectValues(tokens, pType.GenericTypeArguments[0], logicDepth + 1)));
+                            listAdd.Invoke(list, MakeReferenceArray(SetObjectValuesSlow(tokens, pType.GenericTypeArguments[0], logicDepth + 1)));
                             //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"{returnObject.GetIl2CppType().Name} |added object of type: {lastToken} to list of type {pType.Name}-{pType.GenericTypeArguments[0].Name}", logicDepth);
 
                             //either start_object or end_list
@@ -409,7 +379,7 @@ namespace HPCSC
                     {
                         //complex type, go in recusrive and set all values, then add here
                         //invoke method and add object
-                        currentMethod.Invoke(returnObject, MakeReferenceArray(SetObjectValues(tokens, pType, logicDepth + 1)));
+                        currentMethod.Invoke(returnObject, MakeReferenceArray(SetObjectValuesSlow(tokens, pType, logicDepth + 1)));
                     }
                     else
                     {
@@ -422,6 +392,28 @@ namespace HPCSC
                     token = tokens.Dequeue();
                 }
             }
+        }
+
+        public void*[] SetObjectValues(Queue<string> tokens, Type type, int logicDepth = 0)
+        {
+            MethodInfo setList, listAdd;
+            string lastToken = "", token;
+            Type pType;
+            //create return object
+            Object returnObject = CreateObject(type);
+            //get first token
+            token = tokens.Dequeue();
+            //go through tokens. create new list of refernces when a new object is created, and for each new field of our object we go one level deeper,
+            //then add a pointer to a new object created with the returned pointers as one of the pointers for the params of our current object. 
+            while (true)
+            {
+                
+            }
+        }
+
+        public MainStory CreateMainStory(Queue<string> tokens)
+        {
+            return new MainStory(SetObjectValues(tokens, Il2CppType.Of<MainStory>(), 0));
         }
 
         public static Queue<string> SplitJson(string tempS)

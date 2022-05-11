@@ -379,7 +379,7 @@ namespace HPCSC
         {
             try
             {
-                CharacterStory charStory = Json.SetObjectValues(JsonsSupreme.SplitJson(tempS), Il2CppType.Of<CharacterStory>()).Cast<CharacterStory>();
+                CharacterStory charStory = Json.SetObjectValuesSlow(JsonsSupreme.SplitJson(tempS), Il2CppType.Of<CharacterStory>()).Cast<CharacterStory>();
 
                 return charStory;
             }

@@ -379,7 +379,7 @@ namespace HPCSC
         {
             try
             {
-                CharacterStory charStory = Json.SetObjectValues<CharacterStory>(JsonsSupreme.SplitJson(tempS), Il2CppType.Of<CharacterStory>());
+                CharacterStory charStory = Json.SetObjectValues(JsonsSupreme.SplitJson(tempS), Il2CppType.Of<CharacterStory>()).Cast<CharacterStory>();
 
                 return charStory;
             }
@@ -394,7 +394,7 @@ namespace HPCSC
         {
             try
             {
-                MainStory mainStory = Json.SetObjectValues<MainStory>(JsonsSupreme.SplitJson(tempS), Il2CppType.Of<MainStory>());
+                MainStory mainStory = Json.SetObjectValues(JsonsSupreme.SplitJson(tempS), Il2CppType.Of<MainStory>()).Cast<MainStory>();
                 //mainStory.GetAchievements()[0].SetName("asdufgsd");
                 return mainStory;
             }

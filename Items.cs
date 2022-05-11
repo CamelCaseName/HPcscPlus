@@ -8,10 +8,14 @@ namespace HPCSC
     {
         private List<Object> instance = new List<Object>();
 
-        public Criterion(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<Criterion>())
+        public Criterion() : base(ClassInjector.DerivedConstructorPointer<Criterion>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+        }
+
+        public Criterion(params void*[] parameters) : this()
+        {
             boolValue = new string((char*)parameters[0]);
             character = new string((char*)parameters[1]);
             character2 = new string((char*)parameters[2]);
@@ -290,10 +294,14 @@ namespace HPCSC
     {
         private List<Object> instance = new List<Object>();
 
-        public Event(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<Event>())
+        public Event() : base(ClassInjector.DerivedConstructorPointer<Event>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+        }
+
+        public Event(params void*[] parameters) : this()
+        {
             sortOrder2 = *(int*)parameters[0];
             version = new string((char*)parameters[1]);
             id = new string((char*)parameters[2]);
@@ -578,10 +586,14 @@ namespace HPCSC
     {
         private List<Object> instance = new List<Object>();
 
-        public ItemAction(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<ItemAction>())
+        public ItemAction() : base(ClassInjector.DerivedConstructorPointer<ItemAction>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+        }
+
+        public ItemAction(params void*[] parameters) : this()
+        {
             actionName = new string((char*)parameters[0]);
             criteria = new List<Criterion>(new System.IntPtr(parameters[1]));
             displayInEditor = *(bool*)parameters[2];
@@ -663,10 +675,14 @@ namespace HPCSC
     {
         private List<Object> instance = new List<Object>();
 
-        public UseWith(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<UseWith>())
+        public UseWith() : base(ClassInjector.DerivedConstructorPointer<UseWith>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+        }
+
+        public UseWith(params void*[] parameters) : this()
+        {
             criteria = new List<Criterion>(new System.IntPtr(parameters[0]));
             customCantDoThatMessage = new string((char*)parameters[1]);
             displayInEditor = *(bool*)parameters[2];
@@ -760,10 +776,14 @@ namespace HPCSC
     {
         private List<Object> instance = new List<Object>();
 
-        public ItemOverride(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<ItemOverride>())
+        public ItemOverride() : base(ClassInjector.DerivedConstructorPointer<ItemOverride>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+        }
+
+        public ItemOverride(params void*[] parameters) : this()
+        {
             id = new string((char*)parameters[0]);
             displayInEditor = *(bool*)parameters[1];
             displayName = new string((char*)parameters[2]);
@@ -884,10 +904,14 @@ namespace HPCSC
     {
         private List<Object> instance = new List<Object>();
 
-        public ItemGroupBehavior(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<ItemGroupBehavior>())
+        public ItemGroupBehavior() : base(ClassInjector.DerivedConstructorPointer<ItemGroupBehavior>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+        }
+
+        public ItemGroupBehavior(params void*[] parameters) : this()
+        {
             id = new string((char*)parameters[0]);
             name = new string((char*)parameters[1]);
             groupName = new string((char*)parameters[2]);
@@ -991,10 +1015,14 @@ namespace HPCSC
     {
         private List<Object> instance = new List<Object>();
 
-        public Achievement(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<Achievement>())
+        public Achievement() : base(ClassInjector.DerivedConstructorPointer<Achievement>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+        }
+
+        public Achievement(params void*[] parameters) : this()
+        {
             description = new string((char*)parameters[0]);
             id = new string((char*)parameters[1]);
             image = new string((char*)parameters[2]);
@@ -1092,10 +1120,14 @@ namespace HPCSC
     {
         private List<Object> instance = new List<Object>();
 
-        public CriteriaList(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<CriteriaList>())
+        public CriteriaList() : base(ClassInjector.DerivedConstructorPointer<CriteriaList>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+        }
+
+        public CriteriaList(params void*[] parameters) : this()
+        {
             criteriaList = new List<Criterion>(new System.IntPtr(parameters[0]));
         }
 
@@ -1132,10 +1164,14 @@ namespace HPCSC
     {
         private List<Object> instance = new List<Object>();
 
-        public CriteriaGroup(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<CriteriaGroup>())
+        public CriteriaGroup() : base(ClassInjector.DerivedConstructorPointer<CriteriaGroup>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+        }
+
+        public CriteriaGroup(params void*[] parameters) : this()
+        {
             id = new string((char*)parameters[0]);
             name = new string((char*)parameters[1]);
             displayInEditor = *(bool*)parameters[2];
@@ -1224,10 +1260,14 @@ namespace HPCSC
     {
         private List<Object> instance = new List<Object>();
 
-        public ItemGroup(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<ItemGroup>())
+        public ItemGroup() : base(ClassInjector.DerivedConstructorPointer<ItemGroup>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+        }
+
+        public ItemGroup(params void*[] parameters) : this()
+        {
             id = new string((char*)parameters[0]);
             name = new string((char*)parameters[1]);
             displayInEditor = *(bool*)parameters[2];
@@ -1299,10 +1339,14 @@ namespace HPCSC
     {
         private List<Object> instance = new List<Object>();
 
-        public PlayerReaction(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<PlayerReaction>())
+        public PlayerReaction() : base(ClassInjector.DerivedConstructorPointer<PlayerReaction>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+        }
+
+        public PlayerReaction(params void*[] parameters) : this()
+        {
             id = new string((char*)parameters[0]);
             characterToReactTo = new string((char*)parameters[1]);
             critera = new List<Criterion>(new System.IntPtr(parameters[2]));
@@ -1500,10 +1544,23 @@ namespace HPCSC
     {
         private List<Object> instance = new List<Object>();
 
-        public MainStory(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<MainStory>())
+        public MainStory() : base(ClassInjector.DerivedConstructorPointer<MainStory>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+        }
+
+        public MainStory(params void*[] parameters) : this()
+        {
+            housePartyVersion = new string((char*)parameters[0]);
+            itemOverrides = new List<ItemOverride>(new System.IntPtr(parameters[1]));
+            itemGroupBehaviors = new List<ItemGroupBehavior>(new System.IntPtr(parameters[2]));
+            achievements = new List<Achievement>(new System.IntPtr(parameters[3]));
+            playerValues = new List<string>(new System.IntPtr(parameters[4]));
+            criteriaGroups = new List<CriteriaGroup>(new System.IntPtr(parameters[5]));
+            itemGroups = new List<ItemGroup>(new System.IntPtr(parameters[6]));
+            gameStartEvents = new List<Event>(new System.IntPtr(parameters[7]));
+            playerReactions = new List<PlayerReaction>(new System.IntPtr(parameters[8]));
         }
 
         public void Unload()

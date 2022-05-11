@@ -324,7 +324,7 @@ namespace HPCSC
         // - worst case: hard type all
         // - per wurzel: remove the need for the queue by using a streamreader directly in the same place as creating the objects (would get rid of the part where i have to parse the tokens)
 
-        public T SetObjectValues<T>(Queue<string> tokens, Type type, int logicDepth = 0) where T : Object, new()
+        public Object SetObjectValues(Queue<string> tokens, Type type, int logicDepth = 0)
         {
             MethodInfo setList, currentMethod, listAdd;
             string lastToken = "", token;
@@ -371,7 +371,7 @@ namespace HPCSC
                         while (token != "END_LIST")
                         {//list of objects  
                             //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"{returnObject.GetIl2CppType().Name} |adding object of type: {lastToken} to list of type {pType.Name}-{pType.GenericTypeArguments[0].Name}", logicDepth);
-                            listAdd.Invoke(list, MakeReferenceArray(SetObjectValues<Object>(tokens, pType.GenericTypeArguments[0], logicDepth + 1)));
+                            listAdd.Invoke(list, MakeReferenceArray(SetObjectValues(tokens, pType.GenericTypeArguments[0], logicDepth + 1)));
                             //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"{returnObject.GetIl2CppType().Name} |added object of type: {lastToken} to list of type {pType.Name}-{pType.GenericTypeArguments[0].Name}", logicDepth);
 
                             //either start_object or end_list
@@ -389,7 +389,7 @@ namespace HPCSC
                         secondLayerCriteriaList = false;
                     }
                     //LogWithLogicDepth(System.ConsoleColor.DarkGray, $"{type.Name} |return object of type {returnObject.GetIl2CppType().Name}", logicDepth);
-                    return returnObject.Cast<T>();
+                    return returnObject;
                 }
                 else
                 {//either key or value, should only be a key
@@ -409,7 +409,7 @@ namespace HPCSC
                     {
                         //complex type, go in recusrive and set all values, then add here
                         //invoke method and add object
-                        currentMethod.Invoke(returnObject, MakeReferenceArray(SetObjectValues<Object>(tokens, pType, logicDepth + 1)));
+                        currentMethod.Invoke(returnObject, MakeReferenceArray(SetObjectValues(tokens, pType, logicDepth + 1)));
                     }
                     else
                     {

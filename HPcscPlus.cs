@@ -394,7 +394,7 @@ namespace HPCSC
         {
             try
             {
-                MainStory mainStory = Json.SetObjectValues(JsonsSupreme.SplitJson(tempS), Il2CppType.Of<MainStory>()).Cast<MainStory>();
+                MainStory mainStory = Json.CreateMainStory(JsonsSupreme.SplitJson(tempS));
                 //mainStory.GetAchievements()[0].SetName("asdufgsd");
                 return mainStory;
             }

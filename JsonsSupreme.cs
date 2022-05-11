@@ -3,6 +3,7 @@
 using Il2CppSystem;
 using Il2CppSystem.Collections.Generic;
 using Il2CppSystem.Reflection;
+using Il2CppSystem.Runtime.InteropServices;
 using Il2CppSystem.Text;
 using MelonLoader;
 using System.Runtime.CompilerServices;
@@ -405,9 +406,10 @@ namespace HPCSC
             token = tokens.Dequeue();
             //go through tokens. create new list of refernces when a new object is created, and for each new field of our object we go one level deeper,
             //then add a pointer to a new object created with the returned pointers as one of the pointers for the params of our current object. 
+            //this pointer to our created object needs to be fixed...
             while (true)
             {
-                
+
             }
         }
 
@@ -416,80 +418,84 @@ namespace HPCSC
             return new MainStory(SetObjectValues(tokens, Il2CppType.Of<MainStory>(), 0));
         }
 
-        public static Queue<string> SplitJson(string tempS)
+        public unsafe static Queue<string> SplitJson(string tempS)
         {
             Queue<string> tokens = new Queue<string>(300000);
             bool inValueString = false;
             bool isEscaped = false;
             bool emptyValue = false;
-            char c;
             //init stringbuilder with approximate buffer size for speed reasons (reduces resizing operations)
             StringBuilder stringBuilder = new StringBuilder(tempS.Length);
-
-            for (int i = 0; i < tempS.Length; i++)
+            char[] tempC = tempS.ToCharArray();
+            fixed (char* cc = tempC)
             {
-                if (!isEscaped)
+                char* c;
+                for (int i = 0; i < tempS.Length; i++)
                 {
-                    c = tempS[i];
-
-                    //entering string
-                    if (inValueString)
+                    c = cc + i;
+                    if (!isEscaped)
                     {
-                        //add char to builder if it is not escaped
-                        if (c != '\\' && c != '"')
+                        //entering string
+                        if (inValueString)
                         {
-                            stringBuilder.Append(c);
-                        }
-                        else
-                        {
-                            if (c == '\\')
+                            //add char to builder if it is not escaped
+                            if (*c != '\\' && *c != '"')
                             {
-                                isEscaped = true;
-                                stringBuilder.Append('\\');
+                                stringBuilder.Append(*c);
                             }
                             else
                             {
-                                if (stringBuilder.Length == 0)
+                                if (*c == '\\')
                                 {
-                                    emptyValue = true;
+                                    isEscaped = true;
+                                    stringBuilder.Append('\\');
                                 }
-                                inValueString = false;
+                                else
+                                {
+                                    if (stringBuilder.Length == 0)
+                                    {
+                                        emptyValue = true;
+                                    }
+                                    inValueString = false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (*c == '"')
+                            {
+                                inValueString = true;
+                            }
+                            else if (IsInArray(seperators, *c))
+                            {
+                                //if we hit a seperator, add nonempty strings and clear string builder
+                                if (stringBuilder.Length > 0 || emptyValue)
+                                {
+                                    emptyValue = false;
+                                    tokens.Enqueue(stringBuilder.ToString());
+                                    stringBuilder.Clear();
+                                }
+
+                                if (*c == '[') tokens.Enqueue("START_LIST");
+                                else if (*c == ']') tokens.Enqueue("END_LIST");
+                                else if (*c == '{') tokens.Enqueue("START_OBJECT");
+                                else if (*c == '}') tokens.Enqueue("END_OBJECT");
+                            }
+                            else if (IsInArray(numbers, *c))
+                            {
+                                //add char, in names and stuff
+                                stringBuilder.Append(*c);
                             }
                         }
                     }
                     else
                     {
-                        if (c == '"')
-                        {
-                            inValueString = true;
-                        }
-                        else if (IsInArray(seperators, c))
-                        {
-                            //if we hit a seperator, add nonempty strings and clear string builder
-                            if (stringBuilder.Length > 0 || emptyValue)
-                            {
-                                emptyValue = false;
-                                tokens.Enqueue(stringBuilder.ToString());
-                                stringBuilder.Clear();
-                            }
-
-                            if (c == '[') tokens.Enqueue("START_LIST");
-                            else if (c == ']') tokens.Enqueue("END_LIST");
-                            else if (c == '{') tokens.Enqueue("START_OBJECT");
-                            else if (c == '}') tokens.Enqueue("END_OBJECT");
-                        }
-                        else if (IsInArray(numbers, c))
-                        {
-                            //add char, in names and stuff
-                            stringBuilder.Append(c);
-                        }
+                        isEscaped = false;
+                        //is escaped so add regardless
+                        stringBuilder.Append(tempS[i]);
                     }
-                }
-                else
-                {
-                    isEscaped = false;
-                    //is escaped so add regardless
-                    stringBuilder.Append(tempS[i]);
+                    //point to next char
+                    ;
                 }
             }
 

@@ -13,7 +13,7 @@ using Object = Il2CppSystem.Object;
 namespace HPCSC
 {
 
-    sealed class JsonsSupreme
+    unsafe sealed class JsonsSupreme
     {
         private readonly Il2CppReferenceArray<Object> objectReferenceArray = new Il2CppReferenceArray<Object>(1);
         private Type stringListType;
@@ -181,7 +181,88 @@ namespace HPCSC
             throw new System.NotSupportedException($"Get{token} can not be found, check token order");
         }
 
+        /*
+            int testint = 42;
+            string teststring = "answer";
+
+            fixed (char* testchars = teststring.ToCharArray())
+            {
+                Object o = new Testt(new void*[] { testchars, &testint });
+
+                Testt t = o.Cast<Testt>();
+
+                MelonLogger.Msg($"string: {t.GetType()} int: {t.GetValue()}");
+            }
+        */
+        //constructors like this
+        //order needs to be 100% correct, else every speed increase diminishes because it doesn't work lol
+        /*
+            public Testt(void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<Testt>())
+            {
+                ClassInjector.DerivedConstructorBody(this);
+                instance.Add(this);
+                type = new string((char*)parameters[0]);
+                value = *(int*)parameters[1];
+            }
+        */
         private Object CreateObject(Type type)
+        {
+            //MelonLogger.Msg(type.Name); seems right for 
+            if (type == TypeList[3]) { return new Event(); }
+            else if (type == Il2CppType.Of<List<Event>>()) { return new List<Event>(); }
+            else if (type == TypeList[4]) { return new Criterion(); }
+            else if (type == Il2CppType.Of<List<Criterion>>()) { return new List<Criterion>(); }
+            else if (type == TypeList[17]) { return new ItemAction(); }
+            else if (type == Il2CppType.Of<List<ItemAction>>()) { return new List<ItemAction>(); }
+            else if (type == TypeList[34]) { return new UseWith(); }
+            else if (type == Il2CppType.Of<List<UseWith>>()) { return new List<UseWith>(); }
+            else if (type == TypeList[20]) { return new ItemOverride(); }
+            else if (type == Il2CppType.Of<List<string>>()) { return new List<string>(); }
+            else if (type == TypeList[18]) { return new ItemGroupBehavior(); }
+            else if (type == TypeList[0]) { return new Achievement(); }
+            else if (type == TypeList[8]) { return new CriteriaList(); }
+            else if (type == Il2CppType.Of<List<CriteriaList>>()) { return new List<CriteriaList>(); }
+            else if (type == TypeList[7]) { return new CriteriaGroup(); }
+            else if (type == TypeList[19]) { return new ItemGroup(); }
+            else if (type == TypeList[26]) { return new PlayerReaction(); }
+            else if (type == TypeList[1]) { return new AlternateText(); }
+            else if (type == TypeList[31]) { return new Response(); }
+            else if (type == TypeList[11]) { return new Dialogue(); }
+            else if (type == Il2CppType.Of<List<Response>>()) { return new List<Response>(); }
+            else if (type == Il2CppType.Of<List<AlternateText>>()) { return new List<AlternateText>(); }
+            else if (type == TypeList[15]) { return new GlobalGoodbyeResponse(); }
+            else if (type == TypeList[16]) { return new GlobalResponse(); }
+            else if (type == TypeList[2]) { return new BackgroundChatter(); }
+            else if (type == TypeList[35]) { return new Valuee(); }
+            else if (type == Il2CppType.Of<List<Valuee>>()) { return new List<Valuee>(); }
+            else if (type == TypeList[25]) { return new Personality(); }
+            else if (type == TypeList[13]) { return new ExtendedDetail(); }
+            else if (type == Il2CppType.Of<List<ExtendedDetail>>()) { return new List<ExtendedDetail>(); }
+            else if (type == TypeList[27]) { return new Quest(); }
+            else if (type == TypeList[28]) { return new Reaction(); }
+            else if (type == TypeList[33]) { return new StoryItem(); }
+            else if (type == TypeList[36]) { return new CharacterItemGroupInteraction(); }
+            else if (type == Il2CppType.Of<List<ItemOverride>>()) { return new List<ItemOverride>(); }
+            else if (type == Il2CppType.Of<List<ItemGroupBehavior>>()) { return new List<ItemGroupBehavior>(); }
+            else if (type == Il2CppType.Of<List<Achievement>>()) { return new List<Achievement>(); }
+            else if (type == Il2CppType.Of<List<CriteriaGroup>>()) { return new List<CriteriaGroup>(); }
+            else if (type == Il2CppType.Of<List<ItemGroup>>()) { return new List<ItemGroup>(); }
+            else if (type == Il2CppType.Of<List<PlayerReaction>>()) { return new List<PlayerReaction>(); }
+            else if (type == TypeList[38]) { return new MainStory(); }
+            else if (type == Il2CppType.Of<List<Dialogue>>()) { return new List<Dialogue>(); }
+            else if (type == Il2CppType.Of<List<GlobalGoodbyeResponse>>()) { return new List<GlobalGoodbyeResponse>(); }
+            else if (type == Il2CppType.Of<List<GlobalResponse>>()) { return new List<GlobalResponse>(); }
+            else if (type == Il2CppType.Of<List<BackgroundChatter>>()) { return new List<BackgroundChatter>(); }
+            else if (type == Il2CppType.Of<List<Quest>>()) { return new List<Quest>(); }
+            else if (type == Il2CppType.Of<List<Reaction>>()) { return new List<Reaction>(); }
+            else if (type == Il2CppType.Of<List<StoryItem>>()) { return new List<StoryItem>(); }
+            else if (type == Il2CppType.Of<List<CharacterItemGroupInteraction>>()) { return new List<CharacterItemGroupInteraction>(); }
+            else if (type == TypeList[39]) { return new CharacterStory(); }
+            else if (type == Il2CppType.Of<string>()) { return ""; }
+            else { MelonLogger.Msg($"Type '{type.Name}' not yet added to elseif"); return new Object(); }
+        }
+
+        private Object CreateObject(Type type, void*[] parameters)
         {
             //MelonLogger.Msg(type.Name); seems right for 
             if (type == TypeList[3]) { return new Event(); }

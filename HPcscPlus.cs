@@ -55,7 +55,7 @@ namespace HPCSC
             "Set 1"
             };
         private string[][] StoryValues = new string[30][] { new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200] };
-        
+
 
         private readonly CompareTypes[] CompareTypesArray = new CompareTypes[] {
                 CompareTypes.Never,
@@ -255,7 +255,7 @@ namespace HPCSC
             int x = 0;
 
             MelonLogger.Msg("Parsing character stories now.");
-            
+
             foreach (var file in Directory.GetFiles(CurrentStoryFolder))
             {
                 if (Path.GetFileName(file).Split('.').Length == 2)

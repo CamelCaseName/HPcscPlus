@@ -4,14 +4,34 @@ using UnhollowerRuntimeLib;
 
 namespace HPCSC
 {
-    public class Criterion : Object
+    public unsafe class Criterion : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public Criterion() : base(ClassInjector.DerivedConstructorPointer<Criterion>())
+        public Criterion(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<Criterion>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+            boolValue = new string((char*)parameters[0]);
+            character = new string((char*)parameters[1]);
+            character2 = new string((char*)parameters[2]);
+            compareType = new string((char*)parameters[3]);
+            dialogueStatus = new string((char*)parameters[4]);
+            displayInEditor = *(bool*)parameters[5];
+            doorOptions = new string((char*)parameters[6]);
+            equalsValue = new string((char*)parameters[7]);
+            equationValue = new string((char*)parameters[8]);
+            valueFormula = new string((char*)parameters[9]);
+            itemComparison = new string((char*)parameters[10]);
+            itemFromItemGroupComparison = new string((char*)parameters[11]);
+            key = new string((char*)parameters[12]);
+            key2 = new string((char*)parameters[13]);
+            order = *(int*)parameters[14];
+            playerInventoryOption = new string((char*)parameters[15]);
+            poseOption = new string((char*)parameters[16]);
+            socialStatus = new string((char*)parameters[17]);
+            value = new string((char*)parameters[18]);
+            option = *(int*)parameters[19];
         }
 
         public void Unload()
@@ -266,14 +286,34 @@ namespace HPCSC
         }
     }
 
-    public class Event : Object
+    public unsafe class Event : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public Event() : base(ClassInjector.DerivedConstructorPointer<Event>())
+        public Event(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<Event>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+            sortOrder2 = *(int*)parameters[0];
+            version = new string((char*)parameters[1]);
+            id = new string((char*)parameters[2]);
+            enabled = *(bool*)parameters[3];
+            eventType = *(int*)parameters[4];
+            character = new string((char*)parameters[5]);
+            character2 = new string((char*)parameters[6]);
+            key = new string((char*)parameters[7]);
+            option = *(int*)parameters[8];
+            option2 = *(int*)parameters[9];
+            option3 = *(int*)parameters[10];
+            value = new string((char*)parameters[11]);
+            value2 = new string((char*)parameters[12]);
+            sortOrder = *(int*)parameters[13];
+            delay = new string((char*)parameters[14]);
+            originalDelay = new string((char*)parameters[15]);
+            startDelayTime = new string((char*)parameters[16]);
+            useConditions = *(bool*)parameters[17];
+            displayInEditor = *(bool*)parameters[18];
+            criteria = new List<Criterion>(new System.IntPtr(parameters[19]));
         }
 
         public void Unload()
@@ -534,14 +574,18 @@ namespace HPCSC
         }
     }
 
-    public class ItemAction : Object
+    public unsafe class ItemAction : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public ItemAction() : base(ClassInjector.DerivedConstructorPointer<ItemAction>())
+        public ItemAction(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<ItemAction>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+            actionName = new string((char*)parameters[0]);
+            criteria = new List<Criterion>(new System.IntPtr(parameters[1]));
+            displayInEditor = *(bool*)parameters[2];
+            onTakeActionEvents = new List<Event>(new System.IntPtr(parameters[3]));
         }
 
         public void Unload()
@@ -615,14 +659,19 @@ namespace HPCSC
         }
     }
 
-    public class UseWith : Object
+    public unsafe class UseWith : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public UseWith() : base(ClassInjector.DerivedConstructorPointer<UseWith>())
+        public UseWith(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<UseWith>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+            criteria = new List<Criterion>(new System.IntPtr(parameters[0]));
+            customCantDoThatMessage = new string((char*)parameters[1]);
+            displayInEditor = *(bool*)parameters[2];
+            itemName = new string((char*)parameters[3]);
+            onSuccessEvents = new List<Event>(new System.IntPtr(parameters[4]));
         }
 
         public void Unload()
@@ -707,14 +756,21 @@ namespace HPCSC
         }
     }
 
-    public class ItemOverride : Object
+    public unsafe class ItemOverride : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public ItemOverride() : base(ClassInjector.DerivedConstructorPointer<ItemOverride>())
+        public ItemOverride(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<ItemOverride>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+            id = new string((char*)parameters[0]);
+            displayInEditor = *(bool*)parameters[1];
+            displayName = new string((char*)parameters[2]);
+            itemActions = new List<ItemAction>(new System.IntPtr(parameters[3]));
+            itemName = new string((char*)parameters[4]);
+            useWiths = new List<UseWith>(new System.IntPtr(parameters[5]));
+            useDefaultRadialOptions = *(bool*)parameters[6];
         }
 
         public void Unload()
@@ -824,14 +880,20 @@ namespace HPCSC
         }
     }
 
-    public class ItemGroupBehavior : Object
+    public unsafe class ItemGroupBehavior : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public ItemGroupBehavior() : base(ClassInjector.DerivedConstructorPointer<ItemGroupBehavior>())
+        public ItemGroupBehavior(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<ItemGroupBehavior>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+            id = new string((char*)parameters[0]);
+            name = new string((char*)parameters[1]);
+            groupName = new string((char*)parameters[2]);
+            displayInEditor = *(bool*)parameters[3];
+            itemActions = new List<ItemAction>(new System.IntPtr(parameters[4]));
+            useWiths = new List<UseWith>(new System.IntPtr(parameters[5]));
         }
 
         public void Unload()
@@ -912,27 +974,33 @@ namespace HPCSC
             itemActions = value;
         }
 
-        private List<string> useWiths;
+        private List<UseWith> useWiths;
 
-        public List<string> GetUseWiths()
+        public List<UseWith> GetUseWiths()
         {
             return useWiths;
         }
 
-        public void SetUseWiths(List<string> value)
+        public void SetUseWiths(List<UseWith> value)
         {
             useWiths = value;
         }
     }
 
-    public class Achievement : Object
+    public unsafe class Achievement : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public Achievement() : base(ClassInjector.DerivedConstructorPointer<Achievement>())
+        public Achievement(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<Achievement>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+            description = new string((char*)parameters[0]);
+            id = new string((char*)parameters[1]);
+            image = new string((char*)parameters[2]);
+            name = new string((char*)parameters[3]);
+            showInEditor = *(bool*)parameters[4];
+            steamName = new string((char*)parameters[5]);
         }
 
         public void Unload()
@@ -1020,14 +1088,15 @@ namespace HPCSC
         }
     }
 
-    public class CriteriaList : Object
+    public unsafe class CriteriaList : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public CriteriaList() : base(ClassInjector.DerivedConstructorPointer<CriteriaList>())
+        public CriteriaList(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<CriteriaList>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+            criteriaList = new List<Criterion>(new System.IntPtr(parameters[0]));
         }
 
         public void Unload()
@@ -1059,14 +1128,19 @@ namespace HPCSC
         }
     }
 
-    public class CriteriaGroup : Object
+    public unsafe class CriteriaGroup : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public CriteriaGroup() : base(ClassInjector.DerivedConstructorPointer<CriteriaGroup>())
+        public CriteriaGroup(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<CriteriaGroup>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+            id = new string((char*)parameters[0]);
+            name = new string((char*)parameters[1]);
+            displayInEditor = *(bool*)parameters[2];
+            passCondition = new string((char*)parameters[3]);
+            criteriaList = new List<CriteriaList>(new System.IntPtr(parameters[4]));
         }
 
         public void Unload()
@@ -1146,14 +1220,18 @@ namespace HPCSC
         }
     }
 
-    public class ItemGroup : Object
+    public unsafe class ItemGroup : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public ItemGroup() : base(ClassInjector.DerivedConstructorPointer<ItemGroup>())
+        public ItemGroup(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<ItemGroup>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+            id = new string((char*)parameters[0]);
+            name = new string((char*)parameters[1]);
+            displayInEditor = *(bool*)parameters[2];
+            itemsInGroup = new List<string>(new System.IntPtr(parameters[3]));
         }
 
         public void Unload()
@@ -1217,14 +1295,27 @@ namespace HPCSC
         }
     }
 
-    public class PlayerReaction : Object
+    public unsafe class PlayerReaction : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public PlayerReaction() : base(ClassInjector.DerivedConstructorPointer<PlayerReaction>())
+        public PlayerReaction(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<PlayerReaction>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
+            id = new string((char*)parameters[0]);
+            characterToReactTo = new string((char*)parameters[1]);
+            critera = new List<Criterion>(new System.IntPtr(parameters[2]));
+            currentIteration = new string((char*)parameters[3]);
+            enabled = *(bool*)parameters[4];
+            events = new List<Event>(new System.IntPtr(parameters[5]));
+            key = new string((char*)parameters[6]);
+            name = new string((char*)parameters[7]);
+            showInInspector = *(bool*)parameters[8];
+            type = new string((char*)parameters[9]);
+            updateIteration = new string((char*)parameters[10]);
+            value = new string((char*)parameters[11]);
+            locationTargetOption = new string((char*)parameters[12]);
         }
 
         public void Unload()
@@ -1405,11 +1496,11 @@ namespace HPCSC
         }
     }
 
-    public class MainStory : Object
+    public unsafe class MainStory : Object
     {
         private List<Object> instance = new List<Object>();
 
-        public MainStory() : base(ClassInjector.DerivedConstructorPointer<MainStory>())
+        public MainStory(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<MainStory>())
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
@@ -3687,6 +3778,55 @@ namespace HPCSC
         public void SetStoryValues(List<string> value)
         {
             storyValues = value;
+        }
+    }
+
+    [MelonLoader.RegisterTypeInIl2Cpp(true)]
+    public unsafe class Testt : Object
+    {
+        private List<Object> instance = new List<Object>();
+
+        public Testt(params void*[] parameters) : base(ClassInjector.DerivedConstructorPointer<Testt>())
+        {
+            ClassInjector.DerivedConstructorBody(this);
+            instance.Add(this);
+            type = new string((char*)parameters[0]);
+            value = *(int*)parameters[1];
+        }
+
+        public void Unload()
+        {
+            instance.Clear();
+            instance = null;
+        }
+
+        public Testt(System.IntPtr value) : base(value)
+        {
+            instance.Add(this);
+        }
+
+        private string type;
+
+        public new string GetType()
+        {
+            return type;
+        }
+
+        public void SetType(string value)
+        {
+            type = value;
+        }
+
+        private int value;
+
+        public int GetValue()
+        {
+            return value;
+        }
+
+        public void SetValue(int value)
+        {
+            this.value = value;
         }
     }
 

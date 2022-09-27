@@ -6,6 +6,7 @@ using Il2CppSystem.Reflection;
 using Il2CppSystem.Runtime.InteropServices;
 using Il2CppSystem.Text;
 using MelonLoader;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnhollowerBaseLib;
 using UnhollowerRuntimeLib;
@@ -21,11 +22,12 @@ namespace HPCSC
 
         private bool secondLayerCriteriaList = false;
         private readonly Il2CppReferenceArray<MethodInfo>[] MethodInfoList = new Il2CppReferenceArray<MethodInfo>[45];
-        private readonly static char[] numbers = new char[] { '0', '1', '2', '3', '4', '4', '5', '6', '7', '8', '9', '.', 'n', 'u', 'l', 'f', 'a', 's', 'r', 't', 'e' };
-        private readonly static char[] seperators = new char[] { '{', '}', '[', ']', ',', ':' };
+        private readonly static string numbers = "0123456789nulfasrte";
+        private readonly static string seperators = "{}[],:";
         private static Boolean system_Boolean = new Boolean();
         private static Int32 system_Int32 = new Int32();
         private Type[] TypeList;
+        //private List<GCHandle> handles = new List<GCHandle>();
 
         private Il2CppReferenceArray<Object> MakeReferenceArray(Object @object)
         {
@@ -115,19 +117,7 @@ namespace HPCSC
             stringListType = Il2CppType.Of<List<string>>();
         }
 
-        private static bool IsInArray(char[] arr, char c)
-        {
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (c == arr[i])
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public static void LogWithLogicDepth(System.ConsoleColor color, string text, int logicDepth,
+        public static void LogWithLogicDepth(string text, int logicDepth, System.ConsoleColor color = System.ConsoleColor.White,
     [CallerLineNumber] int lineNumber = 0,
     [CallerMemberName] string caller = null)
         {
@@ -195,6 +185,7 @@ namespace HPCSC
                 MelonLogger.Msg($"string: {t.GetType()} int: {t.GetValue()}");
             }
         */
+
         private Object CreateObject(Type type)
         {
             //MelonLogger.Msg(type.Name); seems right for 
@@ -397,25 +388,62 @@ namespace HPCSC
 
         public void*[] SetObjectValues(Queue<string> tokens, Type type, int logicDepth = 0)
         {
+            //tokens: START_OBJECT, END_OBJECT, START_LIST, END_LIST, *string value*, number value
             MethodInfo setList, listAdd;
             string lastToken = "", token;
             Type pType;
-            //create return object
-            Object returnObject = CreateObject(type);
+            int currentParameterIndex = 0;
             //get first token
             token = tokens.Dequeue();
+            void*[] returnParams = new void*[25];
+            GCHandle[] returnObjects = new GCHandle[25];
+            //todo get pointers to all objects using gchandle.alloc
+            //free all of them later before we return
             //go through tokens. create new list of refernces when a new object is created, and for each new field of our object we go one level deeper,
             //then add a pointer to a new object created with the returned pointers as one of the pointers for the params of our current object. 
             //this pointer to our created object needs to be fixed...
+            //to get the type we need for the field given the name we have to mirror the method we used for getting the methodinof for the setter (or use them lol)
             while (true)
             {
-
+                if (token == "END_OBJECT")
+                {
+                    return returnParams;
+                }
+                else if (token == "START_LIST")
+                {
+                    lastToken = token;
+                    token = tokens.Dequeue();
+                    //get type of list
+                    pType = GetGetMethodInfo(type, token).ReturnType;
+                    Object list = CreateList(pType);
+                    //todo add all objects here until we end the list
+                }
+                else if (token == "START_OBJECT")
+                {
+                    //get type of object from return method
+                    LogWithLogicDepth(lastToken, logicDepth, System.ConsoleColor.Blue);
+                    pType = GetGetMethodInfo(type, lastToken).ReturnType;
+                    Object ret = CreateObject(pType, SetObjectValues(tokens, pType, logicDepth + 1));
+                    //pin object so we can get a pointer with the gchandle
+                    GCHandle handle = GCHandle.Alloc(ret, GCHandleType.Pinned);
+                    //store handle for freeing later
+                    //handles.Add(handle);
+                    returnParams[currentParameterIndex++] = (void*)handle.AddrOfPinnedObject();
+                }
             }
         }
 
-        public MainStory CreateMainStory(Queue<string> tokens)
+        public MainStory CreateMainStory(string json)
         {
-            return new MainStory(SetObjectValues(tokens, Il2CppType.Of<MainStory>(), 0));
+            return new MainStory(SetObjectValues(SplitJson(json), Il2CppType.Of<MainStory>(), 0));
+        }
+
+        public void FreeHandles()
+        {
+            //for (int i = 0; i < handles.Count; i++)
+            //{
+                //handles[i].Free();
+            //}
         }
 
         public unsafe static Queue<string> SplitJson(string tempS)
@@ -425,77 +453,73 @@ namespace HPCSC
             bool isEscaped = false;
             bool emptyValue = false;
             //init stringbuilder with approximate buffer size for speed reasons (reduces resizing operations)
-            StringBuilder stringBuilder = new StringBuilder(tempS.Length);
-            char[] tempC = tempS.ToCharArray();
-            fixed (char* cc = tempC)
+            StringBuilder stringBuilder = new StringBuilder(5000);
+            char[] cc = tempS.ToCharArray();
+            //fix array in memory and get pointer to start
+            char c;
+            for (int i = 0; i < tempS.Length; i++)
             {
-                char* c;
-                for (int i = 0; i < tempS.Length; i++)
+                c = cc[i];
+                if (!isEscaped)
                 {
-                    c = cc + i;
-                    if (!isEscaped)
+                    //entering string
+                    if (inValueString)
                     {
-                        //entering string
-                        if (inValueString)
+                        //add char to builder if it is not escaped
+                        if (c != '\\' && c != '"')
                         {
-                            //add char to builder if it is not escaped
-                            if (*c != '\\' && *c != '"')
-                            {
-                                stringBuilder.Append(*c);
-                            }
-                            else
-                            {
-                                if (*c == '\\')
-                                {
-                                    isEscaped = true;
-                                    stringBuilder.Append('\\');
-                                }
-                                else
-                                {
-                                    if (stringBuilder.Length == 0)
-                                    {
-                                        emptyValue = true;
-                                    }
-                                    inValueString = false;
-                                }
-                            }
+                            stringBuilder.Append(c);
                         }
                         else
                         {
-                            if (*c == '"')
+                            if (c == '\\')
                             {
-                                inValueString = true;
+                                isEscaped = true;
+                                stringBuilder.Append('\\');
                             }
-                            else if (IsInArray(seperators, *c))
+                            else
                             {
-                                //if we hit a seperator, add nonempty strings and clear string builder
-                                if (stringBuilder.Length > 0 || emptyValue)
+                                if (stringBuilder.Length == 0)
                                 {
-                                    emptyValue = false;
-                                    tokens.Enqueue(stringBuilder.ToString());
-                                    stringBuilder.Clear();
+                                    emptyValue = true;
                                 }
-
-                                if (*c == '[') tokens.Enqueue("START_LIST");
-                                else if (*c == ']') tokens.Enqueue("END_LIST");
-                                else if (*c == '{') tokens.Enqueue("START_OBJECT");
-                                else if (*c == '}') tokens.Enqueue("END_OBJECT");
-                            }
-                            else if (IsInArray(numbers, *c))
-                            {
-                                //add char, in names and stuff
-                                stringBuilder.Append(*c);
+                                inValueString = false;
                             }
                         }
                     }
                     else
                     {
-                        isEscaped = false;
-                        //is escaped so add regardless
-                        stringBuilder.Append(tempS[i]);
+                        if (c == '"')
+                        {
+                            inValueString = true;
+                        }
+                        else if (seperators.Contains(c))
+                        {
+                            //if we hit a seperator, add nonempty strings and clear string builder
+                            if (stringBuilder.Length > 0 || emptyValue)
+                            {
+                                emptyValue = false;
+                                tokens.Enqueue(stringBuilder.ToString());
+                                stringBuilder.Clear();
+                            }
+
+                            if (c == '[') tokens.Enqueue("START_LIST");
+                            else if (c == ']') tokens.Enqueue("END_LIST");
+                            else if (c == '{') tokens.Enqueue("START_OBJECT");
+                            else if (c == '}') tokens.Enqueue("END_OBJECT");
+                        }
+                        else if (numbers.Contains(c))
+                        {
+                            //add char, in names and stuff
+                            stringBuilder.Append(c);
+                        }
                     }
-                    //point to next char
-                    ;
+                }
+                else
+                {
+                    isEscaped = false;
+                    //is escaped so add regardless
+                    stringBuilder.Append(tempS[i]);
                 }
             }
 

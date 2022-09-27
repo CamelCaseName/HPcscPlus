@@ -16,26 +16,27 @@ namespace HPCSC
 
         public Criterion(params void*[] parameters) : this()
         {
-            boolValue = new string((char*)parameters[0]);
-            character = new string((char*)parameters[1]);
-            character2 = new string((char*)parameters[2]);
-            compareType = new string((char*)parameters[3]);
-            dialogueStatus = new string((char*)parameters[4]);
-            displayInEditor = *(bool*)parameters[5];
-            doorOptions = new string((char*)parameters[6]);
-            equalsValue = new string((char*)parameters[7]);
-            equationValue = new string((char*)parameters[8]);
-            valueFormula = new string((char*)parameters[9]);
-            itemComparison = new string((char*)parameters[10]);
-            itemFromItemGroupComparison = new string((char*)parameters[11]);
-            key = new string((char*)parameters[12]);
-            key2 = new string((char*)parameters[13]);
-            order = *(int*)parameters[14];
-            playerInventoryOption = new string((char*)parameters[15]);
-            poseOption = new string((char*)parameters[16]);
-            socialStatus = new string((char*)parameters[17]);
-            value = new string((char*)parameters[18]);
-            option = *(int*)parameters[19];
+            int i = -1;
+            boolValue = new string((char*)parameters[++i]);
+            character = new string((char*)parameters[++i]);
+            character2 = new string((char*)parameters[++i]);
+            compareType = new string((char*)parameters[++i]);
+            dialogueStatus = new string((char*)parameters[++i]);
+            displayInEditor = *(bool*)parameters[++i];
+            doorOptions = new string((char*)parameters[++i]);
+            equalsValue = new string((char*)parameters[++i]);
+            equationValue = new string((char*)parameters[++i]);
+            valueFormula = new string((char*)parameters[++i]);
+            itemComparison = new string((char*)parameters[++i]);
+            itemFromItemGroupComparison = new string((char*)parameters[++i]);
+            key = new string((char*)parameters[++i]);
+            key2 = new string((char*)parameters[++i]);
+            order = *(int*)parameters[++i];
+            playerInventoryOption = new string((char*)parameters[++i]);
+            poseOption = new string((char*)parameters[++i]);
+            socialStatus = new string((char*)parameters[++i]);
+            value = new string((char*)parameters[++i]);
+            option = *(int*)parameters[++i];
         }
 
         public void Unload()
@@ -302,26 +303,27 @@ namespace HPCSC
 
         public Event(params void*[] parameters) : this()
         {
-            sortOrder2 = *(int*)parameters[0];
-            version = new string((char*)parameters[1]);
-            id = new string((char*)parameters[2]);
-            enabled = *(bool*)parameters[3];
-            eventType = *(int*)parameters[4];
-            character = new string((char*)parameters[5]);
-            character2 = new string((char*)parameters[6]);
-            key = new string((char*)parameters[7]);
-            option = *(int*)parameters[8];
-            option2 = *(int*)parameters[9];
-            option3 = *(int*)parameters[10];
-            value = new string((char*)parameters[11]);
-            value2 = new string((char*)parameters[12]);
-            sortOrder = *(int*)parameters[13];
-            delay = new string((char*)parameters[14]);
-            originalDelay = new string((char*)parameters[15]);
-            startDelayTime = new string((char*)parameters[16]);
-            useConditions = *(bool*)parameters[17];
-            displayInEditor = *(bool*)parameters[18];
-            criteria = new List<Criterion>(new System.IntPtr(parameters[19]));
+            int i = -1;
+            sortOrder2 = *(int*)parameters[++i];
+            version = new string((char*)parameters[++i]);
+            id = new string((char*)parameters[++i]);
+            enabled = *(bool*)parameters[++i];
+            eventType = *(int*)parameters[++i];
+            character = new string((char*)parameters[++i]);
+            character2 = new string((char*)parameters[++i]);
+            key = new string((char*)parameters[++i]);
+            option = *(int*)parameters[++i];
+            option2 = *(int*)parameters[++i];
+            option3 = *(int*)parameters[++i];
+            value = new string((char*)parameters[++i]);
+            value2 = new string((char*)parameters[++i]);
+            sortOrder = *(int*)parameters[++i];
+            delay = new string((char*)parameters[++i]);
+            originalDelay = new string((char*)parameters[++i]);
+            startDelayTime = new string((char*)parameters[++i]);
+            useConditions = *(bool*)parameters[++i];
+            displayInEditor = *(bool*)parameters[++i];
+            criteria = new List<Criterion>((System.IntPtr)parameters[++i]);
         }
 
         public void Unload()
@@ -594,10 +596,11 @@ namespace HPCSC
 
         public ItemAction(params void*[] parameters) : this()
         {
-            actionName = new string((char*)parameters[0]);
-            criteria = new List<Criterion>(new System.IntPtr(parameters[1]));
-            displayInEditor = *(bool*)parameters[2];
-            onTakeActionEvents = new List<Event>(new System.IntPtr(parameters[3]));
+            int i = -1;
+            actionName = new string((char*)parameters[++i]);
+            criteria = new List<Criterion>((System.IntPtr)parameters[++i]);
+            displayInEditor = *(bool*)parameters[++i];
+            onTakeActionEvents = new List<Event>((System.IntPtr)parameters[++i]);
         }
 
         public void Unload()
@@ -683,11 +686,12 @@ namespace HPCSC
 
         public UseWith(params void*[] parameters) : this()
         {
-            criteria = new List<Criterion>(new System.IntPtr(parameters[0]));
-            customCantDoThatMessage = new string((char*)parameters[1]);
-            displayInEditor = *(bool*)parameters[2];
-            itemName = new string((char*)parameters[3]);
-            onSuccessEvents = new List<Event>(new System.IntPtr(parameters[4]));
+            int i = -1;
+            criteria = new List<Criterion>((System.IntPtr)parameters[++i]);
+            customCantDoThatMessage = new string((char*)parameters[++i]);
+            displayInEditor = *(bool*)parameters[++i];
+            itemName = new string((char*)parameters[++i]);
+            onSuccessEvents = new List<Event>((System.IntPtr)parameters[++i]);
         }
 
         public void Unload()
@@ -784,13 +788,14 @@ namespace HPCSC
 
         public ItemOverride(params void*[] parameters) : this()
         {
-            id = new string((char*)parameters[0]);
-            displayInEditor = *(bool*)parameters[1];
-            displayName = new string((char*)parameters[2]);
-            itemActions = new List<ItemAction>(new System.IntPtr(parameters[3]));
-            itemName = new string((char*)parameters[4]);
-            useWiths = new List<UseWith>(new System.IntPtr(parameters[5]));
-            useDefaultRadialOptions = *(bool*)parameters[6];
+            int i = -1;
+            id = new string((char*)parameters[++i]);
+            displayInEditor = *(bool*)parameters[++i];
+            displayName = new string((char*)parameters[++i]);
+            itemActions = new List<ItemAction>((System.IntPtr)parameters[++i]);
+            itemName = new string((char*)parameters[++i]);
+            useWiths = new List<UseWith>((System.IntPtr)parameters[++i]);
+            useDefaultRadialOptions = *(bool*)parameters[++i];
         }
 
         public void Unload()
@@ -912,12 +917,13 @@ namespace HPCSC
 
         public ItemGroupBehavior(params void*[] parameters) : this()
         {
-            id = new string((char*)parameters[0]);
-            name = new string((char*)parameters[1]);
-            groupName = new string((char*)parameters[2]);
-            displayInEditor = *(bool*)parameters[3];
-            itemActions = new List<ItemAction>(new System.IntPtr(parameters[4]));
-            useWiths = new List<UseWith>(new System.IntPtr(parameters[5]));
+            int i = -1;
+            id = new string((char*)parameters[++i]);
+            name = new string((char*)parameters[++i]);
+            groupName = new string((char*)parameters[++i]);
+            displayInEditor = *(bool*)parameters[++i];
+            itemActions = new List<ItemAction>((System.IntPtr)parameters[++i]);
+            useWiths = new List<UseWith>((System.IntPtr)parameters[++i]);
         }
 
         public void Unload()
@@ -1023,12 +1029,13 @@ namespace HPCSC
 
         public Achievement(params void*[] parameters) : this()
         {
-            description = new string((char*)parameters[0]);
-            id = new string((char*)parameters[1]);
-            image = new string((char*)parameters[2]);
-            name = new string((char*)parameters[3]);
-            showInEditor = *(bool*)parameters[4];
-            steamName = new string((char*)parameters[5]);
+            int i = -1;
+            description = new string((char*)parameters[++i]);
+            id = new string((char*)parameters[++i]);
+            image = new string((char*)parameters[++i]);
+            name = new string((char*)parameters[++i]);
+            showInEditor = *(bool*)parameters[++i];
+            steamName = new string((char*)parameters[++i]);
         }
 
         public void Unload()
@@ -1128,7 +1135,8 @@ namespace HPCSC
 
         public CriteriaList(params void*[] parameters) : this()
         {
-            criteriaList = new List<Criterion>(new System.IntPtr(parameters[0]));
+            int i = -1;
+            criteriaList = new List<Criterion>((System.IntPtr)parameters[++i]);
         }
 
         public void Unload()
@@ -1172,11 +1180,12 @@ namespace HPCSC
 
         public CriteriaGroup(params void*[] parameters) : this()
         {
-            id = new string((char*)parameters[0]);
-            name = new string((char*)parameters[1]);
-            displayInEditor = *(bool*)parameters[2];
-            passCondition = new string((char*)parameters[3]);
-            criteriaList = new List<CriteriaList>(new System.IntPtr(parameters[4]));
+            int i = -1;
+            id = new string((char*)parameters[++i]);
+            name = new string((char*)parameters[++i]);
+            displayInEditor = *(bool*)parameters[++i];
+            passCondition = new string((char*)parameters[++i]);
+            criteriaList = new List<CriteriaList>((System.IntPtr)parameters[++i]);
         }
 
         public void Unload()
@@ -1268,10 +1277,11 @@ namespace HPCSC
 
         public ItemGroup(params void*[] parameters) : this()
         {
-            id = new string((char*)parameters[0]);
-            name = new string((char*)parameters[1]);
-            displayInEditor = *(bool*)parameters[2];
-            itemsInGroup = new List<string>(new System.IntPtr(parameters[3]));
+            int i = -1;
+            id = new string((char*)parameters[++i]);
+            name = new string((char*)parameters[++i]);
+            displayInEditor = *(bool*)parameters[++i];
+            itemsInGroup = new List<string>((System.IntPtr)parameters[++i]);
         }
 
         public void Unload()
@@ -1347,19 +1357,20 @@ namespace HPCSC
 
         public PlayerReaction(params void*[] parameters) : this()
         {
-            id = new string((char*)parameters[0]);
-            characterToReactTo = new string((char*)parameters[1]);
-            critera = new List<Criterion>(new System.IntPtr(parameters[2]));
-            currentIteration = new string((char*)parameters[3]);
-            enabled = *(bool*)parameters[4];
-            events = new List<Event>(new System.IntPtr(parameters[5]));
-            key = new string((char*)parameters[6]);
-            name = new string((char*)parameters[7]);
-            showInInspector = *(bool*)parameters[8];
-            type = new string((char*)parameters[9]);
-            updateIteration = new string((char*)parameters[10]);
-            value = new string((char*)parameters[11]);
-            locationTargetOption = new string((char*)parameters[12]);
+            int i = -1;
+            id = new string((char*)parameters[++i]);
+            characterToReactTo = new string((char*)parameters[++i]);
+            critera = new List<Criterion>((System.IntPtr)parameters[++i]);
+            currentIteration = new string((char*)parameters[++i]);
+            enabled = *(bool*)parameters[++i];
+            events = new List<Event>((System.IntPtr)parameters[++i]);
+            key = new string((char*)parameters[++i]);
+            name = new string((char*)parameters[++i]);
+            showInInspector = *(bool*)parameters[++i];
+            type = new string((char*)parameters[++i]);
+            updateIteration = new string((char*)parameters[++i]);
+            value = new string((char*)parameters[++i]);
+            locationTargetOption = new string((char*)parameters[++i]);
         }
 
         public void Unload()
@@ -1552,15 +1563,16 @@ namespace HPCSC
 
         public MainStory(params void*[] parameters) : this()
         {
-            housePartyVersion = new string((char*)parameters[0]);
-            itemOverrides = new List<ItemOverride>(new System.IntPtr(parameters[1]));
-            itemGroupBehaviors = new List<ItemGroupBehavior>(new System.IntPtr(parameters[2]));
-            achievements = new List<Achievement>(new System.IntPtr(parameters[3]));
-            playerValues = new List<string>(new System.IntPtr(parameters[4]));
-            criteriaGroups = new List<CriteriaGroup>(new System.IntPtr(parameters[5]));
-            itemGroups = new List<ItemGroup>(new System.IntPtr(parameters[6]));
-            gameStartEvents = new List<Event>(new System.IntPtr(parameters[7]));
-            playerReactions = new List<PlayerReaction>(new System.IntPtr(parameters[8]));
+            int i = -1;
+            housePartyVersion = new string((char*)parameters[++i]);
+            itemOverrides = new List<ItemOverride>((System.IntPtr)parameters[++i]);
+            itemGroupBehaviors = new List<ItemGroupBehavior>((System.IntPtr)parameters[++i]);
+            achievements = new List<Achievement>((System.IntPtr)parameters[++i]);
+            playerValues = new List<string>((System.IntPtr)parameters[++i]);
+            criteriaGroups = new List<CriteriaGroup>((System.IntPtr)parameters[++i]);
+            itemGroups = new List<ItemGroup>((System.IntPtr)parameters[++i]);
+            gameStartEvents = new List<Event>((System.IntPtr)parameters[++i]);
+            playerReactions = new List<PlayerReaction>((System.IntPtr)parameters[++i]);
         }
 
         public void Unload()
@@ -3847,8 +3859,9 @@ namespace HPCSC
         {
             ClassInjector.DerivedConstructorBody(this);
             instance.Add(this);
-            type = new string((char*)parameters[0]);
-            value = *(int*)parameters[1];
+            int i = -1;
+            type = new string((char*)parameters[++i]);
+            value = *(int*)parameters[++i];
         }
 
         public void Unload()

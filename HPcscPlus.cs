@@ -57,52 +57,50 @@ namespace HPCSC
         private string[][] StoryValues = new string[30][] { new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200] };
 
 
-        private readonly CompareTypes[] CompareTypesArray = new CompareTypes[] {
-                CompareTypes.Never,
-                CompareTypes.Clothing,
-                CompareTypes.CoinFlip,
-                CompareTypes.CompareValues,
-                CompareTypes.CriteriaGroup,
-                CompareTypes.CutScene,
-                CompareTypes.Dialogue,
-                CompareTypes.Distance,
-                CompareTypes.Door,
-                CompareTypes.IntimacyPartner,
-                CompareTypes.IntimacyState,
-                CompareTypes.InVicinity,
-                CompareTypes.InVicinityAndVision,
-                CompareTypes.InZone,
-                CompareTypes.IsAloneWithPlayer,
-                CompareTypes.IsBeingSpokenTo,
-                CompareTypes.IsCharacterEnabled,
-                CompareTypes.IsCurrentlyBeingUsed,
-                CompareTypes.IsCurrentlyUsing,
-                CompareTypes.IsExplicitGameVersion,
-                CompareTypes.IsInFrontOf,
-                CompareTypes.IsInHouse,
-                CompareTypes.IsNewGame,
-                CompareTypes.IsOnlyInVicinityAndVisionOf,
-                CompareTypes.IsOnlyInVicinityOf,
-                CompareTypes.IsOnlyInVisionOf,
-                CompareTypes.IsZoneEmpty,
-                CompareTypes.Item,
-                CompareTypes.ItemFromItemGroup,
-                CompareTypes.MetByPlayer,
-                CompareTypes.None,
-                CompareTypes.Personality,
-                CompareTypes.PlayerBeingSpokenTo,
-                CompareTypes.PlayerGender,
-                CompareTypes.PlayerInventory,
-                CompareTypes.PlayerPrefs,
-                CompareTypes.Posing,
-                CompareTypes.Property,
-                CompareTypes.Quest,
-                CompareTypes.SameZoneAs,
-                CompareTypes.Social,
-                CompareTypes.State,
-                CompareTypes.UseLegacyIntimacy,
-                CompareTypes.Value,
-                CompareTypes.Vision
+        private readonly CBLCMJKCKKD[] CompareTypesArray = new CBLCMJKCKKD[] {
+                CBLCMJKCKKD.Never,
+                CBLCMJKCKKD.Clothing,
+                CBLCMJKCKKD.CoinFlip,
+                CBLCMJKCKKD.CompareValues,
+                CBLCMJKCKKD.CriteriaGroup,
+                CBLCMJKCKKD.CutScene,
+                CBLCMJKCKKD.Dialogue,
+                CBLCMJKCKKD.Distance,
+                CBLCMJKCKKD.Door,
+                CBLCMJKCKKD.IntimacyPartner,
+                CBLCMJKCKKD.IntimacyState,
+                CBLCMJKCKKD.InVicinity,
+                CBLCMJKCKKD.InVicinityAndVision,
+                CBLCMJKCKKD.InZone,
+                CBLCMJKCKKD.IsBeingSpokenTo,
+                CBLCMJKCKKD.IsCharacterEnabled,
+                CBLCMJKCKKD.IsCurrentlyBeingUsed,
+                CBLCMJKCKKD.IsCurrentlyUsing,
+                CBLCMJKCKKD.IsExplicitGameVersion,
+                CBLCMJKCKKD.IsInFrontOf,
+                CBLCMJKCKKD.IsInHouse,
+                CBLCMJKCKKD.IsNewGame,
+                CBLCMJKCKKD.IsOnlyInVicinityAndVisionOf,
+                CBLCMJKCKKD.IsOnlyInVicinityOf,
+                CBLCMJKCKKD.IsOnlyInVisionOf,
+                CBLCMJKCKKD.IsZoneEmpty,
+                CBLCMJKCKKD.Item,
+                CBLCMJKCKKD.ItemFromItemGroup,
+                CBLCMJKCKKD.MetByPlayer,
+                CBLCMJKCKKD.None,
+                CBLCMJKCKKD.Personality,
+                CBLCMJKCKKD.PlayerGender,
+                CBLCMJKCKKD.PlayerInventory,
+                CBLCMJKCKKD.PlayerPrefs,
+                CBLCMJKCKKD.Posing,
+                CBLCMJKCKKD.Property,
+                CBLCMJKCKKD.Quest,
+                CBLCMJKCKKD.SameZoneAs,
+                CBLCMJKCKKD.Social,
+                CBLCMJKCKKD.State,
+                CBLCMJKCKKD.UseLegacyIntimacy,
+                CBLCMJKCKKD.Value,
+                CBLCMJKCKKD.Vision
             };
 
         //private const int EditorCharacterSelectionHeight = 60;
@@ -225,7 +223,7 @@ namespace HPCSC
 
         public void LoadAndParseCurrentStory()
         {
-            CurrentStoryFolder = StoryData.GetInternalStoryFolder(GameManager.GetActiveStoryName());
+            CurrentStoryFolder = StoryData.AOOPOCNMMEO(GameManager.GetActiveStoryName());
 
             MelonLogger.Msg(System.ConsoleColor.DarkMagenta, $"Current story found in {CurrentStoryFolder}");
 
@@ -294,6 +292,7 @@ namespace HPCSC
         //on quit
         public override void OnApplicationQuit()
         {
+            Json.FreeHandles();
         }
 
         //on start
@@ -342,7 +341,7 @@ namespace HPCSC
             //get references to the GameManager and so on
             if (InGameMain)
             {
-                GameManagerInstance = GameManager.GetActiveGameManager();
+                GameManagerInstance = GameManager.HPMMPJACDIL();
 
                 Stories = GameManager.GetCharacterStories();
 
@@ -394,7 +393,7 @@ namespace HPCSC
         {
             try
             {
-                MainStory mainStory = Json.CreateMainStory(JsonsSupreme.SplitJson(tempS));
+                MainStory mainStory = Json.CreateMainStory(tempS);
                 //mainStory.GetAchievements()[0].SetName("asdufgsd");
                 return mainStory;
             }
@@ -505,15 +504,15 @@ namespace HPCSC
             GUILayout.EndVertical();
         }
 
-        private BoolCritera DisplayBoolValueSelector(BoolCritera boolValue)
+        private EACMHIPDGEE DisplayBoolValueSelector(EACMHIPDGEE boolValue)
         {
-            if (GUILayout.Toggle(boolValue == BoolCritera.True, boolValue.ToString(), Opt))
+            if (GUILayout.Toggle(boolValue == EACMHIPDGEE.True, boolValue.ToString(), Opt))
             {
-                boolValue = BoolCritera.True;
+                boolValue = EACMHIPDGEE.True;
             }
             else
             {
-                boolValue = BoolCritera.False;
+                boolValue = EACMHIPDGEE.False;
             }
             return boolValue;
         }
@@ -635,11 +634,11 @@ namespace HPCSC
             return criterion;
         }
 
-        private CompareTypes DisplayCompareTypes(CompareTypes type)
+        private CBLCMJKCKKD DisplayCompareTypes(CBLCMJKCKKD type)
         {
             GUILayout.BeginVertical(Opt);
             int index = 0;
-            foreach (CompareTypes item in CompareTypesArray)
+            foreach (CBLCMJKCKKD item in CompareTypesArray)
             {
                 if (item == type)
                 {
@@ -663,188 +662,180 @@ namespace HPCSC
             //we are already in a horizontal area!
             switch (criterion.CompareType)
             {
-                case CompareTypes.Never:
+                case CBLCMJKCKKD.Never:
                     //Nothing?
                     break;
 
-                case CompareTypes.Clothing:
+                case CBLCMJKCKKD.Clothing:
                     criterion = DisplayCompareTypeClothing(criterion);
                     break;
 
-                case CompareTypes.CoinFlip:
+                case CBLCMJKCKKD.CoinFlip:
                     //nothing needed, its 50/50 anyways
                     break;
 
-                case CompareTypes.CompareValues:
+                case CBLCMJKCKKD.CompareValues:
                     criterion = DisplayCompareTypeCompareValues(criterion);
                     break;
 
-                case CompareTypes.CriteriaGroup:
+                case CBLCMJKCKKD.CriteriaGroup:
                     //criteriagroup(id) as key, true/false as option (0/1)
                     break;
 
-                case CompareTypes.CutScene:
+                case CBLCMJKCKKD.CutScene:
                     //no idea what is needed
                     break;
 
-                case CompareTypes.Dialogue:
+                case CBLCMJKCKKD.Dialogue:
                     //Character as character, dialogie id as value, dialogue status as dialogue status
                     break;
 
-                case CompareTypes.Distance:
+                case CBLCMJKCKKD.Distance:
                     //Object name 1 as key(typed), Object name 2 as key2(typed), equal value as equationvalue, distance as value
                     break;
 
-                case CompareTypes.Door:
+                case CBLCMJKCKKD.Door:
                     //dor name as key, door option as dooroption
                     break;
 
-                case CompareTypes.IntimacyPartner:
+                case CBLCMJKCKKD.IntimacyPartner:
                     //character as charater, equals value as equalsvalue, character 2 as value
                     break;
 
-                case CompareTypes.IntimacyState:
+                case CBLCMJKCKKD.IntimacyState:
                     //character as character, equals vlaue as equalsvalue, state as value
                     break;
 
-                case CompareTypes.InZone:
+                case CBLCMJKCKKD.InZone:
                     //character as character, zone name as key, state as boolvalue
                     break;
 
-                case CompareTypes.InVicinity:
+                case CBLCMJKCKKD.InVicinity:
                     //character as character, character as character2, state as boolvalue
                     break;
 
-                case CompareTypes.InVicinityAndVision:
+                case CBLCMJKCKKD.InVicinityAndVision:
                     //same as invicinity
                     break;
 
-                case CompareTypes.Item:
+                case CBLCMJKCKKD.Item:
                     //item as key, item comparison as itemcomparison, character as character, state as boolvalue
                     //or it not involved with characters(no "To/By")
                     //item as key, item comparison as itemcomparison, state as boolvalue
                     break;
 
-                case CompareTypes.IsOnlyInVicinityOf:
+                case CBLCMJKCKKD.IsOnlyInVicinityOf:
                     //same as invicinity
                     break;
 
-                case CompareTypes.IsOnlyInVisionOf:
+                case CBLCMJKCKKD.IsOnlyInVisionOf:
                     //same as invicinity
                     break;
 
-                case CompareTypes.IsOnlyInVicinityAndVisionOf:
+                case CBLCMJKCKKD.IsOnlyInVicinityAndVisionOf:
                     //same as invicinity
                     break;
 
-                case CompareTypes.IsAloneWithPlayer:
+                case CBLCMJKCKKD.IsCharacterEnabled:
                     //character as character, value as boolvalue
                     break;
 
-                case CompareTypes.IsCharacterEnabled:
-                    //character as character, value as boolvalue
-                    break;
-
-                case CompareTypes.IsCurrentlyBeingUsed:
+                case CBLCMJKCKKD.IsCurrentlyBeingUsed:
                     //item name as key, value as boolvalue
                     break;
 
-                case CompareTypes.IsCurrentlyUsing:
+                case CBLCMJKCKKD.IsCurrentlyUsing:
                     //character as character, item as key, state as boolvalue
                     break;
 
-                case CompareTypes.IsExplicitGameVersion:
+                case CBLCMJKCKKD.IsExplicitGameVersion:
                     //state as boolvalue
                     break;
 
-                case CompareTypes.IsInFrontOf:
+                case CBLCMJKCKKD.IsInFrontOf:
                     //character as character2, characetr as character, state as boolvalue
                     break;
 
-                case CompareTypes.IsInHouse:
+                case CBLCMJKCKKD.IsInHouse:
                     //character as character, state as boolvalue
                     break;
 
-                case CompareTypes.IsNewGame:
+                case CBLCMJKCKKD.IsNewGame:
                     //state as boolvalue
                     break;
 
-                case CompareTypes.IsZoneEmpty:
+                case CBLCMJKCKKD.IsZoneEmpty:
                     //zone as key, state as boolvalue
                     break;
 
-                case CompareTypes.ItemFromItemGroup:
+                case CBLCMJKCKKD.ItemFromItemGroup:
                     //greyed out in csc
                     break;
 
-                case CompareTypes.MetByPlayer:
+                case CBLCMJKCKKD.MetByPlayer:
                     //character as character, value as boolvalue
                     break;
 
-                case CompareTypes.Personality:
+                case CBLCMJKCKKD.Personality:
                     //character as character, personality type as key, comparison as equationvalue, value as boolvalue
                     break;
 
-                case CompareTypes.IsBeingSpokenTo:
+                case CBLCMJKCKKD.IsBeingSpokenTo:
                     //character as character, value as boolvalue
                     break;
 
-                case CompareTypes.PlayerBeingSpokenTo:
-                    //value as boolvalue
-                    break;
-
-                case CompareTypes.PlayerGender:
+                case CBLCMJKCKKD.PlayerGender:
                     //gender as value
                     break;
 
-                case CompareTypes.PlayerInventory:
+                case CBLCMJKCKKD.PlayerInventory:
                     //has item: item as key, value as boolvalue
                     //has at least one item: value as boolvalue
                     break;
 
-                case CompareTypes.Posing:
+                case CBLCMJKCKKD.Posing:
                     //is currently posing: character as character, value as boolvalue
                     //current pose: character as character, pose id as value, value as boolvalue
                     break;
 
-                case CompareTypes.Property:
+                case CBLCMJKCKKD.Property:
                     //character as character, property id as value, value as boolvalue
                     break;
 
-                case CompareTypes.Quest:
+                case CBLCMJKCKKD.Quest:
                     //quest id as key, quest name as key2, value as boolvalue
                     break;
 
-                case CompareTypes.SameZoneAs:
+                case CBLCMJKCKKD.SameZoneAs:
                     //character as character, character as character2, value as boolvalue
                     break;
 
-                case CompareTypes.Social:
+                case CBLCMJKCKKD.Social:
                     //for one: character as character, status as social status, comparison as equationvalue, value as value
                     //for two: character as character, character as character2, status as social status, comparison as equationvalue, value as value
                     break;
 
-                case CompareTypes.State:
+                case CBLCMJKCKKD.State:
                     //character as character, state id as value, value as boolvalue
                     break;
 
-                case CompareTypes.Value:
+                case CBLCMJKCKKD.Value:
                     //character as character, value name as key, comparison as equationvalue, value as value
                     break;
 
-                case CompareTypes.Vision:
+                case CBLCMJKCKKD.Vision:
                     //character as character, character as character2, value as boolvalue
                     break;
 
-                case CompareTypes.PlayerPrefs:
+                case CBLCMJKCKKD.PlayerPrefs:
                     //value name as key, comparison as equationvalue, value as value
                     break;
 
-                case CompareTypes.UseLegacyIntimacy:
+                case CBLCMJKCKKD.UseLegacyIntimacy:
                     //state as boolvalue
                     break;
 
-                case CompareTypes.None:
+                case CBLCMJKCKKD.None:
                     //none, duh :)
                     break;
 
@@ -1011,9 +1002,9 @@ namespace HPCSC
             GUILayout.EndHorizontal();
         }
 
-        private ValueSpecificFormulas DisplayValueFormulaSelector(ValueSpecificFormulas valueFormula)
+        private HENLFNFHCMH DisplayValueFormulaSelector(HENLFNFHCMH valueFormula)
         {
-            valueFormula = (ValueSpecificFormulas)DisplayNumberBlock((int)valueFormula, 0, 3, valueFormula.ToString(), ">", "<", false);
+            valueFormula = (HENLFNFHCMH)DisplayNumberBlock((int)valueFormula, 0, 3, valueFormula.ToString(), ">", "<", false);
             return valueFormula;
         }
 

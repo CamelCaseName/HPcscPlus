@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>D:\House party\official\game\HP.0.22.0.RC1.835\Mods\</OutputPath>
+    <OutputPath>G:\SteamLibrary\steamapps\common\House Party\Mods\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -43,39 +43,39 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>D:\House party\official\game\HP.0.22.0.RC1.835\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>G:\SteamLibrary\steamapps\common\House Party\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Il2Cppmscorlib">
-      <HintPath>D:\House party\official\game\HP.0.22.0.RC1.835\MelonLoader\Managed\Il2Cppmscorlib.dll</HintPath>
+      <HintPath>G:\SteamLibrary\steamapps\common\House Party\MelonLoader\Managed\Il2Cppmscorlib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Il2CppSystem">
-      <HintPath>D:\House party\official\game\HP.0.22.0.RC1.835\MelonLoader\Managed\Il2CppSystem.dll</HintPath>
+      <HintPath>G:\SteamLibrary\steamapps\common\House Party\MelonLoader\Managed\Il2CppSystem.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="MelonLoader">
-      <HintPath>D:\House party\official\game\HP.0.22.0.RC1.835\MelonLoader\MelonLoader.dll</HintPath>
+      <HintPath>G:\SteamLibrary\steamapps\common\House Party\MelonLoader\MelonLoader.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnhollowerBaseLib">
-      <HintPath>D:\House party\official\game\HP.0.22.0.RC1.835\MelonLoader\Managed\UnhollowerBaseLib.dll</HintPath>
+      <HintPath>G:\SteamLibrary\steamapps\common\House Party\MelonLoader\Managed\UnhollowerBaseLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnhollowerRuntimeLib">
-      <HintPath>D:\House party\official\game\HP.0.22.0.RC1.835\MelonLoader\Managed\UnhollowerRuntimeLib.dll</HintPath>
+      <HintPath>G:\SteamLibrary\steamapps\common\House Party\MelonLoader\Managed\UnhollowerRuntimeLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.InputSystem">
-      <HintPath>D:\House party\official\game\HP.0.22.0.RC1.835\MelonLoader\Managed\Unity.InputSystem.dll</HintPath>
+      <HintPath>G:\SteamLibrary\steamapps\common\House Party\MelonLoader\Managed\Unity.InputSystem.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>D:\House party\official\game\HP.0.22.0.RC1.835\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>G:\SteamLibrary\steamapps\common\House Party\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>D:\House party\official\game\HP.0.22.0.RC1.835\MelonLoader\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>G:\SteamLibrary\steamapps\common\House Party\MelonLoader\Managed\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

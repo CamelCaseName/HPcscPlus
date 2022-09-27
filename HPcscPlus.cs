@@ -54,8 +54,7 @@ namespace HPCSC
             "Set 0",
             "Set 1"
             };
-        private string[][] StoryValues = new string[30][] { new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200] };
-
+        private readonly string[][] StoryValues = new string[30][] { new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200], new string[200] };
 
         private readonly CBLCMJKCKKD[] CompareTypesArray = new CBLCMJKCKKD[] {
                 CBLCMJKCKKD.Never,
@@ -131,6 +130,9 @@ namespace HPCSC
         private List<CharacterStoryData> Stories;
         private bool StoriesSet = false;
         private bool StorySelected = false;
+
+        private MelonPreferences_Category settings;
+        private MelonPreferences_Entry<bool> enableCSC;
 
 
         private CharacterStoryData SelectedStory
@@ -293,20 +295,32 @@ namespace HPCSC
         public override void OnApplicationQuit()
         {
             Json.FreeHandles();
+            settings.SaveToFile();
         }
 
         //on start
         public override void OnApplicationStart()
         {
-            Json.Initialize();
+            settings = MelonPreferences.CreateCategory("CSC");
+            enableCSC = settings.CreateEntry("enableCSC", true);
 
             EditorWindow = new Rect(EditorX, EditorY, EditorWidth, EditorHeight);
+
+            if (enableCSC.Value)
+            {
+                MelonLogger.Msg("CSC is enabled, will take some time on game load");
+                Json.Initialize();
+            }
+            else
+            {
+                MelonLogger.Msg("CSC is currently disabled, left ALT + T to toggle");
+            }
         }
 
         //every time ui is updated
         public override void OnGUI()
         {
-            if (InGameMain && ShowEditor)
+            if (InGameMain && ShowEditor && enableCSC.Value)
             {
                 //also do keys and mouse by events:
                 //Event currentEvent = Event.current;
@@ -332,46 +346,87 @@ namespace HPCSC
                 GUILayout.EndArea();
             }
         }
+
         //when the main game scene was loaded
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
             InGameMain = sceneName == "GameMain";
-            MelonLogger.Msg($"scene {sceneName} loaded ({buildIndex})");
+            if(InGameMain)MelonLogger.Msg($"Loading into {sceneName} ({buildIndex})");
 
             //get references to the GameManager and so on
-            if (InGameMain)
+            if (InGameMain && enableCSC.Value)
             {
-                GameManagerInstance = GameManager.HPMMPJACDIL();
-
-                Stories = GameManager.GetCharacterStories();
-
-                MainStoryData = GameManager.GetActiveStory();
-
-                LoadAndParseCurrentStory();
-
-                //parse story to custom format from file here, eeks libraries don't provide enough info lol
-
-                StoriesSet = true;
-
-                //add stories to game
-                foreach (var story in Stories)
-                {
-                    GameManagerInstance.RegisterCharacterStory(story);
-                }
+                InitializeInGame();
             }
         }
+
+        private void InitializeInGame()
+        {
+            GameManagerInstance = GameManager.HPMMPJACDIL();
+
+            Stories = GameManager.GetCharacterStories();
+
+            MainStoryData = GameManager.GetActiveStory();
+
+            LoadAndParseCurrentStory();
+
+            //parse story to custom format from file here, eeks libraries don't provide enough info lol
+
+            StoriesSet = true;
+
+            //add stories to game
+            foreach (var story in Stories)
+            {
+                GameManagerInstance.RegisterCharacterStory(story);
+            }
+        }
+
         //every frame
         public override void OnUpdate()
         {
-            if (StoriesSet)
+            if (enableCSC.Value)
             {
-                //check for keypresses to open story editor, toggle window
-                if (Keyboard.current[Key.LeftAlt].isPressed && Keyboard.current[Key.U].wasPressedThisFrame)
+                if (Keyboard.current[Key.LeftAlt].isPressed && Keyboard.current[Key.T].wasPressedThisFrame)
                 {
-                    //MelonLogger.Msg($"ui shown {ShowEditor}");
-                    ShowEditor = !ShowEditor;
+                    DisableCSC();
+                }
+
+                if (StoriesSet)
+                {
+                    //check for keypresses to open story editor, toggle window
+                    if (Keyboard.current[Key.LeftAlt].isPressed && Keyboard.current[Key.U].wasPressedThisFrame)
+                    {
+                        //MelonLogger.Msg($"ui shown {ShowEditor}");
+                        ShowEditor = !ShowEditor;
+                    }
                 }
             }
+            else
+            {
+                if (Keyboard.current[Key.LeftAlt].isPressed && Keyboard.current[Key.T].wasPressedThisFrame)
+                {
+                    EnableCSC();
+                }
+            }
+        }
+
+        private void EnableCSC()
+        {
+            enableCSC.Value = true;
+            MelonLogger.Msg("CSC is now enabled");
+
+            if (!StoriesSet)
+            {
+                Json.Initialize();
+
+                InitializeInGame();
+            }
+        }
+
+        private void DisableCSC()
+        {
+            enableCSC.Value = false;
+            MelonLogger.Msg("CSC is now disabled");
         }
 
         public CharacterStory ParseJsonToCharacterStory(string tempS)
